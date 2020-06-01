@@ -2,6 +2,7 @@ package studio.eyesthetics.sbdelivery
 
 import android.app.Application
 import studio.eyesthetics.sbdelivery.di.AppComponent
+import studio.eyesthetics.sbdelivery.di.DaggerAppComponent
 
 class App : Application(), AppComponent.ComponentProvider {
 
