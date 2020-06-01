@@ -28,6 +28,7 @@ abstract class BaseActivity<T : BaseViewModel<out IViewModelState>> : AppCompatA
     abstract fun renderNotification(notify: Notify)
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(layout)
         setSupportActionBar(toolbar)

@@ -39,4 +39,8 @@
         <item name="android:textColorPrimary">?attr/colorOnPrimary</item>
     </style>
 
+    <style name="SplashTheme" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/launch_screen</item>
+    </style>
+
 </resources>
