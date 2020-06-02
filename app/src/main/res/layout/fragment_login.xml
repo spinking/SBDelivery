@@ -12,66 +12,64 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.5" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/email_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/tv_email_label"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/login_hint_email"
+        android:layout_marginStart="@dimen/maxi_margin"
+        android:layout_marginBottom="6dp"
+        style="@style/LabelText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/ev_email"
+        />
+
+    <EditText
+        android:id="@+id/ev_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/standart_padding"
+        android:paddingBottom="@dimen/standart_padding"
+        android:paddingStart="@dimen/standart_padding"
+        android:layout_marginStart="@dimen/maxi_margin"
+        android:layout_marginEnd="@dimen/maxi_margin"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/background_edit_text"
+        style="@style/DarkText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tv_password_label"
+        />
+
+    <TextView
+        android:id="@+id/tv_password_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_label_password"
+        android:layout_marginStart="@dimen/maxi_margin"
+        android:layout_marginBottom="6dp"
+        style="@style/LabelText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/ev_password"
+        />
+
+    <EditText
+        android:id="@+id/ev_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/standart_padding"
+        android:paddingBottom="@dimen/standart_padding"
+        android:paddingStart="@dimen/standart_padding"
         android:layout_marginStart="@dimen/maxi_margin"
         android:layout_marginEnd="@dimen/maxi_margin"
         android:layout_marginBottom="36dp"
-        android:hint="@string/login_hint_email"
-        app:boxStrokeWidth="0dp"
-        app:boxStrokeColor="@null"
-        app:hintEnabled="false"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/password_layout"
-        >
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/email_edit"
-            android:maxLines="1"
-            android:imeOptions="actionDone"
-            android:inputType="text"
-            android:textAlignment="center"
-            android:textSelectHandle="@drawable/empty_select_handle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/DarkText"
-            />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/password_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
         android:background="@drawable/background_edit_text"
-        android:layout_marginStart="@dimen/maxi_margin"
-        android:layout_marginEnd="@dimen/maxi_margin"
-        android:layout_marginBottom="26dp"
-        android:hint="@string/login_hint_email"
-        app:boxStrokeWidth="0dp"
-        app:boxStrokeColor="@null"
-        app:hintEnabled="false"
+        style="@style/DarkText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/guideline"
-        >
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/password_edit"
-            android:maxLines="1"
-            android:imeOptions="actionDone"
-            android:inputType="textPassword"
-            android:textAlignment="center"
-            android:textSelectHandle="@drawable/empty_select_handle"
-            android:textColorHint="@color/color_hint_gray"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/DarkText"
-            />
-    </com.google.android.material.textfield.TextInputLayout>
+        />
+
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_enter"

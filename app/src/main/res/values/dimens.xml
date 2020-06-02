@@ -3,4 +3,6 @@
     <dimen name="standart_margin">16dp</dimen>
     <dimen name="mini_margin">8dp</dimen>
     <dimen name="maxi_margin">30dp</dimen>
+
+    <dimen name="standart_padding">14dp</dimen>
 </resources>
