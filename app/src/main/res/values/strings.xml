@@ -9,4 +9,10 @@
     <string name="surname_label">Фамилия</string>
     <string name="registration_button">Зарегистрироваться</string>
     <string name="button_enter">Вход</string>
+    <string name="recovery_description">Введите электронную почту, которую вы использовали при регистрации, и мы вышлем на нее код для восстановления пароля</string>
+    <string name="recovery_password_send">Отправить</string>
+    <string name="recovery_code_label">Введите проверочный код</string>
+    <string name="recovery_new_password">Введите новый пароль</string>
+    <string name="button_save">Сохранить</string>
+    <string name="login_label_new_password">Повторите пароль</string>
 </resources>
