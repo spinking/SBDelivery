@@ -5,4 +5,8 @@
     <string name="login_registration">Регистрация</string>
     <string name="login_forgot_password">Забыли пароль?</string>
     <string name="login_label_password">Пароль</string>
+    <string name="name_label">Имя</string>
+    <string name="surname_label">Фамилия</string>
+    <string name="registration_button">Зарегистрироваться</string>
+    <string name="button_enter">Вход</string>
 </resources>
