@@ -10,6 +10,10 @@ import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.appcompat.widget.SearchView
 import androidx.navigation.Navigation
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.FirebaseApp
@@ -39,6 +43,8 @@ class MainActivity : BaseActivity<MainViewModel>() {
     public override val viewModel: MainViewModel by viewModels {
         GenericSavedStateViewModelFactory(mainViewModelFactory, this)
     }
+
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
 
 /*    @Inject
@@ -73,6 +79,10 @@ class MainActivity : BaseActivity<MainViewModel>() {
 
         navController.setGraph(R.navigation.main_graph, intent?.extras)
 
+        appBarConfiguration = AppBarConfiguration(navController.graph, drawer_layout)
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        //nav_view.setupWithNavController(navController)
+
         //initBottombar(navController)
 
         btn_back.setOnClickListener {
@@ -94,7 +104,9 @@ class MainActivity : BaseActivity<MainViewModel>() {
         //guideline.setGuidelinePercent(1f)
     }
 
-
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
 
     /*    private fun getDynamicLinks() {
         FirebaseDynamicLinks.getInstance()
