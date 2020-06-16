@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/ic_background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_name_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/name_label"
+        android:layout_marginStart="@dimen/maxi_margin"
+        android:layout_marginTop="53dp"
+        style="@style/LabelText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <EditText
+        android:id="@+id/ev_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/standart_padding"
+        android:layout_marginStart="@dimen/maxi_margin"
+        android:layout_marginEnd="@dimen/maxi_margin"
+        android:layout_marginTop="@dimen/mini_margin"
+        android:background="@drawable/background_edit_text"
+        style="@style/DarkText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_name_label"
+        />
+
+    <TextView
+        android:id="@+id/tv_surname_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/surname_label"
+        android:layout_marginStart="@dimen/maxi_margin"
+        android:layout_marginTop="@dimen/standart_margin"
+        style="@style/LabelText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ev_name"
+        />
+
+    <EditText
+        android:id="@+id/ev_surname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/standart_padding"
+        android:layout_marginStart="@dimen/maxi_margin"
+        android:layout_marginEnd="@dimen/maxi_margin"
+        android:layout_marginTop="@dimen/mini_margin"
+        android:background="@drawable/background_edit_text"
+        style="@style/DarkText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_surname_label"
+        />
+
+    <TextView
+        android:id="@+id/tv_email_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_hint_email"
+        android:layout_marginStart="@dimen/maxi_margin"
+        android:layout_marginTop="@dimen/standart_margin"
+        style="@style/LabelText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ev_surname"
+        />
+
+    <TextView
+        android:id="@+id/tv_email_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/maxi_margin"
+        android:layout_marginTop="@dimen/standart_margin"
+        style="@style/LabelText"
+        android:textColor="@color/color_text_error"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ev_surname"
+        tools:text="Некорректный e-mail"
+        tools:visibility="visible"
+        />
+
+    <EditText
+        android:id="@+id/ev_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/standart_padding"
+        android:paddingBottom="@dimen/standart_padding"
+        android:paddingStart="@dimen/standart_padding"
+        android:layout_marginStart="@dimen/maxi_margin"
+        android:layout_marginEnd="@dimen/maxi_margin"
+        android:layout_marginTop="@dimen/mini_margin"
+        android:background="@drawable/background_edit_text"
+        style="@style/DarkText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_email_label"
+        />
+
+    <TextView
+        android:id="@+id/tv_password_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_label_password"
+        android:layout_marginStart="@dimen/maxi_margin"
+        android:layout_marginTop="@dimen/standart_margin"
+        style="@style/LabelText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ev_email"
+        />
+
+    <EditText
+        android:id="@+id/ev_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/standart_padding"
+        android:paddingBottom="@dimen/standart_padding"
+        android:paddingStart="@dimen/standart_padding"
+        android:paddingEnd="@dimen/standart_padding"
+        android:layout_marginStart="@dimen/maxi_margin"
+        android:layout_marginEnd="@dimen/maxi_margin"
+        android:layout_marginTop="@dimen/mini_margin"
+        android:background="@drawable/background_edit_text"
+        style="@style/DarkText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_password_label"
+        />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_registration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/maxi_margin"
+        android:layout_marginEnd="@dimen/maxi_margin"
+        android:layout_marginTop="53dp"
+        android:background="@drawable/filled_button"
+        android:stateListAnimator="@null"
+        android:gravity="center"
+        android:text="@string/registration_button"
+        style="@style/LightMediumTitle"
+        app:layout_constraintTop_toBottomOf="@id/ev_password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_enter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/maxi_margin"
+        android:layout_marginEnd="@dimen/maxi_margin"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/stroked_button"
+        android:stateListAnimator="@null"
+        android:gravity="center"
+        android:text="@string/button_enter"
+        style="@style/LightMediumTitle"
+        app:layout_constraintTop_toBottomOf="@id/btn_registration"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

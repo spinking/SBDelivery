@@ -42,5 +42,49 @@
     <style name="SplashTheme" parent="AppTheme">
         <item name="android:windowBackground">@drawable/launch_screen</item>
     </style>
+    
+    <style name="Title" parent="AppTheme">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="MediumTitle" parent="Title">
+        <item name="android:fontFamily">@font/roboto_medium</item>
+    </style>
+
+    <style name="LightMediumTitle" parent="MediumTitle">
+        <item name="android:textColor">@color/color_text_light</item>
+    </style>
+
+    <style name="HintMediumTitle" parent="MediumTitle">
+        <item name="android:textColor">@color/color_label_gray</item>
+    </style>
+
+
+
+    <style name="Text" parent="AppTheme">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="MediumText" parent="Text">
+        <item name="android:fontFamily">@font/roboto_medium</item>
+    </style>
+
+    <style name="DarkText" parent="Text">
+        <item name="android:textColor">@color/color_text_dark</item>
+    </style>
+
+    <style name="LabelText" parent="AppTheme">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/color_label_gray</item>
+    </style>
+
+
+
+    <style name="Description" parent="AppTheme">
+        <item name="android:fontFamily">@font/roboto_light</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/color_label_gray</item>
+        <item name="android:lineSpacingExtra">1sp</item>
+    </style>
 
 </resources>
