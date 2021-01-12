@@ -3,21 +3,22 @@ package studio.eyesthetics.sbdelivery.ui
 import android.content.Context
 import android.graphics.Rect
 import android.os.Bundle
-import android.os.Handler
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.activity_main.*
 import studio.eyesthetics.sbdelivery.App
 import studio.eyesthetics.sbdelivery.R
+import studio.eyesthetics.sbdelivery.extensions.hideSoftKeyboard
 import studio.eyesthetics.sbdelivery.ui.base.BaseActivity
 import studio.eyesthetics.sbdelivery.viewmodels.MainViewModel
 import studio.eyesthetics.sbdelivery.viewmodels.MainViewModelFactory
@@ -48,7 +49,6 @@ class MainActivity : BaseActivity<MainViewModel>() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Handler().postDelayed({}, 3000)
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
 
@@ -89,8 +89,7 @@ class MainActivity : BaseActivity<MainViewModel>() {
                 v.getGlobalVisibleRect(outRect)
                 if (!outRect.contains(ev.rawX.toInt(), ev.rawY.toInt())) {
                     v.clearFocus()
-                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                    imm.hideSoftInputFromWindow(v.windowToken, 0)
+                    v.hideSoftKeyboard()
                 }
             }
         }
@@ -98,7 +97,28 @@ class MainActivity : BaseActivity<MainViewModel>() {
     }
 
     override fun renderNotification(notify: Notify) {
-
+        when (notify) {
+            is Notify.ActionMessage -> {
+                val builder = AlertDialog.Builder(this)
+                builder.apply {
+                    setTitle(notify.actionLabel)
+                    setMessage(notify.message)
+                    setPositiveButton(
+                        getString(R.string.button_ok)
+                    ) { dialog, id ->
+                        notify.actionHandler.invoke()
+                        dialog.dismiss()
+                    }
+                }
+                builder.show()
+            }
+            is Notify.TextMessage -> {
+                Toast.makeText(this, notify.message, Toast.LENGTH_SHORT).show()
+            }
+            is Notify.ErrorMessage -> {
+                Toast.makeText(this, notify.message, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }
 
