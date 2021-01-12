@@ -4,10 +4,7 @@ import android.app.Application
 import dagger.BindsInstance
 import dagger.Component
 import studio.eyesthetics.sbdelivery.App
-import studio.eyesthetics.sbdelivery.di.modules.AppModule
-import studio.eyesthetics.sbdelivery.di.modules.NetworkModule
-import studio.eyesthetics.sbdelivery.di.modules.PreferencesModule
-import studio.eyesthetics.sbdelivery.di.modules.RepositoryModule
+import studio.eyesthetics.sbdelivery.di.modules.*
 import studio.eyesthetics.sbdelivery.ui.MainActivity
 import studio.eyesthetics.sbdelivery.ui.auth.LoginFragment
 import studio.eyesthetics.sbdelivery.ui.auth.RegistrationFragment
@@ -20,6 +17,7 @@ import javax.inject.Singleton
         AppModule::class,
         NetworkModule::class,
         RepositoryModule::class,
+        DatabaseModule::class,
         PreferencesModule::class
     ]
 )
