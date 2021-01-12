@@ -82,4 +82,17 @@
         android:fitsSystemWindows="true"
         />
 
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:indeterminateDrawable="@drawable/progress_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:visibility="visible" />
+
 </androidx.drawerlayout.widget.DrawerLayout>

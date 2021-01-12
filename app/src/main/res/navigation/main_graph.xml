@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/main_graph"
-    app:startDestination="@id/recoveryNewPasswordFragment">
+    app:startDestination="@id/homeFragment">
     <fragment
         android:id="@+id/loginFragment"
         android:name="studio.eyesthetics.sbdelivery.ui.auth.LoginFragment"
@@ -14,4 +14,8 @@
         android:id="@+id/recoveryNewPasswordFragment"
         android:name="studio.eyesthetics.sbdelivery.ui.auth.RecoveryNewPasswordFragment"
         android:label="RecoveryNewPasswordFragment" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="studio.eyesthetics.sbdelivery.ui.home.HomeFragment"
+        android:label="HomeFragment" />
 </navigation>

@@ -13,18 +13,15 @@ import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
-import com.google.firebase.FirebaseApp
-import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_main.*
 import studio.eyesthetics.sbdelivery.App
 import studio.eyesthetics.sbdelivery.R
 import studio.eyesthetics.sbdelivery.ui.base.BaseActivity
 import studio.eyesthetics.sbdelivery.viewmodels.MainViewModel
 import studio.eyesthetics.sbdelivery.viewmodels.MainViewModelFactory
-import studio.eyesthetics.sbdelivery.viewmodels.base.GenericSavedStateViewModelFactory
+import studio.eyesthetics.sbdelivery.viewmodels.base.SavedStateViewModelFactory
 import studio.eyesthetics.sbdelivery.viewmodels.base.IViewModelState
 import studio.eyesthetics.sbdelivery.viewmodels.base.Notify
 import javax.inject.Inject
@@ -41,18 +38,10 @@ class MainActivity : BaseActivity<MainViewModel>() {
     internal lateinit var mainViewModelFactory: MainViewModelFactory
 
     public override val viewModel: MainViewModel by viewModels {
-        GenericSavedStateViewModelFactory(mainViewModelFactory, this)
+        SavedStateViewModelFactory(mainViewModelFactory, this)
     }
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-
-
-/*    @Inject
-    lateinit var pref: Pref
-
-    private lateinit var fusedLocationClient: FusedLocationProviderClient*/
-
-    private val PERMISSIONS_REQUEST = 1
 
     override fun subscribeOnState(state: IViewModelState) {
         //Do something with state
@@ -62,10 +51,6 @@ class MainActivity : BaseActivity<MainViewModel>() {
         Handler().postDelayed({}, 3000)
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
-
-        FirebaseApp.initializeApp(this)
-
-        //setContentView(R.layout.activity_main)
 
         setSupportActionBar(toolbar)
         this.supportActionBar?.apply {
@@ -81,59 +66,15 @@ class MainActivity : BaseActivity<MainViewModel>() {
 
         appBarConfiguration = AppBarConfiguration(navController.graph, drawer_layout)
         setupActionBarWithNavController(navController, appBarConfiguration)
-        //nav_view.setupWithNavController(navController)
-
-        //initBottombar(navController)
 
         btn_back.setOnClickListener {
             this.onBackPressed()
         }
-
-/*        FirebaseInstanceId.getInstance().instanceId
-            .addOnSuccessListener { instanceIdResult ->
-                //val token = instanceIdResult.token
-                //pref.authToken = token
-            }*/
-
-        //getDynamicLinks()
-
-        //requestPermission()
-        //updateLocale()
-        //getLastKnownLocation()
-
-        //guideline.setGuidelinePercent(1f)
     }
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
-
-    /*    private fun getDynamicLinks() {
-        FirebaseDynamicLinks.getInstance()
-            .getDynamicLink(intent)
-            .addOnSuccessListener {
-                var deepLink: Uri? = null
-                if(it != null) {
-                    deepLink = it.link
-                }
-            }
-            .addOnFailureListener {
-                Timber.e(it)
-            }
-    }*/
-
-/*    private fun requestPermission() {
-        val permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
-        val permissionHelper = PermissionHelper(this)
-        permissionHelper.checkPermissions(permissions, PERMISSIONS_REQUEST)
-    }*/
-
-/*    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            PERMISSIONS_REQUEST -> requestPermission()
-        }
-    }*/
 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
 
@@ -157,36 +98,7 @@ class MainActivity : BaseActivity<MainViewModel>() {
     }
 
     override fun renderNotification(notify: Notify) {
-        val snackbar = Snackbar.make(container, notify.message, Snackbar.LENGTH_LONG)
 
-        /*if(bottombar != null) snackbar.anchorView = bottombar
-        else snackbar.anchorView = nav_view*/
-
-        /* when(notify) {
-             is Notify.ActionMessage -> {
-                 val (_, label, handler) = notify
-
-                 with(snackbar) {
-                     setActionTextColor(getColor(R.color.color_accent_dark))
-                     setAction(label) { handler.invoke() }
-                 }
-             }
-
-             is Notify.ErrorMessage -> {
-
-                 val (_, label, handler) = notify
-
-                 with(snackbar) {
-                     setBackgroundTint(getColor(R.color.design_default_color_error))
-                     setTextColor(getColor(android.R.color.white))
-                     setActionTextColor(getColor(android.R.color.white))
-                     handler ?: return@with
-                     setAction(label) { handler.invoke() }
-                 }
-             }
-         }
-
-         snackbar.show()*/
     }
 }
 

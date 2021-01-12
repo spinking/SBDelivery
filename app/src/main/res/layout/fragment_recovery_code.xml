@@ -23,10 +23,10 @@
         android:layout_marginBottom="17dp"
         android:text="@string/recovery_code_label"
         android:textSize="13sp"
-        app:layout_constraintBottom_toTopOf="@id/restore_code"
+        app:layout_constraintBottom_toBottomOf="@id/guideline"
         app:layout_constraintStart_toStartOf="parent" />
 
-        <com.poovam.pinedittextfield.SquarePinField
+<!--        <com.poovam.pinedittextfield.SquarePinField
         android:id="@+id/restore_code"
         android:layout_width="match_parent"
         android:layout_height="43dp"
@@ -58,6 +58,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/guideline"
         tools:text="761990"
-        />
+        />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

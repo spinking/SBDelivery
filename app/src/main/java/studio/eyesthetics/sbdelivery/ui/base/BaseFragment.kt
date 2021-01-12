@@ -2,11 +2,15 @@ package studio.eyesthetics.sbdelivery.ui.base
 
 import android.os.Bundle
 import android.view.*
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.activity_main.*
 import studio.eyesthetics.sbdelivery.ui.MainActivity
 import studio.eyesthetics.sbdelivery.viewmodels.base.BaseViewModel
 import studio.eyesthetics.sbdelivery.viewmodels.base.IViewModelState
+import studio.eyesthetics.sbdelivery.R
+import studio.eyesthetics.sbdelivery.viewmodels.base.Loading
+import studio.eyesthetics.sbdelivery.viewmodels.base.Notify
 
 abstract class BaseFragment<T : BaseViewModel<out IViewModelState>> : Fragment() {
     val main: MainActivity
@@ -14,13 +18,13 @@ abstract class BaseFragment<T : BaseViewModel<out IViewModelState>> : Fragment()
     open val binding: Binding? = null
     protected abstract val viewModel: T
     protected abstract val layout: Int
+    open val applicationBackground: Int = R.color.color_secondary
 
     open val prepareToolbar: (ToolbarBuilder.() -> Unit)? = null
 
     val toolbar
         get() = main.toolbar
 
-    //set listeners, tuning views
     abstract fun setupViews()
 
     override fun onCreateView(
@@ -32,15 +36,8 @@ abstract class BaseFragment<T : BaseViewModel<out IViewModelState>> : Fragment()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //prepare toolbar
-        main.toolbarBuilder
-            .invalidate()
-            .prepare(prepareToolbar)
-            .build(main)
-
         //restore state
         viewModel.restoreState()
-        binding?.restoreUi(savedInstanceState)
 
         //owner it is view
         viewModel.observeState(viewLifecycleOwner) { binding?.bind(it) }
@@ -49,8 +46,25 @@ abstract class BaseFragment<T : BaseViewModel<out IViewModelState>> : Fragment()
 
         viewModel.observeNotifications(viewLifecycleOwner) { main.renderNotification(it) }
         viewModel.observeNavigation(viewLifecycleOwner) { main.viewModel.navigate(it) }
+        viewModel.observeLoading(viewLifecycleOwner) { renderLoading(it) }
+        binding?.restoreUi(savedInstanceState)
+    }
 
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+
+        main.toolbarBuilder
+            .invalidate()
+            .prepare(prepareToolbar)
+            .build(main)
+
+        toolbar.setNavigationOnClickListener {
+            main.navController.popBackStack()
+        }
+        updateApplicationBackground(applicationBackground)
         setupViews()
+
+        binding?.rebind()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -64,13 +78,26 @@ abstract class BaseFragment<T : BaseViewModel<out IViewModelState>> : Fragment()
             for((index, menuHolder) in main.toolbarBuilder.items.withIndex()) {
                 val item = menu.add(0, menuHolder.menuId, index, menuHolder.title)
                 item.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS or MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW)
-                    .setIcon(menuHolder.icon)
                     .setOnMenuItemClickListener {
                         menuHolder.clickListener?.invoke(it)?.let { true } ?: false
                     }
+                if (menuHolder.icon != null)
+                    item.setIcon(menuHolder.icon)
                 if(menuHolder.actionViewLayout != null) item.setActionView(menuHolder.actionViewLayout)
             }
         } else menu.clear()
         super.onPrepareOptionsMenu(menu)
+    }
+
+    open fun renderNotification(notify: Notify) {
+        main.renderNotification(notify)
+    }
+
+    private fun updateApplicationBackground(resourceId: Int = R.color.color_secondary) {
+        main.container.background = ResourcesCompat.getDrawable(resources, resourceId, null)
+    }
+
+    private fun renderLoading(loadingState: Loading) {
+        main.renderLoading(loadingState)
     }
 }

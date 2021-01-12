@@ -15,7 +15,7 @@
 
         <!--<item name="selectableItemBackgroundCollapsed">@color/color_background_test</item>-->
 
-        <item name="md_color_button_text">@color/color_accent_yellow</item>
+       <!-- <item name="md_color_button_text">@color/color_accent_yellow</item>-->
 
         <item name="searchViewStyle">@style/MySearchViewStyle</item>
     </style>

@@ -6,7 +6,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.savedstate.SavedStateRegistryOwner
 
-class GenericSavedStateViewModelFactory<out V : ViewModel> (
+class SavedStateViewModelFactory<out V : ViewModel> (
     private val viewModelFactory: IViewModelFactory<V>,
     owner: SavedStateRegistryOwner,
     defaultArgs: Bundle? = null

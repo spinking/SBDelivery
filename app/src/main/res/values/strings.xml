@@ -15,4 +15,6 @@
     <string name="recovery_new_password">Введите новый пароль</string>
     <string name="button_save">Сохранить</string>
     <string name="login_label_new_password">Повторите пароль</string>
+
+    <string name="button_ok">OK</string>
 </resources>
