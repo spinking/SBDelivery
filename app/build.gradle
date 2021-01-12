@@ -28,14 +28,11 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-
-            //buildConfigField("String", "BETA_PHP_BASE_URL", '""')
-            //buildConfigField("String", "BETA_PHP_BASE_URL_IMAGE", '""')
+            buildConfigField "String", BASE_URL, '"https://sandbox.skill-branch.ru/"'
         }
 
         debug {
-            //buildConfigField("String", "BETA_PHP_BASE_URL", '""')
-            //buildConfigField("String", "BETA_PHP_BASE_URL_IMAGE", '""')
+            buildConfigField "String", BASE_URL, '"https://sandbox.skill-branch.ru/"'
         }
     }
 

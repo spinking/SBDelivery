@@ -1,4 +1,4 @@
-package studio.eyesthetics.sbdelivery.di
+package studio.eyesthetics.sbdelivery.di.modules
 
 import android.app.Application
 import android.content.Context
