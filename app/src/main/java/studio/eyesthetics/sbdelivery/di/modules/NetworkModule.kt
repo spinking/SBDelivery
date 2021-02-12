@@ -11,7 +11,9 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import studio.eyesthetics.sbdelivery.BuildConfig
+import studio.eyesthetics.sbdelivery.data.network.ICategoryApi
 import studio.eyesthetics.sbdelivery.data.network.interceptors.ErrorStatusInterceptor
+import studio.eyesthetics.sbdelivery.data.network.interceptors.ModifierInterceptor
 import studio.eyesthetics.sbdelivery.data.network.interceptors.NetworkStatusInterceptor
 import studio.eyesthetics.sbdelivery.data.network.interceptors.TokenInterceptor
 import studio.eyesthetics.sbdelivery.data.storage.Pref
@@ -53,11 +55,17 @@ class NetworkModule {
     ) = ErrorStatusInterceptor(moshi, pref)
 
     @Provides
+    fun provideModifierInterceptor(
+        pref: Pref
+    ) = ModifierInterceptor(pref)
+
+    @Provides
     @Singleton
     @Named(WITHOUT_AUTH_CLIENT)
     fun provideOkHttpClient(
         networkStatusInterceptor: NetworkStatusInterceptor,
-        errorStatusInterceptor: ErrorStatusInterceptor
+        errorStatusInterceptor: ErrorStatusInterceptor,
+        modifierInterceptor: ModifierInterceptor
     ): OkHttpClient =
         OkHttpClient.Builder()
             .readTimeout(30, TimeUnit.SECONDS)
@@ -65,6 +73,7 @@ class NetworkModule {
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .addInterceptor(networkStatusInterceptor)
             .addInterceptor(errorStatusInterceptor)
+            .addInterceptor(modifierInterceptor)
             .build()
 
     @Provides
@@ -102,9 +111,9 @@ class NetworkModule {
             .client(okHttpClient)
             .build()
 
-/*    @Provides
-    fun provideFilterApi(@Named(AUTH_RETROFIT) retrofit: Retrofit): IFilterApi =
-        retrofit.create(IFilterApi::class.java)*/
+    @Provides
+    fun provideFCategoryApi(@Named(WITHOUT_AUTH_RETROFIT) retrofit: Retrofit): ICategoryApi =
+        retrofit.create(ICategoryApi::class.java)
 
     companion object {
         private const val WITHOUT_AUTH_CLIENT = "without_auth_client"

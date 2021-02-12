@@ -5,11 +5,11 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Category(
-    val id: Int,
+    val categoryId: String,
     val name: String,
     val order: Int,
-    val icon: String,
-    val parent: Int,
+    val icon: String?,
+    val parent: String?,
     val active: Boolean,
     val createdAt: Long,
     val updatedAt: Long

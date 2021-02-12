@@ -5,6 +5,8 @@ import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import studio.eyesthetics.sbdelivery.data.database.AppDatabase
+import studio.eyesthetics.sbdelivery.data.database.dao.CategoriesDao
+import studio.eyesthetics.sbdelivery.data.database.dao.DishDao
 import javax.inject.Singleton
 
 @Module
@@ -12,7 +14,7 @@ class DatabaseModule {
 
     @Provides
     @Singleton
-    internal fun provideDatabase(application: Application) : AppDatabase {
+    internal fun provideDatabase(application: Application): AppDatabase {
         return Room
             .databaseBuilder(
                 application,
@@ -21,9 +23,15 @@ class DatabaseModule {
             .allowMainThreadQueries()
             .build()
     }
-/*    @Provides
+    @Provides
     @Singleton
-    internal  fun provideExhibitionDao(appDatabase: AppDatabase) : ExhibitionDao {
-        return appDatabase.exhibitionDao()
-    }*/
+    internal fun provideCategoriesDao(appDatabase: AppDatabase): CategoriesDao {
+        return appDatabase.categoriesDao()
+    }
+
+    @Provides
+    @Singleton
+    internal fun provideDishDao(appDatabase: AppDatabase): DishDao {
+        return appDatabase.dishDao()
+    }
 }

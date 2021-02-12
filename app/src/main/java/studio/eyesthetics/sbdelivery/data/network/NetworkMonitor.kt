@@ -5,6 +5,7 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
+import android.os.Build
 import androidx.lifecycle.MutableLiveData
 
 object NetworkMonitor {
@@ -17,8 +18,17 @@ object NetworkMonitor {
     fun registerNetworkMonitor(context: Context) {
         cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-        obtainNetworkType(cm.activeNetwork?.let { cm.getNetworkCapabilities(it) })
-            .also { networkTypeLive.postValue(it) }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            cm.activeNetworkInfo?.type.let {
+                obtainNetworkType(it).also {networkType ->
+                    networkTypeLive.postValue(networkType)
+                }
+            }
+        } else {
+            obtainNetworkType(cm.activeNetwork?.let { cm.getNetworkCapabilities(it) })
+                .also {
+                    networkTypeLive.postValue(it) }
+        }
 
         cm.registerNetworkCallback(
             NetworkRequest.Builder().build(),
@@ -43,6 +53,13 @@ object NetworkMonitor {
                 }
             }
         )
+    }
+
+    private fun obtainNetworkType(networkType: Int?): NetworkType = when (networkType) {
+        null -> NetworkType.NONE
+        ConnectivityManager.TYPE_WIFI -> NetworkType.WIFI
+        ConnectivityManager.TYPE_MOBILE -> NetworkType.CELLULAR
+        else -> NetworkType.UNKNOWN
     }
 
     private fun obtainNetworkType(networkCapabilities: NetworkCapabilities?): NetworkType = when {
