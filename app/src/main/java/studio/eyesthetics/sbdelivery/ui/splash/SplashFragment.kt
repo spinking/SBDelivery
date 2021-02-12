@@ -1,6 +1,5 @@
 package studio.eyesthetics.sbdelivery.ui.splash
 
-import android.content.Intent
 import android.os.Handler
 import android.os.Looper
 import androidx.fragment.app.viewModels
@@ -10,7 +9,6 @@ import studio.eyesthetics.sbdelivery.ui.base.BaseFragment
 import studio.eyesthetics.sbdelivery.ui.base.ToolbarBuilder
 import studio.eyesthetics.sbdelivery.viewmodels.SplashViewModel
 import studio.eyesthetics.sbdelivery.viewmodels.SplashViewModelFactory
-import studio.eyesthetics.sbdelivery.viewmodels.base.NavigationCommand
 import studio.eyesthetics.sbdelivery.viewmodels.base.SavedStateViewModelFactory
 import javax.inject.Inject
 
@@ -33,8 +31,13 @@ class SplashFragment : BaseFragment<SplashViewModel>() {
     }
 
     override fun setupViews() {
-/*        Handler(Looper.getMainLooper()).postDelayed({
-            viewModel.navigate(NavigationCommand.To(R.id.homeFragment))
-        }, 10000)*/
+        Handler(Looper.getMainLooper()).postDelayed({
+            viewModel.handleHomeNavigation()
+        }, 3000)
+
+        viewModel.observeCurrentWork(viewLifecycleOwner) {
+            if (it[0].state.isFinished)
+                viewModel.handleHomeNavigation()
+        }
     }
 }
