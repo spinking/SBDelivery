@@ -12,6 +12,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import studio.eyesthetics.sbdelivery.BuildConfig
 import studio.eyesthetics.sbdelivery.data.network.ICategoryApi
+import studio.eyesthetics.sbdelivery.data.network.IDishesApi
 import studio.eyesthetics.sbdelivery.data.network.interceptors.ErrorStatusInterceptor
 import studio.eyesthetics.sbdelivery.data.network.interceptors.ModifierInterceptor
 import studio.eyesthetics.sbdelivery.data.network.interceptors.NetworkStatusInterceptor
@@ -112,8 +113,12 @@ class NetworkModule {
             .build()
 
     @Provides
-    fun provideFCategoryApi(@Named(WITHOUT_AUTH_RETROFIT) retrofit: Retrofit): ICategoryApi =
+    fun provideCategoryApi(@Named(WITHOUT_AUTH_RETROFIT) retrofit: Retrofit): ICategoryApi =
         retrofit.create(ICategoryApi::class.java)
+
+    @Provides
+    fun provideDishesApi(@Named(WITHOUT_AUTH_RETROFIT) retrofit: Retrofit): IDishesApi =
+        retrofit.create(IDishesApi::class.java)
 
     companion object {
         private const val WITHOUT_AUTH_CLIENT = "without_auth_client"

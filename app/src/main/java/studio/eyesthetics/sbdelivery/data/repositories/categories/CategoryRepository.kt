@@ -18,6 +18,6 @@ class CategoryRepository @Inject constructor(
     }
 
     private suspend fun insertCategoriesToDb(categories: List<Category>) {
-        categoriesDao.upsert(categoriesMapper.mapFromListEntity(categories).map { it })
+        categoriesDao.upsert(categoriesMapper.mapFromListEntity(categories))
     }
 }

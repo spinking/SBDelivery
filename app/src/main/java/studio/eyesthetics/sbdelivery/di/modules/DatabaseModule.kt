@@ -6,7 +6,7 @@ import dagger.Module
 import dagger.Provides
 import studio.eyesthetics.sbdelivery.data.database.AppDatabase
 import studio.eyesthetics.sbdelivery.data.database.dao.CategoriesDao
-import studio.eyesthetics.sbdelivery.data.database.dao.DishDao
+import studio.eyesthetics.sbdelivery.data.database.dao.DishesDao
 import javax.inject.Singleton
 
 @Module
@@ -31,7 +31,7 @@ class DatabaseModule {
 
     @Provides
     @Singleton
-    internal fun provideDishDao(appDatabase: AppDatabase): DishDao {
+    internal fun provideDishesDao(appDatabase: AppDatabase): DishesDao {
         return appDatabase.dishDao()
     }
 }
