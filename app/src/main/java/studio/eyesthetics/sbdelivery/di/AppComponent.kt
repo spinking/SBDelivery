@@ -9,7 +9,7 @@ import studio.eyesthetics.sbdelivery.ui.MainActivity
 import studio.eyesthetics.sbdelivery.ui.auth.LoginFragment
 import studio.eyesthetics.sbdelivery.ui.auth.RegistrationFragment
 import studio.eyesthetics.sbdelivery.ui.home.HomeFragment
-import studio.eyesthetics.sbdelivery.ui.splash.SplashFragment
+import studio.eyesthetics.sbdelivery.ui.splash.SplashActivity
 import studio.eyesthetics.sbdelivery.workers.SyncWorker
 import javax.inject.Singleton
 
@@ -41,10 +41,10 @@ interface AppComponent {
 
     //activity, fragment
     fun inject(activity: MainActivity)
+    fun inject(activity: SplashActivity)
     fun inject(fragment: LoginFragment)
     fun inject(fragment: RegistrationFragment)
     fun inject(fragment: HomeFragment)
-    fun inject(fragment: SplashFragment)
 
     //workers
     fun inject(worker: SyncWorker)
