@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import studio.eyesthetics.sbdelivery.data.mappers.CategoryToCategoryEntityMapper
 import studio.eyesthetics.sbdelivery.data.mappers.DishToDishEntityMapper
+import studio.eyesthetics.sbdelivery.data.mappers.ProfileResponseToProfileMapper
 
 @Module
 class MapperModule {
@@ -12,4 +13,7 @@ class MapperModule {
 
     @Provides
     fun provideDishesMapper(): DishToDishEntityMapper = DishToDishEntityMapper()
+
+    @Provides
+    fun provideProfileMapper(): ProfileResponseToProfileMapper = ProfileResponseToProfileMapper()
 }

@@ -10,6 +10,7 @@ import kotlinx.coroutines.withContext
 import studio.eyesthetics.sbdelivery.App
 import studio.eyesthetics.sbdelivery.data.repositories.categories.ICategoryRepository
 import studio.eyesthetics.sbdelivery.data.repositories.dishes.IDishesRepository
+import studio.eyesthetics.sbdelivery.data.storage.Pref
 import javax.inject.Inject
 
 class SyncWorker @Inject constructor(
@@ -23,6 +24,9 @@ class SyncWorker @Inject constructor(
     @Inject
     lateinit var dishesRepository: IDishesRepository
 
+    @Inject
+    lateinit var pref: Pref
+
     init {
         App.INSTANCE.appComponent.inject(this)
     }
@@ -32,6 +36,10 @@ class SyncWorker @Inject constructor(
             try {
                 val categoryResponse = async { categoryRepository.loadsCategoriesFromNetwork(0, 10) }
                 val dishesResponse = async { dishesRepository.loadDishesFromNetwork(0, 10) }
+                //maybe need get this value from auth repository, and don't use live data
+                if (pref.isAuthLive.value == true) {
+                    //TODO do profile, basket, orders and favorite dishes requests if is auth
+                }
                 awaitAll(categoryResponse, dishesResponse)
                 Result.success()
             } catch (e: Exception) {
