@@ -11,12 +11,10 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import studio.eyesthetics.sbdelivery.BuildConfig
+import studio.eyesthetics.sbdelivery.data.network.IAuthApi
 import studio.eyesthetics.sbdelivery.data.network.ICategoryApi
 import studio.eyesthetics.sbdelivery.data.network.IDishesApi
-import studio.eyesthetics.sbdelivery.data.network.interceptors.ErrorStatusInterceptor
-import studio.eyesthetics.sbdelivery.data.network.interceptors.ModifierInterceptor
-import studio.eyesthetics.sbdelivery.data.network.interceptors.NetworkStatusInterceptor
-import studio.eyesthetics.sbdelivery.data.network.interceptors.TokenInterceptor
+import studio.eyesthetics.sbdelivery.data.network.interceptors.*
 import studio.eyesthetics.sbdelivery.data.storage.Pref
 import java.util.concurrent.TimeUnit
 import javax.inject.Named
@@ -34,6 +32,12 @@ class NetworkModule {
     fun provideTokenInterceptor(
         pref: Pref
     ) = TokenInterceptor(pref)
+
+    @Provides
+    fun provideTokenAuthenticator(
+        authApi: IAuthApi,
+        pref: Pref
+    ) = TokenAuthenticator(authApi, pref)
 
     @Provides
     @Singleton
@@ -82,7 +86,8 @@ class NetworkModule {
     fun provideAuthOkHttpClient(
         networkStatusInterceptor: NetworkStatusInterceptor,
         errorStatusInterceptor: ErrorStatusInterceptor,
-        tokenInterceptor: TokenInterceptor
+        tokenInterceptor: TokenInterceptor,
+        tokenAuthenticator: TokenAuthenticator
     ): OkHttpClient =
         OkHttpClient.Builder()
             .readTimeout(30, TimeUnit.SECONDS)
@@ -91,6 +96,7 @@ class NetworkModule {
             .addInterceptor(networkStatusInterceptor)
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .addInterceptor(errorStatusInterceptor)
+            .authenticator(tokenAuthenticator)
             .build()
 
     @Provides
