@@ -5,7 +5,7 @@ import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_dish.*
 import studio.eyesthetics.sbdelivery.R
-import studio.eyesthetics.sbdelivery.data.database.entities.DishEntity
+import studio.eyesthetics.sbdelivery.data.database.entities.DishItem
 import studio.eyesthetics.sbdelivery.extensions.dpToPx
 import studio.eyesthetics.sbdelivery.extensions.formatToRub
 import studio.eyesthetics.sbdelivery.extensions.setMarginOptionally
@@ -13,10 +13,10 @@ import studio.eyesthetics.sbdelivery.ui.base.BaseAdapterDelegate
 
 class RecommendDelegate(
     private val displayWidth: Int = 0,
-    private val dishClickListener: (DishEntity) -> Unit,
+    private val dishClickListener: (DishItem) -> Unit,
     private val addClickListener: (String) -> Unit,
-    private val addToFavoriteClickListener: (String) -> Unit
-) : BaseAdapterDelegate<DishEntity>() {
+    private val addToFavoriteClickListener: (String, Boolean) -> Unit
+) : BaseAdapterDelegate<DishItem>() {
     override val layoutRes: Int = R.layout.item_dish
 
     override fun createHolder(view: View): ViewHolder {
@@ -31,13 +31,13 @@ class RecommendDelegate(
         return RecommendViewHolder(view)
     }
 
-    override fun onBindViewHolder(item: DishEntity, holder: ViewHolder, payloads: MutableList<Any>) {
+    override fun onBindViewHolder(item: DishItem, holder: ViewHolder, payloads: MutableList<Any>) {
         val viewHolder = holder as RecommendViewHolder
         viewHolder.bind(item)
     }
 
     inner class RecommendViewHolder(convertView: View) : ViewHolder(convertView) {
-        fun bind(item: DishEntity) {
+        fun bind(item: DishItem) {
 
             //TODO add placeholder
             Glide.with(itemView.context)
@@ -46,12 +46,11 @@ class RecommendDelegate(
 
             tv_price.text = item.price.formatToRub()
             tv_title.text = item.name
-            //TODO need field for check favorite
-            cb_favorite.isChecked = false
+            cb_favorite.isChecked = item.isFavorite
             tv_stock.isVisible = item.oldPrice.isNotEmpty()
 
             cb_favorite.setOnClickListener {
-                addToFavoriteClickListener.invoke(item.id)
+                addToFavoriteClickListener.invoke(item.id, cb_favorite.isChecked)
             }
 
             btn_add.setOnClickListener {

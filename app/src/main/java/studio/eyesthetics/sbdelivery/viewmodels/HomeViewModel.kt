@@ -1,12 +1,10 @@
 package studio.eyesthetics.sbdelivery.viewmodels
 
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.SavedStateHandle
-import kotlinx.coroutines.async
-import studio.eyesthetics.sbdelivery.data.database.entities.DishEntity
+import androidx.lifecycle.*
+import studio.eyesthetics.sbdelivery.data.database.entities.DishItem
+import studio.eyesthetics.sbdelivery.data.models.favorites.FavoriteChangeRequest
 import studio.eyesthetics.sbdelivery.data.repositories.dishes.IDishesRepository
+import studio.eyesthetics.sbdelivery.data.repositories.favorite.IFavoriteRepository
 import studio.eyesthetics.sbdelivery.viewmodels.base.BaseViewModel
 import studio.eyesthetics.sbdelivery.viewmodels.base.IViewModelFactory
 import studio.eyesthetics.sbdelivery.viewmodels.base.IViewModelState
@@ -14,51 +12,39 @@ import javax.inject.Inject
 
 class HomeViewModel(
     handle: SavedStateHandle,
-    private val dishesRepository: IDishesRepository
+    private val dishesRepository: IDishesRepository,
+    private val favoriteRepository: IFavoriteRepository
 ) : BaseViewModel<HomeState>(handle, HomeState()) {
 
-    init {
-        getDishes()
-    }
+    private val recommendDishes = dishesRepository.getRecommendDishes()
+    private val bestDishes = dishesRepository.getBestDishes()
+    private val popularDishes = dishesRepository.getPopularDishes()
 
-    private val recommendDishes = MutableLiveData<List<DishEntity>>()
-    private val bestDishes = MutableLiveData<List<DishEntity>>()
-    private val popularDishes = MutableLiveData<List<DishEntity>>()
-
-    fun observeRecommend(owner: LifecycleOwner, onChange: (List<DishEntity>) -> Unit) {
+    fun observeRecommend(owner: LifecycleOwner, onChange: (List<DishItem>) -> Unit) {
         recommendDishes.observe(owner, Observer { onChange(it) })
     }
 
-    fun observeBest(owner: LifecycleOwner, onChange: (List<DishEntity>) -> Unit) {
+    fun observeBest(owner: LifecycleOwner, onChange: (List<DishItem>) -> Unit) {
         bestDishes.observe(owner, Observer { onChange(it) })
     }
 
-    fun observePopular(owner: LifecycleOwner, onChange: (List<DishEntity>) -> Unit) {
+    fun observePopular(owner: LifecycleOwner, onChange: (List<DishItem>) -> Unit) {
         popularDishes.observe(owner, Observer { onChange(it) })
     }
 
-    private fun getDishes() {
+    fun handleFavorite(dishId: String, isChecked: Boolean) {
         launchSafety {
-            val recommendRequest = async { dishesRepository.getRecommendDishes() }
-            val bestRequest = async { dishesRepository.getBestDishes() }
-            val popularRequest = async { dishesRepository.getPopularDishes() }
-
-            val recommendResponse = recommendRequest.await()
-            val bestResponse  = bestRequest.await()
-            val popularResponse = popularRequest.await()
-
-            recommendDishes.value = recommendResponse
-            bestDishes.value = bestResponse
-            popularDishes.value = popularResponse
+            favoriteRepository.changeToFavorite(FavoriteChangeRequest(dishId, isChecked))
         }
     }
 }
 
 class HomeViewModelFactory @Inject constructor(
-    private val dishesRepository: IDishesRepository
+    private val dishesRepository: IDishesRepository,
+    private val favoriteRepository: IFavoriteRepository
 ) : IViewModelFactory<HomeViewModel> {
     override fun create(handle: SavedStateHandle): HomeViewModel {
-        return HomeViewModel(handle, dishesRepository)
+        return HomeViewModel(handle, dishesRepository, favoriteRepository)
     }
 }
 

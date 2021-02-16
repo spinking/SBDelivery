@@ -1,12 +1,13 @@
 package studio.eyesthetics.sbdelivery.data.repositories.dishes
 
-import studio.eyesthetics.sbdelivery.data.database.entities.DishEntity
+import androidx.lifecycle.LiveData
+import studio.eyesthetics.sbdelivery.data.database.entities.DishItem
 
 interface IDishesRepository {
     suspend fun loadDishesFromNetwork(offset: Int, limit: Int)
     suspend fun loadRecommendIdsFromNetwork()
 
-    suspend fun getRecommendDishes(): List<DishEntity>
-    suspend fun getBestDishes(): List<DishEntity>
-    suspend fun getPopularDishes(): List<DishEntity>
+    fun getRecommendDishes(): LiveData<List<DishItem>>
+    fun getBestDishes(): LiveData<List<DishItem>>
+    fun getPopularDishes(): LiveData<List<DishItem>>
 }

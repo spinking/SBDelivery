@@ -23,7 +23,8 @@ class TokenAuthenticator @Inject constructor(
             return if (refreshRes.isSuccessful) {
                 pref.accessToken = refreshRes.body()!!.accessToken
                 response.request.newBuilder()
-                    .header("Authorization", "Bearer ${refreshRes.body()!!.accessToken}")
+                    //.header("Authorization", "Bearer ${refreshRes.body()!!.accessToken}")
+                    .header("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwMmMwYWVjYmQ5N2UwMDAzYzRiNmE5MyIsImlhdCI6MTYxMzQ5OTExNn0.rzTJ4jYSnkewZill-MF9lELIyOkFqcDE0jPGPJPKYLw")
                     .build()
             } else {
                 null

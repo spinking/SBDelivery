@@ -1,12 +1,14 @@
 package studio.eyesthetics.sbdelivery.data.repositories.dishes
 
+import androidx.lifecycle.LiveData
 import studio.eyesthetics.sbdelivery.data.database.dao.DishesDao
 import studio.eyesthetics.sbdelivery.data.database.dao.RecommendIdDao
-import studio.eyesthetics.sbdelivery.data.database.entities.DishEntity
+import studio.eyesthetics.sbdelivery.data.database.entities.DishItem
 import studio.eyesthetics.sbdelivery.data.database.entities.RecommendIdEntity
 import studio.eyesthetics.sbdelivery.data.mappers.DishToDishEntityMapper
 import studio.eyesthetics.sbdelivery.data.models.dishes.Dish
 import studio.eyesthetics.sbdelivery.data.network.IDishesApi
+import studio.eyesthetics.sbdelivery.extensions.mutableLiveData
 import javax.inject.Inject
 
 class DishesRepository @Inject constructor(
@@ -20,10 +22,6 @@ class DishesRepository @Inject constructor(
         if (items.isNotEmpty()) insertDishesToDb(items)
     }
 
-    private suspend fun insertDishesToDb(dishes: List<Dish>) {
-        dishesDao.upsert(dishEntityMapper.mapFromListEntity(dishes))
-    }
-
     override suspend fun loadRecommendIdsFromNetwork() {
         val ids = dishesApi.getRecommendDishesIds()
         if (ids.isEmpty())
@@ -32,19 +30,23 @@ class DishesRepository @Inject constructor(
             recommendIdDao.insert(ids.map { RecommendIdEntity(it) })
     }
 
-    override suspend fun getRecommendDishes(): List<DishEntity> {
+    private suspend fun insertDishesToDb(dishes: List<Dish>) {
+        dishesDao.upsert(dishEntityMapper.mapFromListEntity(dishes))
+    }
+
+    override fun getRecommendDishes(): LiveData<List<DishItem>> {
         val ids = recommendIdDao.findRecommendIds()
         return if (ids.isEmpty())
-            emptyList()
+            mutableLiveData()
         else
-            dishesDao.findRecommendDishes(ids.map { it.id }).shuffled()
+            dishesDao.findRecommendDishes(ids.map { it.id })
     }
 
-    override suspend fun getBestDishes(): List<DishEntity> {
-        return dishesDao.findBestDishes().shuffled()
+    override fun getBestDishes(): LiveData<List<DishItem>> {
+        return dishesDao.findBestDishes()
     }
 
-    override suspend fun getPopularDishes(): List<DishEntity> {
-        return dishesDao.findPopularDishes().shuffled()
+    override fun getPopularDishes(): LiveData<List<DishItem>> {
+        return dishesDao.findPopularDishes()
     }
 }

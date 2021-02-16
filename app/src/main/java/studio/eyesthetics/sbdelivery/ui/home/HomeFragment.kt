@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_home.*
 import studio.eyesthetics.sbdelivery.App
 import studio.eyesthetics.sbdelivery.R
-import studio.eyesthetics.sbdelivery.data.database.entities.DishEntity
+import studio.eyesthetics.sbdelivery.data.database.entities.DishItem
 import studio.eyesthetics.sbdelivery.extensions.dpToPx
 import studio.eyesthetics.sbdelivery.ui.adapterdelegates.RecommendDelegate
 import studio.eyesthetics.sbdelivery.ui.adapterdelegates.decorators.ItemDecorator
@@ -34,9 +34,9 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
 
     override val prepareToolbar: (ToolbarBuilder.() -> Unit)? = {}
 
-    private val recommendAdapter by lazy { DelegationAdapter<DishEntity>() }
-    private val bestAdapter by lazy { DelegationAdapter<DishEntity>() }
-    private val popularAdapter by lazy { DelegationAdapter<DishEntity>() }
+    private val recommendAdapter by lazy { DelegationAdapter<DishItem>() }
+    private val bestAdapter by lazy { DelegationAdapter<DishItem>() }
+    private val popularAdapter by lazy { DelegationAdapter<DishItem>() }
 
     override fun setupViews() {
 
@@ -74,8 +74,8 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         }, {
             //TODO add dish to basket
 
-        }) {
-            //TODO add ot favorite
+        }) { dishId, isChecked ->
+            viewModel.handleFavorite(dishId, isChecked)
         })
 
         bestAdapter.delegatesManager.addDelegate(RecommendDelegate(displayWidth, {
@@ -83,8 +83,8 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         }, {
             //TODO add dish to basket
 
-        }) {
-            //TODO add ot favorite
+        }) { dishId, isChecked ->
+            viewModel.handleFavorite(dishId, isChecked)
         })
 
         popularAdapter.delegatesManager.addDelegate(RecommendDelegate(displayWidth, {
@@ -92,8 +92,8 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         }, {
             //TODO add dish to basket
 
-        }) {
-            //TODO add ot favorite
+        }) { dishId, isChecked ->
+            viewModel.handleFavorite(dishId, isChecked)
         })
 
         rv_recommend.apply {

@@ -14,6 +14,7 @@ import studio.eyesthetics.sbdelivery.BuildConfig
 import studio.eyesthetics.sbdelivery.data.network.IAuthApi
 import studio.eyesthetics.sbdelivery.data.network.ICategoryApi
 import studio.eyesthetics.sbdelivery.data.network.IDishesApi
+import studio.eyesthetics.sbdelivery.data.network.IFavoriteApi
 import studio.eyesthetics.sbdelivery.data.network.interceptors.*
 import studio.eyesthetics.sbdelivery.data.storage.Pref
 import java.util.concurrent.TimeUnit
@@ -125,6 +126,14 @@ class NetworkModule {
     @Provides
     fun provideDishesApi(@Named(WITHOUT_AUTH_RETROFIT) retrofit: Retrofit): IDishesApi =
         retrofit.create(IDishesApi::class.java)
+
+    @Provides
+    fun provideFavoriteApi(@Named(AUTH_RETROFIT) retrofit: Retrofit): IFavoriteApi =
+        retrofit.create(IFavoriteApi::class.java)
+
+    @Provides
+    fun provideAuthApi(@Named(WITHOUT_AUTH_RETROFIT) retrofit: Retrofit): IAuthApi =
+        retrofit.create(IAuthApi::class.java)
 
     companion object {
         private const val WITHOUT_AUTH_CLIENT = "without_auth_client"
