@@ -14,6 +14,7 @@
     <color name="color_hint_gray">#A6A6B2</color>
     <color name="color_text_secondary_gray">#A6A6B3</color>
     <color name="color_text_error">#EF3131</color>
+    <color name="color_text_grey_white">#FAFAFA</color>
 
     <color name="color_border">#32FFFFFF</color>
     <color name="color_border_light">#E5E5E5</color>

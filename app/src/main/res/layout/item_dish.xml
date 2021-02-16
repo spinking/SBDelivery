@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:elevation="8dp"
+    >
+
+    <ImageView
+        android:id="@+id/iv_dish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/mock_dish"
+        android:background="@drawable/background_with_top_rounded_corners"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <LinearLayout
+        android:id="@+id/layout_dish"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/background_with_bottom_rounded_corners"
+        app:layout_constraintTop_toBottomOf="@id/iv_dish"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/mini_margin_10dp"
+            android:layout_marginStart="@dimen/mini_margin_8dp"
+            android:layout_marginEnd="@dimen/mini_margin_8dp"
+            style="@style/MediumText.Orange"
+            tools:text="1280 ₽"
+            />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/mini_margin_8dp"
+            android:layout_marginEnd="@dimen/mini_margin_8dp"
+            android:layout_marginTop="@dimen/mini_margin_6dp"
+            android:layout_marginBottom="@dimen/mini_margin_12dp"
+            style="@style/MediumText.GreyWhite"
+            tools:text="Сет Королевский"
+            />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/btn_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/mini_margin_10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/ic_add"
+        app:layout_constraintTop_toBottomOf="@id/iv_dish"
+        app:layout_constraintBottom_toBottomOf="@id/iv_dish"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/cb_favorite"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginTop="@dimen/mini_margin_12dp"
+        android:layout_marginEnd="@dimen/mini_margin_12dp"
+        android:button="@drawable/btn_toggle_favorite"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/tv_stock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/mini_margin_10dp"
+        android:paddingStart="@dimen/mini_margin_10dp"
+        android:paddingEnd="@dimen/mini_margin_10dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="2dp"
+        android:background="@drawable/background_stock"
+        android:text="@string/home_stock_title"
+        android:textAllCaps="true"
+        android:visibility="gone"
+        style="@style/MediumText.10.Dark"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

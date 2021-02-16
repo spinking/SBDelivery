@@ -69,8 +69,36 @@
         <item name="android:fontFamily">@font/roboto_medium</item>
     </style>
 
+    <style name="Text.18">
+        <item name="android:textSize">@dimen/text_size_18sp</item>
+    </style>
+
+    <style name="Text.18.White">
+        <item name="android:textColor">@color/color_text_light</item>
+    </style>
+
+    <style name="MediumText.10">
+        <item name="android:textSize">@dimen/text_size_10sp</item>
+    </style>
+
+    <style name="MediumText.10.Dark">
+        <item name="android:textColor">@color/color_text_dark</item>
+    </style>
+
+    <style name="Text.Orange">
+        <item name="android:textColor">@color/color_accent_orange</item>
+    </style>
+
     <style name="DarkText" parent="Text">
         <item name="android:textColor">@color/color_text_dark</item>
+    </style>
+
+    <style name="MediumText.Orange">
+        <item name="android:textColor">@color/color_accent_orange</item>
+    </style>
+
+    <style name="MediumText.GreyWhite">
+        <item name="android:textColor">@color/color_text_grey_white</item>
     </style>
 
     <style name="LabelText" parent="AppTheme">

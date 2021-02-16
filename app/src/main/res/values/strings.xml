@@ -17,4 +17,7 @@
     <string name="login_label_new_password">Повторите пароль</string>
 
     <string name="button_ok">OK</string>
+    <string name="home_recommend_label">Рекомендуем</string>
+    <string name="home_view_all">См. все</string>
+    <string name="home_stock_title">Акция</string>
 </resources>
