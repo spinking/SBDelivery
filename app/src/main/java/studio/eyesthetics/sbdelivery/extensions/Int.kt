@@ -17,6 +17,14 @@ fun Int.dpToPx() : Int {
     return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), displayMetrics).toInt()
 }
 
+fun Int.splitToUnits(): String {
+    return "%,d".format(this)
+}
+
+fun Int.formatToRub(prefix: String = ""): String {
+    return "$prefix${this.splitToUnits()} ₽"
+}
+
 /*fun Int.formatToCost() : String {
     return "$this.00 ₽"
 }*/

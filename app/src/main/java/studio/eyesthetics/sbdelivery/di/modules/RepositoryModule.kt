@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import studio.eyesthetics.sbdelivery.data.database.dao.CategoriesDao
 import studio.eyesthetics.sbdelivery.data.database.dao.DishesDao
+import studio.eyesthetics.sbdelivery.data.database.dao.RecommendIdDao
 import studio.eyesthetics.sbdelivery.data.mappers.CategoryToCategoryEntityMapper
 import studio.eyesthetics.sbdelivery.data.mappers.DishToDishEntityMapper
 import studio.eyesthetics.sbdelivery.data.network.ICategoryApi
@@ -26,6 +27,7 @@ class RepositoryModule {
     fun provideDishesRepository(
         dishesApi: IDishesApi,
         dishesDao: DishesDao,
-        dishesEntityMapper: DishToDishEntityMapper
-    ) : IDishesRepository = DishesRepository(dishesApi, dishesDao, dishesEntityMapper)
+        dishesEntityMapper: DishToDishEntityMapper,
+        recommendIdDao: RecommendIdDao
+    ) : IDishesRepository = DishesRepository(dishesApi, dishesDao, dishesEntityMapper, recommendIdDao)
 }

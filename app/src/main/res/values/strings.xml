@@ -20,4 +20,6 @@
     <string name="home_recommend_label">Рекомендуем</string>
     <string name="home_view_all">См. все</string>
     <string name="home_stock_title">Акция</string>
+    <string name="home_best_label">Лучшее</string>
+    <string name="home_popular_label">Популярное</string>
 </resources>

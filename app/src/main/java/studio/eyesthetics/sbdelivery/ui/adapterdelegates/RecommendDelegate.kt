@@ -1,16 +1,21 @@
 package studio.eyesthetics.sbdelivery.ui.adapterdelegates
 
 import android.view.View
+import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.item_dish.*
 import studio.eyesthetics.sbdelivery.R
 import studio.eyesthetics.sbdelivery.data.database.entities.DishEntity
 import studio.eyesthetics.sbdelivery.extensions.dpToPx
+import studio.eyesthetics.sbdelivery.extensions.formatToRub
 import studio.eyesthetics.sbdelivery.extensions.setMarginOptionally
 import studio.eyesthetics.sbdelivery.ui.base.BaseAdapterDelegate
 
 class RecommendDelegate(
     private val displayWidth: Int = 0,
-    private val dishClickListener: (Int) -> Unit
+    private val dishClickListener: (DishEntity) -> Unit,
+    private val addClickListener: (String) -> Unit,
+    private val addToFavoriteClickListener: (String) -> Unit
 ) : BaseAdapterDelegate<DishEntity>() {
     override val layoutRes: Int = R.layout.item_dish
 
@@ -34,14 +39,28 @@ class RecommendDelegate(
     inner class RecommendViewHolder(convertView: View) : ViewHolder(convertView) {
         fun bind(item: DishEntity) {
 
-/*            Glide.with(itemView.context)
-                .load(item.photo)
-                .placeholder(R.drawable.ic_placeholder_edit_profile)
-                .into(iv_course)
+            //TODO add placeholder
+            Glide.with(itemView.context)
+                .load(item.image)
+                .into(iv_dish)
+
+            tv_price.text = item.price.formatToRub()
+            tv_title.text = item.name
+            //TODO need field for check favorite
+            cb_favorite.isChecked = false
+            tv_stock.isVisible = item.oldPrice.isNotEmpty()
+
+            cb_favorite.setOnClickListener {
+                addToFavoriteClickListener.invoke(item.id)
+            }
+
+            btn_add.setOnClickListener {
+                addClickListener.invoke(item.id)
+            }
 
             itemView.setOnClickListener {
-                courseClickListener.invoke(item.id)
-            }*/
+                dishClickListener.invoke(item)
+            }
         }
     }
 

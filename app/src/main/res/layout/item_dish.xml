@@ -8,16 +8,16 @@
     android:elevation="8dp"
     >
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_dish"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
         android:scaleType="centerCrop"
         android:src="@drawable/mock_dish"
-        android:background="@drawable/background_with_top_rounded_corners"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:shapeAppearanceOverlay="@style/TopCornersAppearanceOverlay"
         />
 
     <LinearLayout
