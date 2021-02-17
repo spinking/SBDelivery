@@ -11,6 +11,7 @@ class FavoriteRepository @Inject constructor(
 ) : IFavoriteRepository {
 
     override suspend fun changeToFavorite(favoriteCRequest: FavoriteChangeRequest) {
+        //TODO add cache for favorites if user not login
         favoriteApi.changeToFavorite(favoriteCRequest)
         dishPersonalInfoDao.toggleFavoriteOrInsert(favoriteCRequest.dishId)
     }
