@@ -1,14 +1,15 @@
 package studio.eyesthetics.sbdelivery.ui.adapterdelegates
 
 import android.view.View
+import android.widget.ImageView
 import androidx.core.view.isVisible
-import com.bumptech.glide.Glide
+import coil.load
+import coil.request.CachePolicy
 import kotlinx.android.synthetic.main.item_dish.*
 import studio.eyesthetics.sbdelivery.R
 import studio.eyesthetics.sbdelivery.data.database.entities.DishItem
 import studio.eyesthetics.sbdelivery.extensions.dpToPx
 import studio.eyesthetics.sbdelivery.extensions.formatToRub
-import studio.eyesthetics.sbdelivery.extensions.setMarginOptionally
 import studio.eyesthetics.sbdelivery.ui.base.BaseAdapterDelegate
 
 class RecommendDelegate(
@@ -18,12 +19,15 @@ class RecommendDelegate(
     private val addToFavoriteClickListener: (String, Boolean) -> Unit
 ) : BaseAdapterDelegate<DishItem>() {
     override val layoutRes: Int = R.layout.item_dish
+    private var currentWidht: Int = 0
 
     override fun createHolder(view: View): ViewHolder {
-        val params = view.layoutParams
-        val width = ((displayWidth - 20.dpToPx()) * 0.45).toInt()
-        params.width = width
-        view.layoutParams = params
+        currentWidht = ((displayWidth - 20.dpToPx()) * 0.45).toInt()
+        val imageView = view.findViewById<ImageView>(R.id.iv_dish)
+        val imageParams = imageView.layoutParams
+        imageParams.width = currentWidht
+        imageParams.height = currentWidht
+        imageView.layoutParams = imageParams
         return RecommendViewHolder(view)
     }
 
@@ -35,10 +39,10 @@ class RecommendDelegate(
     inner class RecommendViewHolder(convertView: View) : ViewHolder(convertView) {
         fun bind(item: DishItem) {
 
-            //TODO add placeholder
-            Glide.with(itemView.context)
-                .load(item.image)
-                .into(iv_dish)
+            (iv_dish as ImageView).load(item.image) {
+                placeholder(R.drawable.placeholder_dish)
+                diskCachePolicy(CachePolicy.ENABLED)
+            }
 
             tv_price.text = item.price.formatToRub()
             tv_title.text = item.name
