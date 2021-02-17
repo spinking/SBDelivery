@@ -8,9 +8,12 @@ import studio.eyesthetics.sbdelivery.data.database.dao.DishesDao
 import studio.eyesthetics.sbdelivery.data.database.dao.RecommendIdDao
 import studio.eyesthetics.sbdelivery.data.mappers.CategoryToCategoryEntityMapper
 import studio.eyesthetics.sbdelivery.data.mappers.DishToDishEntityMapper
+import studio.eyesthetics.sbdelivery.data.network.IAuthApi
 import studio.eyesthetics.sbdelivery.data.network.ICategoryApi
 import studio.eyesthetics.sbdelivery.data.network.IDishesApi
 import studio.eyesthetics.sbdelivery.data.network.IFavoriteApi
+import studio.eyesthetics.sbdelivery.data.repositories.auth.AuthRepository
+import studio.eyesthetics.sbdelivery.data.repositories.auth.IAuthRepository
 import studio.eyesthetics.sbdelivery.data.repositories.categories.CategoryRepository
 import studio.eyesthetics.sbdelivery.data.repositories.categories.ICategoryRepository
 import studio.eyesthetics.sbdelivery.data.repositories.dishes.DishesRepository
@@ -40,4 +43,9 @@ class RepositoryModule {
         favoriteApi: IFavoriteApi,
         dishPersonalInfoDao: DishPersonalInfoDao
     ) : IFavoriteRepository = FavoriteRepository(favoriteApi, dishPersonalInfoDao)
+
+    @Provides
+    fun provideAuthRepository(
+        authApi: IAuthApi
+    ) : IAuthRepository = AuthRepository(authApi)
 }
