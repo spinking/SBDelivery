@@ -26,4 +26,7 @@
 
     <!--RegistrationFragment-->
     <string name="registration_label">Регистрация</string>
+    <string name="registration_name_error">Только буквы</string>
+    <string name="registration_email_error">Некорректный e-mail</string>
+    <string name="registration_empty_error">Пустое поле</string>
 </resources>

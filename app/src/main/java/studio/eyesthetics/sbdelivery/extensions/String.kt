@@ -57,7 +57,7 @@ fun String.isValidEmail(): Boolean {
 
 fun String.isValidPassword(): Boolean = this.length > 5
 
-fun String.isValidName(): Boolean = this.matches("(.)*(\\d)(.)*".toRegex()).not()
+fun String.isValidName(): Boolean = this.matches("^[a-zA-Z]+$".toRegex())
 
 /*
 fun String.phoneMask() : String {
