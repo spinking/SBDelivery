@@ -10,6 +10,7 @@ import studio.eyesthetics.sbdelivery.data.database.entities.DishItem
 import studio.eyesthetics.sbdelivery.extensions.dpToPx
 import studio.eyesthetics.sbdelivery.ui.adapterdelegates.RecommendDelegate
 import studio.eyesthetics.sbdelivery.ui.adapterdelegates.decorators.ItemDecorator
+import studio.eyesthetics.sbdelivery.ui.adapterdelegates.diffcallbacks.DishDiffCallback
 import studio.eyesthetics.sbdelivery.ui.base.BaseFragment
 import studio.eyesthetics.sbdelivery.ui.base.DelegationAdapter
 import studio.eyesthetics.sbdelivery.ui.base.ToolbarBuilder
@@ -34,9 +35,10 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
 
     override val prepareToolbar: (ToolbarBuilder.() -> Unit)? = {}
 
-    private val recommendAdapter by lazy { DelegationAdapter<DishItem>() }
-    private val bestAdapter by lazy { DelegationAdapter<DishItem>() }
-    private val popularAdapter by lazy { DelegationAdapter<DishItem>() }
+    private val diffCallback = DishDiffCallback()
+    private val recommendAdapter by lazy { DelegationAdapter(diffCallback) }
+    private val bestAdapter by lazy { DelegationAdapter<DishItem>(diffCallback) }
+    private val popularAdapter by lazy { DelegationAdapter<DishItem>(diffCallback) }
 
     override fun setupViews() {
 

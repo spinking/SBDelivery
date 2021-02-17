@@ -11,7 +11,7 @@ class TokenInterceptor (
     override fun intercept(chain: Interceptor.Chain): Response {
         var request = chain.request()
         try {
-            request = request.newBuilder().addHeader("Authorization", /*pref.accessToken*/"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwMmMwYWVjYmQ5N2UwMDAzYzRiNmE5MyIsImlhdCI6MTYxMzQ5OTExNiwiZXhwIjoxNjEzNTAwMzE2fQ.Gjor8Yb-hRD57zShOKIvF8iX0nNyA3iWbcx9b9jhgoo").build()
+            request = request.newBuilder().addHeader("Authorization", /*pref.accessToken*/"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwMmNkYTI5YmQ5N2UwMDAzYzRiNmE5NCIsImlhdCI6MTYxMzU1MjE2OSwiZXhwIjoxNjEzNTUzMzY5fQ.gBNQTgRJ4wGhB2NJP6iTL2YAmY5-dwua5iK_6oqpOWY").build()
         } catch (e: IllegalArgumentException) {
             throw TokenInvalidError(e.message ?: "")
         }

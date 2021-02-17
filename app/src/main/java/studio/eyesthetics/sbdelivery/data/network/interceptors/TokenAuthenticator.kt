@@ -24,7 +24,7 @@ class TokenAuthenticator @Inject constructor(
                 pref.accessToken = refreshRes.body()!!.accessToken
                 response.request.newBuilder()
                     //.header("Authorization", "Bearer ${refreshRes.body()!!.accessToken}")
-                    .header("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwMmMwYWVjYmQ5N2UwMDAzYzRiNmE5MyIsImlhdCI6MTYxMzQ5OTExNn0.rzTJ4jYSnkewZill-MF9lELIyOkFqcDE0jPGPJPKYLw")
+                    .header("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwMmNkYTI5YmQ5N2UwMDAzYzRiNmE5NCIsImlhdCI6MTYxMzU1MjE2OX0.HZ50OS4Dt4zPIm-UPKNG04DQnt6OG2e4jt6TYN0yczM")
                     .build()
             } else {
                 null
