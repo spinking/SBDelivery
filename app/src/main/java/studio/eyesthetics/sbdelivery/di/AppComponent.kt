@@ -4,20 +4,27 @@ import android.app.Application
 import dagger.BindsInstance
 import dagger.Component
 import studio.eyesthetics.sbdelivery.App
+import studio.eyesthetics.sbdelivery.di.modules.*
 import studio.eyesthetics.sbdelivery.ui.MainActivity
+import studio.eyesthetics.sbdelivery.ui.auth.LoginFragment
+import studio.eyesthetics.sbdelivery.ui.auth.RegistrationFragment
+import studio.eyesthetics.sbdelivery.ui.home.HomeFragment
+import studio.eyesthetics.sbdelivery.ui.splash.SplashActivity
+import studio.eyesthetics.sbdelivery.workers.SyncWorker
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [
-    AppModule::class/*,
-    NetworkModule::class,
-    LocaleModule::class,
-    AuthModule::class,
-    RepositoryModule::class,
-    PreferencesModule::class,
-    RepositoryModule::class,
-    DatabaseModule::class*/])
-interface AppComponent  {
+@Component(
+    modules = [
+        AppModule::class,
+        NetworkModule::class,
+        RepositoryModule::class,
+        DatabaseModule::class,
+        MapperModule::class,
+        PreferencesModule::class
+    ]
+)
+interface AppComponent {
     fun inject(application: App)
 
     @Component.Builder
@@ -28,12 +35,17 @@ interface AppComponent  {
         fun build(): AppComponent
     }
 
-
     interface ComponentProvider {
         val appComponent: AppComponent
     }
 
     //activity, fragment
     fun inject(activity: MainActivity)
-    //fun inject(fragment: LoginFragment)
+    fun inject(activity: SplashActivity)
+    fun inject(fragment: LoginFragment)
+    fun inject(fragment: RegistrationFragment)
+    fun inject(fragment: HomeFragment)
+
+    //workers
+    fun inject(worker: SyncWorker)
 }

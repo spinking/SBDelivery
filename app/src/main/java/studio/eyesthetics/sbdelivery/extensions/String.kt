@@ -49,6 +49,8 @@ fun String.validEmail():Boolean {
     return this.matches(pattern)
 }
 
+fun String.formatToRub(): String = "$this ₽"
+
 /*
 fun String.phoneMask() : String {
     val countryCode = this.substring(0, 1)

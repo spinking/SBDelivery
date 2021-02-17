@@ -1,8 +1,12 @@
 package studio.eyesthetics.sbdelivery.ui.base
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -10,10 +14,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import studio.eyesthetics.sbdelivery.R
 import studio.eyesthetics.sbdelivery.extensions.visible
-import studio.eyesthetics.sbdelivery.viewmodels.base.BaseViewModel
-import studio.eyesthetics.sbdelivery.viewmodels.base.IViewModelState
-import studio.eyesthetics.sbdelivery.viewmodels.base.NavigationCommand
-import studio.eyesthetics.sbdelivery.viewmodels.base.Notify
+import studio.eyesthetics.sbdelivery.viewmodels.base.*
 
 abstract class BaseActivity<T : BaseViewModel<out IViewModelState>> : AppCompatActivity() {
     protected abstract val viewModel: T
@@ -22,7 +23,6 @@ abstract class BaseActivity<T : BaseViewModel<out IViewModelState>> : AppCompatA
 
     val toolbarBuilder = ToolbarBuilder()
 
-    //set listeners, tuning views
     abstract fun subscribeOnState(state: IViewModelState)
 
     abstract fun renderNotification(notify: Notify)
@@ -35,6 +35,7 @@ abstract class BaseActivity<T : BaseViewModel<out IViewModelState>> : AppCompatA
         viewModel.observeState(this) { subscribeOnState(it) }
         viewModel.observeNotifications(this) { renderNotification(it) }
         viewModel.observeNavigation(this) { subscribeOnNavigation(it) }
+        viewModel.observeLoading(this) { renderLoading(it) }
 
         navController = findNavController(R.id.nav_host_fragment)
     }
@@ -53,6 +54,17 @@ abstract class BaseActivity<T : BaseViewModel<out IViewModelState>> : AppCompatA
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
+    open fun renderLoading(loadingState: Loading) {
+        when(loadingState) {
+            Loading.SHOW_LOADING -> progress.isVisible = true
+            Loading.SHOW_BLOCKING_LOADING -> {
+                progress.isVisible = true
+                //TODO block interact with UI
+            }
+            Loading.HIDE_LOADING -> progress.isVisible = false
+        }
+    }
+
     private fun subscribeOnNavigation(command: NavigationCommand) {
         when (command) {
             is NavigationCommand.To -> {
@@ -63,39 +75,31 @@ abstract class BaseActivity<T : BaseViewModel<out IViewModelState>> : AppCompatA
                     command.extras
                 )
             }
-/*            is NavigationCommand.FinishLogin -> {
-                navController.navigate(R.id.finish_login)
-                if(command.privateDestination!=null) navController.navigate(command.privateDestination)
-            }
-
-            is NavigationCommand.StartLogin -> {
-                navController.navigate(
-                    R.id.start_login,
-                    bundleOf("private_destination" to (command.privateDestination ?: -1))
-                )
-            }*/
         }
     }
 }
 
-class ToolbarBuilder() {
+class ToolbarBuilder {
     var title: String? = null
-    private var backButtonVisibility: Boolean = false
+    var isHomeBackground: Boolean = true
+    var isBackButtonVisible: Boolean = true
     var visibility: Boolean = true
     val items: MutableList<MenuItemHolder> = mutableListOf()
+    private val views = mutableListOf<Int>()
+    private val tempViews = mutableListOf<Int>()
 
     fun setTitle(title: String): ToolbarBuilder {
         this.title = title
         return this
     }
 
-    fun setBackButtonVisibility(isVisible: Boolean): ToolbarBuilder {
-        this.backButtonVisibility = isVisible
+    fun setHomeBackground(isHomeBackground: Boolean): ToolbarBuilder {
+        this.isHomeBackground = isHomeBackground
         return this
     }
 
-    fun setVisibility(isVisible: Boolean) : ToolbarBuilder {
-        this.visibility = isVisible
+    fun setBackButtonVisible(isVisible: Boolean): ToolbarBuilder {
+        this.isBackButtonVisible = isVisible
         return this
     }
 
@@ -106,9 +110,16 @@ class ToolbarBuilder() {
 
     fun invalidate(): ToolbarBuilder {
         this.title = null
-        this.backButtonVisibility = false
+        this.isHomeBackground = false
+        this.isBackButtonVisible = true
         this.visibility = true
         this.items.clear()
+        views.clear()
+        return this
+    }
+
+    fun addView(layoutId: Int): ToolbarBuilder {
+        views.add(layoutId)
         return this
     }
 
@@ -118,19 +129,45 @@ class ToolbarBuilder() {
     }
 
     fun build(context: FragmentActivity) {
-        //context.container_app_bar.setExpanded(true, true)
 
         with(context.toolbar) {
-            if (this@ToolbarBuilder.title != null) {
-                if(tv_label != null)
-                    tv_label.text = this@ToolbarBuilder.title
-            } else {
-                if(tv_label != null)
-                    tv_label.text = context.getString(R.string.app_name)
-            }
             toolbar.visible(this@ToolbarBuilder.visibility)
-            if(btn_back != null)
-                btn_back.visible(this@ToolbarBuilder.backButtonVisibility)
+
+            if (this@ToolbarBuilder.visibility) {
+                if (this@ToolbarBuilder.title != null) {
+                    this.title = this@ToolbarBuilder.title
+                }
+                if (this@ToolbarBuilder.isBackButtonVisible.not()) {
+                    this.navigationIcon = null
+                } else {
+                    this.navigationIcon = ResourcesCompat.getDrawable(resources, R.drawable.ic_back, null)
+                }
+/*                val backgroundId = if (this@ToolbarBuilder.isHomeBackground)
+                    R.color.colorWhite
+                else
+                    R.drawable.background_toolbar*/
+
+                //this.background = ResourcesCompat.getDrawable(resources, backgroundId, null)
+            }
+        }
+
+        //remove temp views
+        if (tempViews.isNotEmpty()) {
+            tempViews.forEach {
+                val view = context.container.findViewById<View>(it)
+                context.container.removeView(view)
+            }
+            tempViews.clear()
+        }
+
+        //add new toolbar bar views
+        if (views.isNotEmpty()) {
+            val inflater = LayoutInflater.from(context)
+            views.forEach {
+                val view = inflater.inflate(it, context.container, false)
+                context.container.addView(view)
+                tempViews.add(view.id)
+            }
         }
     }
 }
@@ -138,7 +175,7 @@ class ToolbarBuilder() {
 data class MenuItemHolder(
     val title: String,
     val menuId: Int,
-    val icon: Int,
+    val icon: Int? = null,
     val actionViewLayout: Int? = null,
     val clickListener: ((MenuItem) -> Unit)? = null
 )

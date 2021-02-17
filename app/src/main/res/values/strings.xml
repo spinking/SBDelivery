@@ -15,4 +15,11 @@
     <string name="recovery_new_password">Введите новый пароль</string>
     <string name="button_save">Сохранить</string>
     <string name="login_label_new_password">Повторите пароль</string>
+
+    <string name="button_ok">OK</string>
+    <string name="home_recommend_label">Рекомендуем</string>
+    <string name="home_view_all">См. все</string>
+    <string name="home_stock_title">Акция</string>
+    <string name="home_best_label">Лучшее</string>
+    <string name="home_popular_label">Популярное</string>
 </resources>
