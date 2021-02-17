@@ -24,10 +24,6 @@ class RecommendDelegate(
         val width = ((displayWidth - 20.dpToPx()) * 0.45).toInt()
         params.width = width
         view.layoutParams = params
-        when (currentPosition) {
-            0 ->  view.setMarginOptionally(left = DEFAULT_LEFT_MARGIN.dpToPx())
-            listSize - 1 -> view.setMarginOptionally(right = DEFAULT_RIGHT_MARGIN.dpToPx())
-        }
         return RecommendViewHolder(view)
     }
 
@@ -61,10 +57,5 @@ class RecommendDelegate(
                 dishClickListener.invoke(item)
             }
         }
-    }
-
-    companion object {
-        private const val DEFAULT_LEFT_MARGIN = 16
-        private const val DEFAULT_RIGHT_MARGIN = 8
     }
 }

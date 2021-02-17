@@ -19,12 +19,12 @@ class TokenAuthenticator @Inject constructor(
     override fun authenticate(route: Route?, response: Response): Request? {
         if (response.code == 401) {
             pref.accessToken = ""
-            val refreshRes = authApi.refreshToken(RefreshTokenRequest(pref.refreshToken)).execute()
+            //val refreshRes = authApi.refreshToken(RefreshTokenRequest(pref.refreshToken)).execute()
+            val refreshRes = authApi.refreshToken(RefreshTokenRequest("Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwMmNlNGE1YmQ5N2UwMDAzYzRiNmE5NiIsImlhdCI6MTYxMzU1NDg1M30.yDKqtHpYdlK1kakZJvIeL9GecUnxi4JHvIBGvIT_WlE")).execute()
             return if (refreshRes.isSuccessful) {
                 pref.accessToken = refreshRes.body()!!.accessToken
                 response.request.newBuilder()
-                    //.header("Authorization", "Bearer ${refreshRes.body()!!.accessToken}")
-                    .header("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwMmNkYTI5YmQ5N2UwMDAzYzRiNmE5NCIsImlhdCI6MTYxMzU1MjE2OX0.HZ50OS4Dt4zPIm-UPKNG04DQnt6OG2e4jt6TYN0yczM")
+                    .header("Authorization", "Bearer ${refreshRes.body()!!.accessToken}")
                     .build()
             } else {
                 null

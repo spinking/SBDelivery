@@ -3,6 +3,7 @@ package studio.eyesthetics.sbdelivery.ui.adapterdelegates.decorators
 import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import studio.eyesthetics.sbdelivery.extensions.dpToPx
 
 class ItemDecorator(
     private val space: Int = 0,
@@ -19,7 +20,13 @@ class ItemDecorator(
             spacePosition = state.itemCount
 
         val position = parent.getChildAdapterPosition(view)
-        if (position < spacePosition)
-            outRect.right = space
+        when(position) {
+            0 -> {
+                outRect.left = 20.dpToPx()
+                outRect.right = space
+            }
+            spacePosition - 1 -> outRect.right = 20.dpToPx()
+            else -> outRect.right = space
+        }
     }
 }
