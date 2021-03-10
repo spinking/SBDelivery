@@ -1,5 +1,5 @@
 ext{
-    kotlin_version = "1.4.10"
+    kotlin_version = "1.4.30"
     navigation_version = "2.3.1"
     gradle_version = '4.0.0'
     paging_version = "2.1.2"
@@ -18,4 +18,5 @@ ext{
     room_version = "2.2.6"
     work_manager="1.1.1"
     coil_version="1.1.1"
+    compose_version = '1.0.0-beta01'
 }
