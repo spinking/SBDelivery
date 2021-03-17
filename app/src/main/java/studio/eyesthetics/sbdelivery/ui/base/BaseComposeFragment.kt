@@ -2,12 +2,14 @@ package studio.eyesthetics.sbdelivery.ui.base
 
 import android.os.Bundle
 import android.view.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.ComposeView
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.activity_main.*
 import studio.eyesthetics.sbdelivery.R
 import studio.eyesthetics.sbdelivery.ui.MainActivity
+import studio.eyesthetics.sbdelivery.ui.theme.DeliveryTheme
 import studio.eyesthetics.sbdelivery.viewmodels.base.BaseViewModel
 import studio.eyesthetics.sbdelivery.viewmodels.base.IViewModelState
 import studio.eyesthetics.sbdelivery.viewmodels.base.Loading
@@ -26,13 +28,21 @@ abstract class BaseComposeFragment<T : BaseViewModel<out IViewModelState>> : Fra
         get() = main.toolbar
 
     abstract fun setupViews()
-    abstract fun setupLayout(): ComposeView
+
+    @Composable
+    abstract fun SetupLayout()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = setupLayout()
+    ): View? = ComposeView(requireContext()).apply {
+        setContent {
+            DeliveryTheme {
+                SetupLayout()
+            }
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
