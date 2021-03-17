@@ -6,8 +6,8 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.fragment.app.viewModels
@@ -40,14 +40,17 @@ class LoginFragment : BaseComposeFragment<LoginViewModel>() {
     override val prepareToolbar: (ToolbarBuilder.() -> Unit) = {}
 
     @Composable
-    override fun SetupLayout() = LoginLayout()
+    override fun SetupLayout() = LoginLayout(viewModel)
 
     override fun setupViews() {}
 }
 
 @Composable
-fun LoginLayout() {
-    val context = LocalContext.current
+fun LoginLayout(loginViewModel: LoginViewModel) {
+
+    val nameState = remember { mutableStateOf("") }
+
+    //val context = LocalContext.current
     Image(painter = painterResource(id = R.drawable.ic_background), contentDescription = "", modifier = Modifier.fillMaxWidth(), contentScale = ContentScale.Crop)
     ConstraintLayout(modifier = Modifier.padding(bottom = 36.dp)) {
         val (content, btnRestorePassword) = createRefs()
@@ -56,29 +59,31 @@ fun LoginLayout() {
             bottom.linkTo(btnRestorePassword.top)
         }) {
             CustomEditText(
-                title = "Имя",
-                errorMessage = "ошибка",
-                hint = "Введите имя",
+                title = stringResource(R.string.login_name_label),
+                hint = stringResource(R.string.login_name_hint),
                 modifier = Modifier
                     .padding(top = 38.dp),
-                handler = { }
+                handler = {
+                    nameState.value = it
+                }
             )
             CustomEditText(
-                title = "Имя",
-                errorMessage = "ошибка",
-                hint = "Введите имя",
+                title = stringResource(R.string.login_password_label),
+                hint = stringResource(R.string.login_password_hint),
                 modifier = Modifier.padding(top = 16.dp),
                 handler = { }
             )
             ActionButton(
-                title = "Войти",
+                title = stringResource(R.string.login_enter_button),
                 Modifier.padding(top = 53.dp),
-                onClick = {  }
+                onClick = { loginViewModel.showMessage("вход выполнен") }
             )
             ActionStrokeButton(
-                title = "Регистрация",
+                title = stringResource(R.string.login_registration_button),
                 Modifier.padding(top = 20.dp),
-                onClick = {  }
+                onClick = {
+                    //TODO transition to registration
+                }
             )
         }
         TextButton(
@@ -87,9 +92,11 @@ fun LoginLayout() {
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
             },
-            onClick = {  }
+            onClick = {
+                //TODO transition to restoring password
+            }
         ) {
-            Text(text = "Забыли пароль?", style = MaterialTheme.typography.h4, color = grey200)
+            Text(text = stringResource(R.string.login_restore_password_button), style = MaterialTheme.typography.h4, color = grey200)
         }
     }
 }

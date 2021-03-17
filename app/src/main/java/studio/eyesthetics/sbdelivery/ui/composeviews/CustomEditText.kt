@@ -14,7 +14,8 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun CustomEditText(
     title: String,
-    errorMessage: String,
+    errorMessage: String = "",
+    isError: Boolean = false,
     hint: String,
     modifier: Modifier,
     handler: (String) -> Unit
@@ -23,8 +24,6 @@ fun CustomEditText(
     val colors = MaterialTheme.colors
     var text by remember(calculation = { mutableStateOf("") })
 
-    //TODO check name
-    var isErrorVisible = false
     Column(modifier = modifier
     ) {
         Row(
@@ -32,7 +31,7 @@ fun CustomEditText(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(color = colors.secondary, text = title, style = typography.body2, modifier = Modifier.padding(start = 20.dp))
-            if (isErrorVisible)
+            if (isError)
                 Text(color = colors.error, text = errorMessage, style = typography.body2, modifier = Modifier.padding(end = 20.dp))
         }
         TextField(

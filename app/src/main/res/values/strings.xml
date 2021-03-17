@@ -29,4 +29,13 @@
     <string name="registration_name_error">Только буквы</string>
     <string name="registration_email_error">Некорректный e-mail</string>
     <string name="registration_empty_error">Пустое поле</string>
+
+    <!--LoginFragment-->
+    <string name="login_name_label">Имя</string>
+    <string name="login_name_hint">Введите имя</string>
+    <string name="login_password_label">Пароль</string>
+    <string name="login_password_hint">Введите пароль</string>
+    <string name="login_enter_button">Войти</string>
+    <string name="login_registration_button">Регистрация</string>
+    <string name="login_restore_password_button">Забыли пароль?</string>
 </resources>
