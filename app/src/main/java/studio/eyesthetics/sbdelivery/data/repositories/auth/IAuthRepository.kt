@@ -7,7 +7,7 @@ interface IAuthRepository {
     suspend fun login(loginRequest: LoginRequest)
     suspend fun registration(registrationRequest: RegistrationRequest)
     suspend fun recoverySendEmail(recoveryEmailRequest: RecoveryEmailRequest)
-    suspend fun recoverySendCode(recoveryCodeRequest: RecoveryCodeRequest)
-    suspend fun recoverySendPassword(recoveryPasswordRequest: RecoveryPasswordRequest)
+    suspend fun recoverySendCode(recoveryCode: String)
+    suspend fun recoverySendPassword(newPassword: String)
     fun isAuth(): LiveData<Boolean>
 }

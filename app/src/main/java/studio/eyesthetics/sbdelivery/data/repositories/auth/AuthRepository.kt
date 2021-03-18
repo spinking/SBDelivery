@@ -29,12 +29,17 @@ class AuthRepository @Inject constructor(
         authApi.recoveryByEmail(recoveryEmailRequest)
     }
 
-    override suspend fun recoverySendCode(recoveryCodeRequest: RecoveryCodeRequest) {
-        authApi.checkRecoveryCode(recoveryCodeRequest)
+    override suspend fun recoverySendCode(recoveryCode: String) {
+        pref.recoveryCode = recoveryCode
+        authApi.checkRecoveryCode(RecoveryCodeRequest(pref.profile?.email ?: "", recoveryCode))
     }
 
-    override suspend fun recoverySendPassword(recoveryPasswordRequest: RecoveryPasswordRequest) {
-        authApi.changePassword(recoveryPasswordRequest)
+    override suspend fun recoverySendPassword(newPassword: String) {
+        authApi.changePassword(RecoveryPasswordRequest(
+            pref.profile?.email ?: "",
+            pref.recoveryCode,
+            newPassword
+        ))
     }
 
     override fun isAuth(): LiveData<Boolean> = pref.isAuthLive

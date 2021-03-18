@@ -202,6 +202,9 @@ sealed class NavigationCommand() {
     data class ReplaceAuth(
         val privateDestination: Int? = null
     ) : NavigationCommand()
+    data class PopUpToDestination(
+        val currentDestination: Int? = null
+    ) : NavigationCommand()
 }
 enum class Loading {
     SHOW_LOADING, SHOW_BLOCKING_LOADING, HIDE_LOADING

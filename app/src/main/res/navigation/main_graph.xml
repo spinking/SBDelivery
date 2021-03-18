@@ -20,19 +20,43 @@
                 android:name="private_destination"
                 app:argType="integer"
                 android:defaultValue="-1" />
+            <action
+                android:id="@+id/action_loginFragment_to_recoveryPasswordFragment"
+                app:destination="@id/recoveryPasswordFragment" />
+            <action
+                android:id="@+id/action_loginFragment_to_registrationFragment"
+                app:destination="@id/registrationFragment" />
         </fragment>
         <fragment
             android:id="@+id/recoveryCodeFragment"
             android:name="studio.eyesthetics.sbdelivery.ui.auth.RecoveryCodeFragment"
-            android:label="RecoveryCodeFragment" />
+            android:label="RecoveryCodeFragment" >
+            <action
+                android:id="@+id/action_recoveryCodeFragment_to_recoveryNewPasswordFragment"
+                app:destination="@id/recoveryNewPasswordFragment" />
+        </fragment>
         <fragment
             android:id="@+id/recoveryNewPasswordFragment"
             android:name="studio.eyesthetics.sbdelivery.ui.auth.RecoveryNewPasswordFragment"
-            android:label="RecoveryNewPasswordFragment" />
+            android:label="RecoveryNewPasswordFragment" >
+            <action
+                android:id="@+id/action_recoveryNewPasswordFragment_to_loginFragment"
+                app:destination="@id/loginFragment"
+                app:popUpTo="@id/loginFragment"
+                app:popUpToInclusive="false" />
+        </fragment>
         <fragment
             android:id="@+id/registrationFragment"
             android:name="studio.eyesthetics.sbdelivery.ui.auth.RegistrationFragment"
             android:label="RegistrationFragment" />
+        <fragment
+            android:id="@+id/recoveryPasswordFragment"
+            android:name="studio.eyesthetics.sbdelivery.ui.auth.RecoveryPasswordFragment"
+            android:label="RecoveryPasswordFragment" >
+            <action
+                android:id="@+id/action_recoveryPasswordFragment_to_recoveryCodeFragment"
+                app:destination="@id/recoveryCodeFragment" />
+        </fragment>
 
     </navigation>
 

@@ -79,6 +79,7 @@ fun LoginLayout(loginViewModel: LoginViewModel, privateDestination: Int) {
                     passwordState.value = it
                 }
             )
+            //TODO add blocking interface when doing request
             ActionButton(
                 title = stringResource(R.string.login_enter_button),
                 Modifier.padding(top = 53.dp),
@@ -88,8 +89,8 @@ fun LoginLayout(loginViewModel: LoginViewModel, privateDestination: Int) {
                 title = stringResource(R.string.login_registration_button),
                 Modifier.padding(top = 20.dp),
                 onClick = {
-                    //TODO add last destination
-                    loginViewModel.navigate(NavigationCommand.To(R.id.registrationFragment))
+                    val destination = LoginFragmentDirections.actionLoginFragmentToRegistrationFragment()
+                    loginViewModel.navigate(NavigationCommand.To(destination.actionId))
                 }
             )
         }
@@ -100,7 +101,6 @@ fun LoginLayout(loginViewModel: LoginViewModel, privateDestination: Int) {
                 end.linkTo(parent.end)
             },
             onClick = {
-                //TODO add last destination
                 loginViewModel.navigate(NavigationCommand.To(R.id.recoveryNewPasswordFragment))
             }
         ) {
