@@ -1,6 +1,6 @@
 package studio.eyesthetics.sbdelivery.data.repositories.auth
 
-import retrofit2.http.POST
+import androidx.lifecycle.LiveData
 import studio.eyesthetics.sbdelivery.data.models.auth.*
 
 interface IAuthRepository {
@@ -9,4 +9,5 @@ interface IAuthRepository {
     suspend fun recoverySendEmail(recoveryEmailRequest: RecoveryEmailRequest)
     suspend fun recoverySendCode(recoveryCodeRequest: RecoveryCodeRequest)
     suspend fun recoverySendPassword(recoveryPasswordRequest: RecoveryPasswordRequest)
+    fun isAuth(): LiveData<Boolean>
 }

@@ -11,6 +11,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import studio.eyesthetics.sbdelivery.App
 import studio.eyesthetics.sbdelivery.R
 import studio.eyesthetics.sbdelivery.ui.base.BaseComposeFragment
@@ -26,6 +27,7 @@ import studio.eyesthetics.sbdelivery.viewmodels.base.SavedStateViewModelFactory
 import javax.inject.Inject
 
 class LoginFragment : BaseComposeFragment<LoginViewModel>() {
+    private val args: LoginFragmentArgs by navArgs()
 
     init {
         App.INSTANCE.appComponent.inject(this@LoginFragment)
@@ -41,13 +43,13 @@ class LoginFragment : BaseComposeFragment<LoginViewModel>() {
     override val prepareToolbar: (ToolbarBuilder.() -> Unit) = {}
 
     @Composable
-    override fun SetupLayout() = LoginLayout(viewModel)
+    override fun SetupLayout() = LoginLayout(viewModel, args.privateDestination)
 
     override fun setupViews() {}
 }
 
 @Composable
-fun LoginLayout(loginViewModel: LoginViewModel) {
+fun LoginLayout(loginViewModel: LoginViewModel, privateDestination: Int) {
 
     val nameState = remember { mutableStateOf("") }
     val passwordState = remember { mutableStateOf("") }
@@ -80,7 +82,7 @@ fun LoginLayout(loginViewModel: LoginViewModel) {
             ActionButton(
                 title = stringResource(R.string.login_enter_button),
                 Modifier.padding(top = 53.dp),
-                onClick = { loginViewModel.login(nameState.value, passwordState.value) }
+                onClick = { loginViewModel.login(nameState.value, passwordState.value, if (privateDestination == -1) null else privateDestination) }
             )
             ActionStrokeButton(
                 title = stringResource(R.string.login_registration_button),

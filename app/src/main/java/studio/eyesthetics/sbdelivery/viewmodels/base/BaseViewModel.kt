@@ -42,8 +42,8 @@ abstract class BaseViewModel<T : IViewModelState>(
             Event(content)
     }
 
-    open fun navigate(command: NavigationCommand) {
-        navigation.value = Event(command)
+    open fun navigate(navigationCommand: NavigationCommand) {
+        navigation.value = Event(navigationCommand)
     }
 
     fun requestPermissions(requestPermission: List<String>) {

@@ -1,25 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/main_graph"
-    app:startDestination="@id/loginFragment">
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="studio.eyesthetics.sbdelivery.ui.auth.LoginFragment"
-        android:label="LoginFragment" />
-    <fragment
-        android:id="@+id/recoveryCodeFragment"
-        android:name="studio.eyesthetics.sbdelivery.ui.auth.RecoveryCodeFragment"
-        android:label="RecoveryCodeFragment" />
-    <fragment
-        android:id="@+id/recoveryNewPasswordFragment"
-        android:name="studio.eyesthetics.sbdelivery.ui.auth.RecoveryNewPasswordFragment"
-        android:label="RecoveryNewPasswordFragment" />
+    app:startDestination="@id/homeFragment">
+
     <fragment
         android:id="@+id/homeFragment"
         android:name="studio.eyesthetics.sbdelivery.ui.home.HomeFragment"
         android:label="HomeFragment" />
-    <fragment
-        android:id="@+id/registrationFragment"
-        android:name="studio.eyesthetics.sbdelivery.ui.auth.RegistrationFragment"
-        android:label="RegistrationFragment" />
+
+    <navigation
+        android:id="@+id/auth"
+        app:startDestination="@id/loginFragment"
+        android:label="@string/app_name">
+        <fragment
+            android:id="@+id/loginFragment"
+            android:name="studio.eyesthetics.sbdelivery.ui.auth.LoginFragment"
+            android:label="LoginFragment" >
+            <argument
+                android:name="private_destination"
+                app:argType="integer"
+                android:defaultValue="-1" />
+        </fragment>
+        <fragment
+            android:id="@+id/recoveryCodeFragment"
+            android:name="studio.eyesthetics.sbdelivery.ui.auth.RecoveryCodeFragment"
+            android:label="RecoveryCodeFragment" />
+        <fragment
+            android:id="@+id/recoveryNewPasswordFragment"
+            android:name="studio.eyesthetics.sbdelivery.ui.auth.RecoveryNewPasswordFragment"
+            android:label="RecoveryNewPasswordFragment" />
+        <fragment
+            android:id="@+id/registrationFragment"
+            android:name="studio.eyesthetics.sbdelivery.ui.auth.RegistrationFragment"
+            android:label="RegistrationFragment" />
+
+    </navigation>
+
+    <!--global actions -->
+    <action
+        android:id="@+id/start_login"
+        app:destination="@id/auth"/>
+    <action
+        android:id="@+id/finish_login"
+        app:popUpTo="@id/auth"
+        app:popUpToInclusive="true"/>
 </navigation>

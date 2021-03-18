@@ -1,5 +1,6 @@
 package studio.eyesthetics.sbdelivery.data.repositories.auth
 
+import androidx.lifecycle.LiveData
 import studio.eyesthetics.sbdelivery.data.mappers.LoginResponseToProfileMapper
 import studio.eyesthetics.sbdelivery.data.models.auth.*
 import studio.eyesthetics.sbdelivery.data.network.IAuthApi
@@ -35,4 +36,6 @@ class AuthRepository @Inject constructor(
     override suspend fun recoverySendPassword(recoveryPasswordRequest: RecoveryPasswordRequest) {
         authApi.changePassword(recoveryPasswordRequest)
     }
+
+    override fun isAuth(): LiveData<Boolean> = pref.isAuthLive
 }

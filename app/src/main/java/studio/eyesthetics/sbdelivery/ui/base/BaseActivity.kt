@@ -6,6 +6,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavController
@@ -73,6 +74,16 @@ abstract class BaseActivity<T : BaseViewModel<out IViewModelState>> : AppCompatA
                     command.args,
                     command.options,
                     command.extras
+                )
+            }
+            is NavigationCommand.FinishLogin -> {
+                navController.navigate(R.id.finish_login)
+                command.privateDestination?.let { navController.navigate(it) }
+            }
+            is NavigationCommand.StartLogin -> {
+                navController.navigate(
+                    R.id.start_login,
+                    bundleOf("private_destination" to (command.privateDestination ?: -1))
                 )
             }
         }
