@@ -21,6 +21,7 @@ import studio.eyesthetics.sbdelivery.ui.composeviews.ActionStrokeButton
 import studio.eyesthetics.sbdelivery.ui.theme.grey200
 import studio.eyesthetics.sbdelivery.viewmodels.LoginViewModel
 import studio.eyesthetics.sbdelivery.viewmodels.LoginViewModelFactory
+import studio.eyesthetics.sbdelivery.viewmodels.base.NavigationCommand
 import studio.eyesthetics.sbdelivery.viewmodels.base.SavedStateViewModelFactory
 import javax.inject.Inject
 
@@ -49,6 +50,7 @@ class LoginFragment : BaseComposeFragment<LoginViewModel>() {
 fun LoginLayout(loginViewModel: LoginViewModel) {
 
     val nameState = remember { mutableStateOf("") }
+    val passwordState = remember { mutableStateOf("") }
 
     //val context = LocalContext.current
     Image(painter = painterResource(id = R.drawable.ic_background), contentDescription = "", modifier = Modifier.fillMaxWidth(), contentScale = ContentScale.Crop)
@@ -71,18 +73,21 @@ fun LoginLayout(loginViewModel: LoginViewModel) {
                 title = stringResource(R.string.login_password_label),
                 hint = stringResource(R.string.login_password_hint),
                 modifier = Modifier.padding(top = 16.dp),
-                handler = { }
+                handler = {
+                    passwordState.value = it
+                }
             )
             ActionButton(
                 title = stringResource(R.string.login_enter_button),
                 Modifier.padding(top = 53.dp),
-                onClick = { loginViewModel.showMessage("вход выполнен") }
+                onClick = { loginViewModel.login(nameState.value, passwordState.value) }
             )
             ActionStrokeButton(
                 title = stringResource(R.string.login_registration_button),
                 Modifier.padding(top = 20.dp),
                 onClick = {
-                    //TODO transition to registration
+                    //TODO add last destination
+                    loginViewModel.navigate(NavigationCommand.To(R.id.registrationFragment))
                 }
             )
         }
@@ -93,7 +98,8 @@ fun LoginLayout(loginViewModel: LoginViewModel) {
                 end.linkTo(parent.end)
             },
             onClick = {
-                //TODO transition to restoring password
+                //TODO add last destination
+                loginViewModel.navigate(NavigationCommand.To(R.id.recoveryNewPasswordFragment))
             }
         ) {
             Text(text = stringResource(R.string.login_restore_password_button), style = MaterialTheme.typography.h4, color = grey200)
