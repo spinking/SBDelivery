@@ -9,6 +9,7 @@ import studio.eyesthetics.sbdelivery.extensions.mutableLiveData
 import studio.eyesthetics.sbdelivery.viewmodels.base.BaseViewModel
 import studio.eyesthetics.sbdelivery.viewmodels.base.IViewModelFactory
 import studio.eyesthetics.sbdelivery.viewmodels.base.IViewModelState
+import studio.eyesthetics.sbdelivery.viewmodels.base.Notify
 import javax.inject.Inject
 
 class MenuViewModel(
@@ -16,7 +17,7 @@ class MenuViewModel(
 ) : BaseViewModel<MenuState>(handle, MenuState()) {
 
     init {
-
+        //TODO get profile data and auth status
     }
 
     private val menuItems = mutableLiveData<List<MenuItem>>()
@@ -78,6 +79,10 @@ class MenuViewModel(
             )
         )
     }
+
+    fun handleLogout(message: String, label: String, actionHandler: () -> Unit) {
+        notify(Notify.DialogMessage(message, label, actionHandler))
+    }
 }
 
 class MenuViewModelFactory @Inject constructor(
@@ -88,4 +93,8 @@ class MenuViewModelFactory @Inject constructor(
     }
 }
 
-class MenuState : IViewModelState
+data class MenuState(
+    val isAuth: Boolean = false,
+    val name: String = "",
+    val email: String = ""
+) : IViewModelState

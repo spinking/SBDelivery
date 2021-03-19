@@ -16,6 +16,8 @@
     <string name="button_save">Сохранить</string>
     <string name="login_label_new_password">Повторите пароль</string>
     <string name="button_ok">OK</string>
+    <string name="button_yes">Да</string>
+    <string name="button_no">Нет</string>
 
     <!--HomeFragment-->
     <string name="home_recommend_label">Рекомендуем</string>
@@ -48,4 +50,5 @@
     <string name="menu_orders">Заказы</string>
     <string name="menu_notifications">Уведомления</string>
     <string name="menu_about">О приложении</string>
+    <string name="menu_dialog_description">Вы действительно хотите выйти из аккаунта</string>
 </resources>

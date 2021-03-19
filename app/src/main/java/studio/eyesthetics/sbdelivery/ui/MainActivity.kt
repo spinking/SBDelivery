@@ -117,6 +117,25 @@ class MainActivity : BaseActivity<MainViewModel>() {
                 }
                 builder.show()
             }
+            is Notify.DialogMessage -> {
+                val builder = AlertDialog.Builder(this)
+                builder.apply {
+                    setTitle(notify.actionLabel)
+                    setMessage(notify.message)
+                    setPositiveButton(
+                        getString(R.string.button_yes)
+                    ) { dialog, id ->
+                        notify.actionHandler.invoke()
+                        dialog.dismiss()
+                    }
+                    setNegativeButton(
+                        getString(R.string.button_no)
+                    ) { dialog, id ->
+                        dialog.dismiss()
+                    }
+                }
+                builder.show()
+            }
             is Notify.TextMessage -> {
                 Toast.makeText(this, notify.message, Toast.LENGTH_SHORT).show()
             }
