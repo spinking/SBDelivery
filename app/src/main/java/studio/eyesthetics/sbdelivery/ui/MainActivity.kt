@@ -18,6 +18,7 @@ import studio.eyesthetics.sbdelivery.App
 import studio.eyesthetics.sbdelivery.R
 import studio.eyesthetics.sbdelivery.extensions.hideSoftKeyboard
 import studio.eyesthetics.sbdelivery.ui.base.BaseActivity
+import studio.eyesthetics.sbdelivery.ui.menu.MenuFragment
 import studio.eyesthetics.sbdelivery.viewmodels.MainViewModel
 import studio.eyesthetics.sbdelivery.viewmodels.MainViewModelFactory
 import studio.eyesthetics.sbdelivery.viewmodels.base.SavedStateViewModelFactory
@@ -70,6 +71,10 @@ class MainActivity : BaseActivity<MainViewModel>() {
         btn_back.setOnClickListener {
             this.onBackPressed()
         }
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.menu_container, MenuFragment(), "menuFragment")
+            .commit()
     }
 
     override fun onSupportNavigateUp(): Boolean {

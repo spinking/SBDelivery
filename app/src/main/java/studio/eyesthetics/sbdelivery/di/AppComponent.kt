@@ -8,6 +8,7 @@ import studio.eyesthetics.sbdelivery.di.modules.*
 import studio.eyesthetics.sbdelivery.ui.MainActivity
 import studio.eyesthetics.sbdelivery.ui.auth.*
 import studio.eyesthetics.sbdelivery.ui.home.HomeFragment
+import studio.eyesthetics.sbdelivery.ui.menu.MenuFragment
 import studio.eyesthetics.sbdelivery.ui.splash.SplashActivity
 import studio.eyesthetics.sbdelivery.workers.SyncWorker
 import javax.inject.Singleton
@@ -47,6 +48,7 @@ interface AppComponent {
     fun inject(fragment: RecoveryCodeFragment)
     fun inject(fragment: RecoveryNewPasswordFragment)
     fun inject(fragment: HomeFragment)
+    fun inject(fragment: MenuFragment)
 
     //workers
     fun inject(worker: SyncWorker)

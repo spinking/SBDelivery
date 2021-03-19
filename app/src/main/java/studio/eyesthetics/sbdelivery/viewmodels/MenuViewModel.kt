@@ -1,0 +1,91 @@
+package studio.eyesthetics.sbdelivery.viewmodels
+
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
+import androidx.lifecycle.SavedStateHandle
+import studio.eyesthetics.sbdelivery.R
+import studio.eyesthetics.sbdelivery.data.models.menu.MenuItem
+import studio.eyesthetics.sbdelivery.extensions.mutableLiveData
+import studio.eyesthetics.sbdelivery.viewmodels.base.BaseViewModel
+import studio.eyesthetics.sbdelivery.viewmodels.base.IViewModelFactory
+import studio.eyesthetics.sbdelivery.viewmodels.base.IViewModelState
+import javax.inject.Inject
+
+class MenuViewModel(
+    handle: SavedStateHandle
+) : BaseViewModel<MenuState>(handle, MenuState()) {
+
+    init {
+
+    }
+
+    private val menuItems = mutableLiveData<List<MenuItem>>()
+
+    fun observeMenuItems(owner: LifecycleOwner, onChange: (List<MenuItem>) -> Unit) {
+        menuItems.observe(owner, Observer { onChange(it) })
+    }
+
+    fun getMenuItems() {
+        launchSafety {
+            //TODO get info for badges
+            menuItems.value = createMenuItems()
+        }
+    }
+
+    private fun createMenuItems(): List<MenuItem> {
+        return listOf(
+            MenuItem(
+                R.string.menu_home,
+                R.drawable.ic_home,
+                -1,
+                R.id.homeFragment
+            ),
+            MenuItem(
+                R.string.menu_dishes,
+                R.drawable.ic_bowl_full_of_food,
+                -1,
+                R.id.homeFragment
+            ),
+            MenuItem(
+                R.string.menu_favorite,
+                R.drawable.ic_heart,
+                -1,
+                R.id.homeFragment
+            ),
+            MenuItem(
+                R.string.menu_basket,
+                R.drawable.ic_basket,
+                -1,
+                R.id.homeFragment
+            ),
+            MenuItem(
+                R.string.menu_profile,
+                R.drawable.ic_user,
+                -1,
+                R.id.homeFragment
+            ),
+            MenuItem(
+                R.string.menu_orders,
+                R.drawable.ic_list,
+                -1,
+                R.id.homeFragment
+            ),
+            MenuItem(
+                R.string.menu_notifications,
+                R.drawable.ic_bell,
+                -1,
+                R.id.homeFragment
+            )
+        )
+    }
+}
+
+class MenuViewModelFactory @Inject constructor(
+
+) : IViewModelFactory<MenuViewModel> {
+    override fun create(handle: SavedStateHandle): MenuViewModel {
+        return MenuViewModel(handle)
+    }
+}
+
+class MenuState : IViewModelState
