@@ -18,8 +18,23 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
+    <TextView
+        android:id="@+id/tv_name_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/maxi_margin_30dp"
+        android:layout_marginTop="53dp"
+        style="@style/LabelText"
+        android:textColor="@color/color_text_error"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Некорректный e-mail"
+        tools:visibility="visible"
+        />
+
     <EditText
-        android:id="@+id/ev_name"
+        android:id="@+id/et_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/standart_padding"
@@ -42,11 +57,26 @@
         android:layout_marginTop="@dimen/standart_margin_16dp"
         style="@style/LabelText"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ev_name"
+        app:layout_constraintTop_toBottomOf="@id/et_name"
+        />
+
+    <TextView
+        android:id="@+id/tv_surname_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/maxi_margin_30dp"
+        android:layout_marginTop="@dimen/standart_margin_16dp"
+        style="@style/LabelText"
+        android:textColor="@color/color_text_error"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_name"
+        tools:text="Некорректный e-mail"
+        tools:visibility="visible"
         />
 
     <EditText
-        android:id="@+id/ev_surname"
+        android:id="@+id/et_surname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/standart_padding"
@@ -69,7 +99,7 @@
         android:layout_marginTop="@dimen/standart_margin_16dp"
         style="@style/LabelText"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ev_surname"
+        app:layout_constraintTop_toBottomOf="@id/et_surname"
         />
 
     <TextView
@@ -82,13 +112,13 @@
         android:textColor="@color/color_text_error"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ev_surname"
+        app:layout_constraintTop_toBottomOf="@id/et_surname"
         tools:text="Некорректный e-mail"
         tools:visibility="visible"
         />
 
     <EditText
-        android:id="@+id/ev_email"
+        android:id="@+id/et_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/standart_padding"
@@ -113,11 +143,26 @@
         android:layout_marginTop="@dimen/standart_margin_16dp"
         style="@style/LabelText"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ev_email"
+        app:layout_constraintTop_toBottomOf="@id/et_email"
+        />
+
+    <TextView
+        android:id="@+id/tv_password_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/maxi_margin_30dp"
+        android:layout_marginTop="@dimen/standart_margin_16dp"
+        style="@style/LabelText"
+        android:textColor="@color/color_text_error"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_email"
+        tools:text="Некорректный e-mail"
+        tools:visibility="visible"
         />
 
     <EditText
-        android:id="@+id/ev_password"
+        android:id="@+id/et_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/standart_padding"
@@ -143,11 +188,10 @@
         android:layout_marginEnd="@dimen/maxi_margin_30dp"
         android:layout_marginTop="53dp"
         android:background="@drawable/filled_button"
-        android:stateListAnimator="@null"
         android:gravity="center"
         android:text="@string/registration_button"
         style="@style/LightMediumTitle"
-        app:layout_constraintTop_toBottomOf="@id/ev_password"
+        app:layout_constraintTop_toBottomOf="@id/et_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         />

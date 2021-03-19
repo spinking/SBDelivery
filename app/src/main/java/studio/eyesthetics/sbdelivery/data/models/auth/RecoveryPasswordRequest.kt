@@ -6,5 +6,6 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class RecoveryPasswordRequest(
     val email: String,
-    val code: Int
+    val code: String,
+    val password: String
 ) : Parcelable

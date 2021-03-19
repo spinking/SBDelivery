@@ -56,6 +56,8 @@ class MainActivity : BaseActivity<MainViewModel>() {
         }
         toolbar.navigationIcon = null
 
+        if (savedInstanceState != null) return
+
         navController = Navigation.findNavController(this,
             R.id.nav_host_fragment
         )

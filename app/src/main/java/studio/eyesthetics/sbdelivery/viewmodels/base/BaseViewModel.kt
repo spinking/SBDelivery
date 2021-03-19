@@ -42,8 +42,8 @@ abstract class BaseViewModel<T : IViewModelState>(
             Event(content)
     }
 
-    open fun navigate(command: NavigationCommand) {
-        navigation.value = Event(command)
+    open fun navigate(navigationCommand: NavigationCommand) {
+        navigation.value = Event(navigationCommand)
     }
 
     fun requestPermissions(requestPermission: List<String>) {
@@ -201,6 +201,9 @@ sealed class NavigationCommand() {
     ) : NavigationCommand()
     data class ReplaceAuth(
         val privateDestination: Int? = null
+    ) : NavigationCommand()
+    data class PopUpToDestination(
+        val currentDestination: Int? = null
     ) : NavigationCommand()
 }
 enum class Loading {

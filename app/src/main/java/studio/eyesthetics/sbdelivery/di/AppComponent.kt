@@ -6,8 +6,7 @@ import dagger.Component
 import studio.eyesthetics.sbdelivery.App
 import studio.eyesthetics.sbdelivery.di.modules.*
 import studio.eyesthetics.sbdelivery.ui.MainActivity
-import studio.eyesthetics.sbdelivery.ui.auth.LoginFragment
-import studio.eyesthetics.sbdelivery.ui.auth.RegistrationFragment
+import studio.eyesthetics.sbdelivery.ui.auth.*
 import studio.eyesthetics.sbdelivery.ui.home.HomeFragment
 import studio.eyesthetics.sbdelivery.ui.splash.SplashActivity
 import studio.eyesthetics.sbdelivery.workers.SyncWorker
@@ -44,6 +43,9 @@ interface AppComponent {
     fun inject(activity: SplashActivity)
     fun inject(fragment: LoginFragment)
     fun inject(fragment: RegistrationFragment)
+    fun inject(fragment: RecoveryPasswordFragment)
+    fun inject(fragment: RecoveryCodeFragment)
+    fun inject(fragment: RecoveryNewPasswordFragment)
     fun inject(fragment: HomeFragment)
 
     //workers

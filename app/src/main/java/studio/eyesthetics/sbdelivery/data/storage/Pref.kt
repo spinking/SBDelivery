@@ -29,6 +29,7 @@ class Pref @Inject constructor(
 
     var accessToken by PrefDelegate("", mainPrefs)
     var refreshToken by PrefDelegate("", mainPrefs)
+    var recoveryCode by PrefDelegate("", mainPrefs)
 
     var profile: Profile? by PrefObjDelegate(moshi.adapter(Profile::class.java))
     val profileLive: LiveData<Profile?> by PrefLiveObjDelegate("profile", moshi.adapter(Profile::class.java), mainPrefs)

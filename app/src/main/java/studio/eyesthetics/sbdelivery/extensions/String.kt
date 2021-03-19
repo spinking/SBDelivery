@@ -51,6 +51,14 @@ fun String.validEmail():Boolean {
 
 fun String.formatToRub(): String = "$this ₽"
 
+fun String.isValidEmail(): Boolean {
+    return android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
+}
+
+fun String.isValidPassword(): Boolean = this.length > 5
+
+fun String.isValidName(): Boolean = this.matches("^[a-zA-Z]+$".toRegex())
+
 /*
 fun String.phoneMask() : String {
     val countryCode = this.substring(0, 1)

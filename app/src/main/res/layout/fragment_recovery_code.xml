@@ -26,7 +26,7 @@
         app:layout_constraintBottom_toBottomOf="@id/guideline"
         app:layout_constraintStart_toStartOf="parent" />
 
-<!--        <com.poovam.pinedittextfield.SquarePinField
+        <com.poovam.pinedittextfield.SquarePinField
         android:id="@+id/restore_code"
         android:layout_width="match_parent"
         android:layout_height="43dp"
@@ -57,7 +57,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/guideline"
-        tools:text="761990"
-        />-->
+        tools:text="7619"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,8 +4,8 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class EnterResponse(
-    val id: Int,
+data class LoginResponse(
+    val id: String,
     val firstName: String,
     val lastName: String,
     val email: String,

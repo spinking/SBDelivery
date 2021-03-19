@@ -6,6 +6,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavController
@@ -65,15 +66,28 @@ abstract class BaseActivity<T : BaseViewModel<out IViewModelState>> : AppCompatA
         }
     }
 
-    private fun subscribeOnNavigation(command: NavigationCommand) {
-        when (command) {
+    private fun subscribeOnNavigation(navigationCommand: NavigationCommand) {
+        when (navigationCommand) {
             is NavigationCommand.To -> {
                 navController.navigate(
-                    command.destination,
-                    command.args,
-                    command.options,
-                    command.extras
+                    navigationCommand.destination,
+                    navigationCommand.args,
+                    navigationCommand.options,
+                    navigationCommand.extras
                 )
+            }
+            is NavigationCommand.FinishLogin -> {
+                navController.navigate(R.id.finish_login)
+                navigationCommand.privateDestination?.let { navController.navigate(it) }
+            }
+            is NavigationCommand.StartLogin -> {
+                navController.navigate(
+                    R.id.start_login,
+                    bundleOf("private_destination" to (navigationCommand.privateDestination ?: -1))
+                )
+            }
+            is NavigationCommand.PopUpToDestination -> {
+                navigationCommand.currentDestination?.let { navController.popBackStack(navigationCommand.currentDestination, false) }
             }
         }
     }

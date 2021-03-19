@@ -8,8 +8,8 @@ import studio.eyesthetics.sbdelivery.data.models.auth.*
 interface IAuthApi {
     @POST("auth/login")
     suspend fun login(
-        @Body enterRequest: EnterRequest
-    ): EnterResponse
+        @Body loginRequest: LoginRequest
+    ): LoginResponse
 
     @POST("auth/register")
     suspend fun register(
