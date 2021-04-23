@@ -45,7 +45,7 @@ class MenuViewModel(
                 R.string.menu_dishes,
                 R.drawable.ic_bowl_full_of_food,
                 -1,
-                R.id.homeFragment
+                R.id.categoriesFragment
             ),
             MenuItem(
                 R.string.menu_favorite,

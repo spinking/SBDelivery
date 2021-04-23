@@ -1,6 +1,8 @@
 package studio.eyesthetics.sbdelivery.data.repositories.categories
 
+import androidx.lifecycle.LiveData
 import studio.eyesthetics.sbdelivery.data.database.dao.CategoriesDao
+import studio.eyesthetics.sbdelivery.data.database.entities.CategoryEntity
 import studio.eyesthetics.sbdelivery.data.mappers.CategoryToCategoryEntityMapper
 import studio.eyesthetics.sbdelivery.data.models.categories.Category
 import studio.eyesthetics.sbdelivery.data.network.ICategoryApi
@@ -15,6 +17,10 @@ class CategoryRepository @Inject constructor(
         val items = categoryApi.getCategories(offset, limit)
         if (items.isNotEmpty()) insertCategoriesToDb(items)
         return items.size
+    }
+
+    override fun getCategories(): LiveData<List<CategoryEntity>> {
+        return categoriesDao.getCategories()
     }
 
     private suspend fun insertCategoriesToDb(categories: List<Category>) {

@@ -6,7 +6,11 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="studio.eyesthetics.sbdelivery.ui.home.HomeFragment"
-        android:label="HomeFragment" />
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_categoriesFragment"
+            app:destination="@id/categoriesFragment" />
+    </fragment>
 
     <navigation
         android:id="@+id/auth"
@@ -68,4 +72,8 @@
         android:id="@+id/finish_login"
         app:popUpTo="@id/auth"
         app:popUpToInclusive="true"/>
+    <fragment
+        android:id="@+id/categoriesFragment"
+        android:name="studio.eyesthetics.sbdelivery.ui.categories.CategoriesFragment"
+        android:label="CategoriesFragment" />
 </navigation>
