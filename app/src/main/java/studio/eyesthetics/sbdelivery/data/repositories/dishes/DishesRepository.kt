@@ -1,6 +1,7 @@
 package studio.eyesthetics.sbdelivery.data.repositories.dishes
 
 import androidx.lifecycle.LiveData
+import androidx.paging.DataSource
 import studio.eyesthetics.sbdelivery.data.database.dao.DishesDao
 import studio.eyesthetics.sbdelivery.data.database.dao.RecommendIdDao
 import studio.eyesthetics.sbdelivery.data.database.entities.DishItem
@@ -20,6 +21,12 @@ class DishesRepository @Inject constructor(
     override suspend fun loadDishesFromNetwork(offset: Int, limit: Int) {
         val items = dishesApi.getDishes(offset, limit)
         if (items.isNotEmpty()) insertDishesToDb(items)
+    }
+
+    override suspend fun loadDishesFromNetworkById(offset: Int, limit: Int, categoryId: String) {
+        val response = dishesApi.getDishes(offset, limit, categoryId)
+        if (response.isNotEmpty())
+            dishesDao.insert(dishEntityMapper.mapFromListEntity(response))
     }
 
     override suspend fun loadRecommendIdsFromNetwork() {
@@ -48,5 +55,9 @@ class DishesRepository @Inject constructor(
 
     override fun getPopularDishes(): LiveData<List<DishItem>> {
         return dishesDao.findPopularDishes()
+    }
+
+    override fun getDishes(categoryId: String): DataSource.Factory<Int, DishItem> {
+        return dishesDao.findDishesByCategoryId(categoryId)
     }
 }
