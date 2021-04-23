@@ -1,6 +1,8 @@
 package studio.eyesthetics.sbdelivery.data.database.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
+import androidx.room.Query
 import androidx.room.Transaction
 import studio.eyesthetics.sbdelivery.data.database.entities.CategoryEntity
 
@@ -13,4 +15,7 @@ interface CategoriesDao : BaseDao<CategoryEntity> {
             .filterNotNull()
             .also { if (it.isNotEmpty()) update(it) }
     }
+
+    @Query("SELECT * FROM categories")
+    fun getCategories(): LiveData<List<CategoryEntity>>
 }
