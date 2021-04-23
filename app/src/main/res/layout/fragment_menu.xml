@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_primary"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <include
+        android:id="@+id/header"
+        android:layout_width="0dp"
+        android:layout_height="170dp"
+        layout="@layout/nav_header"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_menu"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintBottom_toTopOf="@id/btn_about"
+        />
+
+    <TextView
+        android:id="@+id/btn_about"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/standart_margin_20dp"
+        android:layout_marginEnd="@dimen/standart_margin_20dp"
+        android:layout_marginBottom="@dimen/mini_margin_10dp"
+        android:paddingTop="@dimen/standart_margin_16dp"
+        android:paddingBottom="@dimen/standart_margin_16dp"
+        android:text="@string/menu_about"
+        android:drawablePadding="32dp"
+        style="@style/Text.White"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:drawableStartCompat="@drawable/ic_sb"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

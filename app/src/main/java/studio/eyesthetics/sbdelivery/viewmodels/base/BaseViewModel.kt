@@ -182,6 +182,12 @@ sealed class Notify() {
         val errLabel: String? = null,
         val errHandler: (() -> Unit)? = null
     ) : Notify()
+
+    data class DialogMessage(
+        override val message: String,
+        val actionLabel: String,
+        val actionHandler: (() -> Unit)
+    ) : Notify()
 }
 
 sealed class NavigationCommand() {
