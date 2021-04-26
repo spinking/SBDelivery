@@ -19,15 +19,14 @@ class DishDelegate(
     private val addToFavoriteClickListener: (String, Boolean) -> Unit
 ) : BaseAdapterDelegate<DishItem>() {
     override val layoutRes: Int = R.layout.item_dish
-    private var currentWidht: Int = 0
+    private var currentWidth: Int = 0
 
-    //TODO set items width
     override fun createHolder(view: View): ViewHolder {
-        currentWidht = ((displayWidth - 48.dpToPx()) / 2)
+        currentWidth = ((displayWidth - 48.dpToPx()) / 2)
         val imageView = view.findViewById<ImageView>(R.id.iv_dish)
         val imageParams = imageView.layoutParams
-        imageParams.width = currentWidht
-        imageParams.height = currentWidht
+        imageParams.width = currentWidth
+        imageParams.height = currentWidth
         imageView.layoutParams = imageParams
         return DishViewHolder(view)
     }

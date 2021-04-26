@@ -4,7 +4,9 @@ import androidx.lifecycle.*
 import androidx.paging.DataSource
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
+import studio.eyesthetics.sbdelivery.data.database.entities.CategoryEntity
 import studio.eyesthetics.sbdelivery.data.database.entities.DishItem
+import studio.eyesthetics.sbdelivery.data.repositories.categories.ICategoryRepository
 import studio.eyesthetics.sbdelivery.data.repositories.dishes.IDishesRepository
 import studio.eyesthetics.sbdelivery.viewmodels.base.BaseViewModel
 import studio.eyesthetics.sbdelivery.viewmodels.base.IViewModelFactory
@@ -14,7 +16,8 @@ import javax.inject.Inject
 
 class CategoryViewModel(
     handle: SavedStateHandle,
-    private val dishesRepository: IDishesRepository
+    private val dishesRepository: IDishesRepository,
+    private val categoryRepository: ICategoryRepository
 ) : BaseViewModel<CategoryState>(handle, CategoryState()) {
 
     private var isLoadingInitial = false
@@ -24,6 +27,14 @@ class CategoryViewModel(
         state.map { it.categoryId }.distinctUntilChanged()
     ) {
         buildPagedList(dishesRepository.getDishes(it))
+    }
+
+    private val categories = MutableLiveData<List<CategoryEntity>>()
+
+    private fun updateCategories() {
+        val categories = categoryRepository.getCategoriesByParentId(currentState.categoryId)
+        if (categories.isNotEmpty()) updateState { it.copy(parentCategory = currentState.categoryId) }
+        this.categories.value = categories
     }
 
     private val listConfig by lazy {
@@ -72,22 +83,30 @@ class CategoryViewModel(
         dishes.observe(owner, Observer { onChange(it) })
     }
 
+    fun observeCategories(owner: LifecycleOwner, onChange: (List<CategoryEntity>) -> Unit) {
+        categories.observe(owner, Observer { onChange(it) })
+    }
+
     fun handleCategoryId(categoryId: String) {
         updateState { it.copy(categoryId = categoryId) }
+        if (currentState.parentCategory.isEmpty())
+            updateCategories()
     }
 }
 
 class CategoryViewModelFactory @Inject constructor(
-    private val dishesRepository: IDishesRepository
+    private val dishesRepository: IDishesRepository,
+    private val categoryRepository: ICategoryRepository
 ) : IViewModelFactory<CategoryViewModel> {
     override fun create(handle: SavedStateHandle): CategoryViewModel {
-        return CategoryViewModel(handle, dishesRepository)
+        return CategoryViewModel(handle, dishesRepository, categoryRepository)
     }
 }
 
 data class CategoryState(
     val categoryId: String = "",
-    val listIsEmpty: Boolean = false
+    val listIsEmpty: Boolean = false,
+    val parentCategory: String = ""
 ) : IViewModelState
 
 class DishBoundaryCallback(

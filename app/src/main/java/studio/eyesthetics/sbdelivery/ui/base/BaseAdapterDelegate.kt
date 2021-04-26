@@ -10,6 +10,7 @@ import kotlinx.android.extensions.LayoutContainer
 abstract class BaseAdapterDelegate<T> : AbsListItemAdapterDelegate<T, T, BaseAdapterDelegate.ViewHolder>() {
     protected var listSize = 0
     protected var currentPosition = 0
+    protected var items: List<T> = emptyList()
 
     abstract val layoutRes: Int
     abstract fun createHolder(view: View): ViewHolder
@@ -30,6 +31,7 @@ abstract class BaseAdapterDelegate<T> : AbsListItemAdapterDelegate<T, T, BaseAda
     override fun isForViewType(item: T, items: MutableList<T>, position: Int): Boolean {
         listSize = items.size
         currentPosition = position
+        this.items = items
         return isForItem(item, items, position)
     }
 }

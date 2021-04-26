@@ -12,6 +12,7 @@ import studio.eyesthetics.sbdelivery.ui.adapterdelegates.TabCategoryDelegate
 import studio.eyesthetics.sbdelivery.ui.adapterdelegates.decorators.VerticalItemDecorator
 import studio.eyesthetics.sbdelivery.ui.adapterdelegates.diffcallbacks.CategoryDiffCallback
 import studio.eyesthetics.sbdelivery.ui.adapterdelegates.diffcallbacks.DishDiffCallback
+import studio.eyesthetics.sbdelivery.ui.adapterdelegates.managers.CategoryClickManager
 import studio.eyesthetics.sbdelivery.ui.base.BaseFragment
 import studio.eyesthetics.sbdelivery.ui.base.DelegationAdapter
 import studio.eyesthetics.sbdelivery.ui.base.DelegationPageListAdapter
@@ -49,13 +50,19 @@ class CategoryFragment : BaseFragment<CategoryViewModel>() {
             dishesAdapter.submitList(it)
         }
 
+        viewModel.observeCategories(viewLifecycleOwner) {
+            categoriesAdapter.items = it
+        }
+
         if (args.categoryId != null)
             viewModel.handleCategoryId(args.categoryId ?: "")
     }
 
     private fun initAdapters() {
         val displayWidth = resources.displayMetrics.widthPixels
-        categoriesAdapter.delegatesManager.addDelegate(TabCategoryDelegate())
+        categoriesAdapter.delegatesManager.addDelegate(TabCategoryDelegate(displayWidth ,CategoryClickManager()) {
+            viewModel.handleCategoryId(it)
+        })
         dishesAdapter.delegatesManager.addDelegate(DishDelegate(displayWidth, {
             //TODO transition to dish
         }, {
