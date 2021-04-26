@@ -26,7 +26,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/standart_margin_16dp"
-        android:layout_marginTop="@dimen/maxi_margin_38dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rv_categories"

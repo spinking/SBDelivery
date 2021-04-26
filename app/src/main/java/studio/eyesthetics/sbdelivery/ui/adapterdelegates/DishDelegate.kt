@@ -8,6 +8,7 @@ import coil.request.CachePolicy
 import kotlinx.android.synthetic.main.item_dish.*
 import studio.eyesthetics.sbdelivery.R
 import studio.eyesthetics.sbdelivery.data.database.entities.DishItem
+import studio.eyesthetics.sbdelivery.extensions.dpToPx
 import studio.eyesthetics.sbdelivery.extensions.formatToRub
 import studio.eyesthetics.sbdelivery.ui.base.BaseAdapterDelegate
 
@@ -18,9 +19,18 @@ class DishDelegate(
     private val addToFavoriteClickListener: (String, Boolean) -> Unit
 ) : BaseAdapterDelegate<DishItem>() {
     override val layoutRes: Int = R.layout.item_dish
+    private var currentWidht: Int = 0
 
     //TODO set items width
-    override fun createHolder(view: View): ViewHolder = DishViewHolder(view)
+    override fun createHolder(view: View): ViewHolder {
+        currentWidht = ((displayWidth - 48.dpToPx()) / 2)
+        val imageView = view.findViewById<ImageView>(R.id.iv_dish)
+        val imageParams = imageView.layoutParams
+        imageParams.width = currentWidht
+        imageParams.height = currentWidht
+        imageView.layoutParams = imageParams
+        return DishViewHolder(view)
+    }
 
     override fun onBindViewHolder(item: DishItem, holder: ViewHolder, payloads: MutableList<Any>) {
         val viewHolder = holder as DishViewHolder

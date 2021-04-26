@@ -9,6 +9,7 @@ import studio.eyesthetics.sbdelivery.App
 import studio.eyesthetics.sbdelivery.R
 import studio.eyesthetics.sbdelivery.ui.adapterdelegates.DishDelegate
 import studio.eyesthetics.sbdelivery.ui.adapterdelegates.TabCategoryDelegate
+import studio.eyesthetics.sbdelivery.ui.adapterdelegates.decorators.VerticalItemDecorator
 import studio.eyesthetics.sbdelivery.ui.adapterdelegates.diffcallbacks.CategoryDiffCallback
 import studio.eyesthetics.sbdelivery.ui.adapterdelegates.diffcallbacks.DishDiffCallback
 import studio.eyesthetics.sbdelivery.ui.base.BaseFragment
@@ -70,6 +71,7 @@ class CategoryFragment : BaseFragment<CategoryViewModel>() {
         }
 
         rv_dishes.apply {
+            addItemDecoration(VerticalItemDecorator())
             layoutManager = GridLayoutManager(requireContext(), 2)
             adapter = dishesAdapter
         }
