@@ -1,5 +1,6 @@
 package studio.eyesthetics.sbdelivery.ui.categories.category
 
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
@@ -13,12 +14,13 @@ import studio.eyesthetics.sbdelivery.ui.adapterdelegates.decorators.VerticalItem
 import studio.eyesthetics.sbdelivery.ui.adapterdelegates.diffcallbacks.CategoryDiffCallback
 import studio.eyesthetics.sbdelivery.ui.adapterdelegates.diffcallbacks.DishDiffCallback
 import studio.eyesthetics.sbdelivery.ui.adapterdelegates.managers.CategoryClickManager
-import studio.eyesthetics.sbdelivery.ui.base.BaseFragment
-import studio.eyesthetics.sbdelivery.ui.base.DelegationAdapter
-import studio.eyesthetics.sbdelivery.ui.base.DelegationPageListAdapter
-import studio.eyesthetics.sbdelivery.ui.base.ToolbarBuilder
+import studio.eyesthetics.sbdelivery.ui.base.*
+import studio.eyesthetics.sbdelivery.ui.delegates.RenderProp
+import studio.eyesthetics.sbdelivery.viewmodels.CategoryState
 import studio.eyesthetics.sbdelivery.viewmodels.CategoryViewModel
 import studio.eyesthetics.sbdelivery.viewmodels.CategoryViewModelFactory
+import studio.eyesthetics.sbdelivery.viewmodels.SortType
+import studio.eyesthetics.sbdelivery.viewmodels.base.IViewModelState
 import studio.eyesthetics.sbdelivery.viewmodels.base.SavedStateViewModelFactory
 import javax.inject.Inject
 
@@ -35,15 +37,24 @@ class CategoryFragment : BaseFragment<CategoryViewModel>() {
     override val viewModel: CategoryViewModel by viewModels {
         SavedStateViewModelFactory(categoryViewModelFactory, this)
     }
+    override val binding: CategoryBinding by lazy { CategoryBinding() }
     private val categoriesDiffCallback = CategoryDiffCallback()
     private val dishesDiffCallback = DishDiffCallback()
     private val categoriesAdapter by lazy { DelegationAdapter(categoriesDiffCallback) }
     private val dishesAdapter by lazy { DelegationPageListAdapter(dishesDiffCallback) }
     private val args: CategoryFragmentArgs by navArgs()
 
-    override val prepareToolbar: (ToolbarBuilder.() -> Unit) = {}
+    override val prepareToolbar: (ToolbarBuilder.() -> Unit) = {
+        this.addMenuItem(MenuItemHolder(
+            getString(R.string.menu_sort),
+            R.id.menu_sort,
+            R.drawable.ic_sort,
+            clickListener = { showSortDialog() }
+        ))
+    }
 
     override fun setupViews() {
+        setHasOptionsMenu(true)
         initAdapters()
 
         viewModel.observeDishes(viewLifecycleOwner) {
@@ -81,6 +92,26 @@ class CategoryFragment : BaseFragment<CategoryViewModel>() {
             addItemDecoration(VerticalItemDecorator())
             layoutManager = GridLayoutManager(requireContext(), 2)
             adapter = dishesAdapter
+        }
+    }
+
+    private fun showSortDialog() {
+        val items = resources.getStringArray(R.array.sort)
+        val dialog = AlertDialog.Builder(requireContext())
+            .setSingleChoiceItems(items, binding.sortType.position) { dialog, position ->
+                val sortType = SortType.values().filter { it.position == position }[0]
+                viewModel.handleSort(sortType)
+                dialog.dismiss()
+            }
+            .create()
+        dialog.show()
+    }
+
+    inner class CategoryBinding : Binding() {
+        var sortType: SortType by RenderProp(SortType.ALPHABET_ASC)
+        override fun bind(data: IViewModelState) {
+            data as CategoryState
+            sortType = data.sortType
         }
     }
 }

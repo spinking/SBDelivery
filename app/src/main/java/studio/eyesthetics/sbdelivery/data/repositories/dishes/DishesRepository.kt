@@ -10,6 +10,7 @@ import studio.eyesthetics.sbdelivery.data.mappers.DishToDishEntityMapper
 import studio.eyesthetics.sbdelivery.data.models.dishes.Dish
 import studio.eyesthetics.sbdelivery.data.network.IDishesApi
 import studio.eyesthetics.sbdelivery.extensions.mutableLiveData
+import studio.eyesthetics.sbdelivery.viewmodels.SortType
 import javax.inject.Inject
 
 class DishesRepository @Inject constructor(
@@ -57,7 +58,14 @@ class DishesRepository @Inject constructor(
         return dishesDao.findPopularDishes()
     }
 
-    override fun getDishes(categoryId: String): DataSource.Factory<Int, DishItem> {
-        return dishesDao.findDishesByCategoryId(categoryId)
+    override fun getDishes(categoryId: String, sortType: SortType): DataSource.Factory<Int, DishItem> {
+        return when(sortType) {
+            SortType.ALPHABET_DESC -> dishesDao.findDishesByCategoryIdNameDesc(categoryId)
+            SortType.POPULAR_ASC -> dishesDao.findDishesByCategoryIdLikesAsc(categoryId)
+            SortType.POPULAR_DESC -> dishesDao.findDishesByCategoryIdLikesDesc(categoryId)
+            SortType.RATING_ASC -> dishesDao.findDishesByCategoryIdRatingAsc(categoryId)
+            SortType.RATING_DESC -> dishesDao.findDishesByCategoryIdRatingDesc(categoryId)
+            else -> dishesDao.findDishesByCategoryIdNameAsc(categoryId)
+        }
     }
 }

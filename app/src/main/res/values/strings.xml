@@ -18,6 +18,7 @@
     <string name="button_ok">OK</string>
     <string name="button_yes">Да</string>
     <string name="button_no">Нет</string>
+    <string name="menu_sort">Сортировка</string>
 
     <!--HomeFragment-->
     <string name="home_recommend_label">Рекомендуем</string>
@@ -51,4 +52,14 @@
     <string name="menu_notifications">Уведомления</string>
     <string name="menu_about">О приложении</string>
     <string name="menu_dialog_description">Вы действительно хотите выйти из аккаунта</string>
+
+    <!--CategoryFragment-->
+    <string-array name="sort">
+        <item>По алфавиту(по возр.)</item>
+        <item>По алфавиту(по убыв.)</item>
+        <item>По популярности(по возр.)</item>
+        <item>По популярности(по убыв.)</item>
+        <item>По по рейтингу(по возр.)</item>
+        <item>По по рейтингу(по убыв.)</item>
+    </string-array>
 </resources>

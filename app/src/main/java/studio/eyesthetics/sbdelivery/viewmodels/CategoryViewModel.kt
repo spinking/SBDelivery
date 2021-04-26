@@ -8,6 +8,7 @@ import studio.eyesthetics.sbdelivery.data.database.entities.CategoryEntity
 import studio.eyesthetics.sbdelivery.data.database.entities.DishItem
 import studio.eyesthetics.sbdelivery.data.repositories.categories.ICategoryRepository
 import studio.eyesthetics.sbdelivery.data.repositories.dishes.IDishesRepository
+import studio.eyesthetics.sbdelivery.data.storage.Pref
 import studio.eyesthetics.sbdelivery.viewmodels.base.BaseViewModel
 import studio.eyesthetics.sbdelivery.viewmodels.base.IViewModelFactory
 import studio.eyesthetics.sbdelivery.viewmodels.base.IViewModelState
@@ -17,16 +18,23 @@ import javax.inject.Inject
 class CategoryViewModel(
     handle: SavedStateHandle,
     private val dishesRepository: IDishesRepository,
-    private val categoryRepository: ICategoryRepository
+    private val categoryRepository: ICategoryRepository,
+    private val pref: Pref
 ) : BaseViewModel<CategoryState>(handle, CategoryState()) {
+
+    init {
+        subscribeOnDataSource(pref.sortTypeLive) { sortType, state ->
+            state.copy(sortType = sortType ?: SortType.ALPHABET_ASC)
+        }
+    }
 
     private var isLoadingInitial = false
     private var isLoadingAfter = false
 
     private val dishes = Transformations.switchMap(
-        state.map { it.categoryId }.distinctUntilChanged()
+        state.map { it.categoryId to it.sortType }.distinctUntilChanged()
     ) {
-        buildPagedList(dishesRepository.getDishes(it))
+        buildPagedList(dishesRepository.getDishes(it.first, it.second))
     }
 
     private val categories = MutableLiveData<List<CategoryEntity>>()
@@ -92,21 +100,27 @@ class CategoryViewModel(
         if (currentState.parentCategory.isEmpty())
             updateCategories()
     }
+
+    fun handleSort(sortType: SortType) {
+        pref.sortType = sortType
+    }
 }
 
 class CategoryViewModelFactory @Inject constructor(
     private val dishesRepository: IDishesRepository,
-    private val categoryRepository: ICategoryRepository
+    private val categoryRepository: ICategoryRepository,
+    private val pref: Pref
 ) : IViewModelFactory<CategoryViewModel> {
     override fun create(handle: SavedStateHandle): CategoryViewModel {
-        return CategoryViewModel(handle, dishesRepository, categoryRepository)
+        return CategoryViewModel(handle, dishesRepository, categoryRepository, pref)
     }
 }
 
 data class CategoryState(
     val categoryId: String = "",
     val listIsEmpty: Boolean = false,
-    val parentCategory: String = ""
+    val parentCategory: String = "",
+    val sortType: SortType = SortType.ALPHABET_ASC
 ) : IViewModelState
 
 class DishBoundaryCallback(
@@ -120,4 +134,13 @@ class DishBoundaryCallback(
     override fun onItemAtEndLoaded(itemAtEnd: DishItem) {
         itemAtEndHandle(itemAtEnd)
     }
+}
+
+enum class SortType(val position: Int) {
+    ALPHABET_ASC(position = 0),
+    ALPHABET_DESC(position = 1),
+    POPULAR_ASC(position = 2),
+    POPULAR_DESC(position = 3),
+    RATING_ASC(position = 4),
+    RATING_DESC(position = 5)
 }

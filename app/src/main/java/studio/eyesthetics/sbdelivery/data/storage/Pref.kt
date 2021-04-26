@@ -9,6 +9,7 @@ import studio.eyesthetics.sbdelivery.data.delegates.PrefLiveDelegate
 import studio.eyesthetics.sbdelivery.data.delegates.PrefLiveObjDelegate
 import studio.eyesthetics.sbdelivery.data.delegates.PrefObjDelegate
 import studio.eyesthetics.sbdelivery.data.models.profile.Profile
+import studio.eyesthetics.sbdelivery.viewmodels.SortType
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -30,9 +31,11 @@ class Pref @Inject constructor(
     var accessToken by PrefDelegate("", mainPrefs)
     var refreshToken by PrefDelegate("", mainPrefs)
     var recoveryCode by PrefDelegate("", mainPrefs)
+    var sortType by PrefObjDelegate(moshi.adapter(SortType::class.java))
 
     var profile: Profile? by PrefObjDelegate(moshi.adapter(Profile::class.java))
     val profileLive: LiveData<Profile?> by PrefLiveObjDelegate("profile", moshi.adapter(Profile::class.java), mainPrefs)
+    val sortTypeLive: LiveData<SortType?> by PrefLiveObjDelegate("sortType", moshi.adapter(SortType::class.java), mainPrefs)
 
     companion object {
         private const val MAIN_PREFS = "main_prefs"

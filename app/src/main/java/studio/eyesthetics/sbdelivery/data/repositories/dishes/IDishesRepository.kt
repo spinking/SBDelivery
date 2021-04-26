@@ -3,6 +3,7 @@ package studio.eyesthetics.sbdelivery.data.repositories.dishes
 import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import studio.eyesthetics.sbdelivery.data.database.entities.DishItem
+import studio.eyesthetics.sbdelivery.viewmodels.SortType
 
 interface IDishesRepository {
     suspend fun loadDishesFromNetwork(offset: Int, limit: Int)
@@ -13,5 +14,5 @@ interface IDishesRepository {
     fun getBestDishes(): LiveData<List<DishItem>>
     fun getPopularDishes(): LiveData<List<DishItem>>
 
-    fun getDishes(categoryId: String): DataSource.Factory<Int, DishItem>
+    fun getDishes(categoryId: String, sortType: SortType): DataSource.Factory<Int, DishItem>
 }
