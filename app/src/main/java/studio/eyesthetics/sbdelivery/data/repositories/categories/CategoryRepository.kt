@@ -23,6 +23,10 @@ class CategoryRepository @Inject constructor(
         return categoriesDao.getCategories()
     }
 
+    override fun getCategoriesByParentId(categoryId: String): List<CategoryEntity> {
+        return categoriesDao.getCategoriesByParentId(categoryId)
+    }
+
     private suspend fun insertCategoriesToDb(categories: List<Category>) {
         categoriesDao.upsert(categoriesMapper.mapFromListEntity(categories))
     }

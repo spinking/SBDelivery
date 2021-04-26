@@ -75,5 +75,19 @@
     <fragment
         android:id="@+id/categoriesFragment"
         android:name="studio.eyesthetics.sbdelivery.ui.categories.CategoriesFragment"
-        android:label="CategoriesFragment" />
+        android:label="CategoriesFragment" >
+        <action
+            android:id="@+id/action_categoriesFragment_to_categoryFragment"
+            app:destination="@id/categoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoryFragment"
+        android:name="studio.eyesthetics.sbdelivery.ui.categories.category.CategoryFragment"
+        android:label="CategoryFragment" >
+        <argument
+            android:name="categoryId"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
 </navigation>

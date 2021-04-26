@@ -11,6 +11,13 @@ interface IDishesApi {
         @Query("limit") limit: Int
     ): List<Dish>
 
+    @GET("dishes")
+    suspend fun getDishes(
+        @Query("offset") offset: Int,
+        @Query("limit") limit: Int,
+        @Query("id") categoryId: String
+    ): List<Dish>
+
     @GET("main/recommend")
     suspend fun getRecommendDishesIds(): List<String>
 }

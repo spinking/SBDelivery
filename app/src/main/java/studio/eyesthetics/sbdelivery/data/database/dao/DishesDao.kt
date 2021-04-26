@@ -1,6 +1,7 @@
 package studio.eyesthetics.sbdelivery.data.database.dao
 
 import androidx.lifecycle.LiveData
+import androidx.paging.DataSource
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
@@ -36,4 +37,53 @@ interface DishesDao : BaseDao<DishEntity>{
         LEFT JOIN dish_personal_info AS personal ON personal.dish_id = id
         ORDER BY likes DESC LIMIT 10""")
     fun findPopularDishes(): LiveData<List<DishItem>>
+
+
+    @Query("""
+        SELECT * FROM dish_table
+        LEFT JOIN dish_personal_info AS personal ON personal.dish_id = id
+        WHERE category == :categoryId
+        ORDER BY name ASC
+    """)
+    fun findDishesByCategoryIdNameAsc(categoryId: String): DataSource.Factory<Int, DishItem>
+
+    @Query("""
+        SELECT * FROM dish_table
+        LEFT JOIN dish_personal_info AS personal ON personal.dish_id = id
+        WHERE category == :categoryId
+        ORDER BY name DESC
+    """)
+    fun findDishesByCategoryIdNameDesc(categoryId: String): DataSource.Factory<Int, DishItem>
+
+    @Query("""
+        SELECT * FROM dish_table
+        LEFT JOIN dish_personal_info AS personal ON personal.dish_id = id
+        WHERE category == :categoryId
+        ORDER BY likes ASC
+    """)
+    fun findDishesByCategoryIdLikesAsc(categoryId: String): DataSource.Factory<Int, DishItem>
+
+    @Query("""
+        SELECT * FROM dish_table
+        LEFT JOIN dish_personal_info AS personal ON personal.dish_id = id
+        WHERE category == :categoryId
+        ORDER BY likes DESC
+    """)
+    fun findDishesByCategoryIdLikesDesc(categoryId: String): DataSource.Factory<Int, DishItem>
+
+    @Query("""
+        SELECT * FROM dish_table
+        LEFT JOIN dish_personal_info AS personal ON personal.dish_id = id
+        WHERE category == :categoryId
+        ORDER BY rating ASC
+    """)
+    fun findDishesByCategoryIdRatingAsc(categoryId: String): DataSource.Factory<Int, DishItem>
+
+    @Query("""
+        SELECT * FROM dish_table
+        LEFT JOIN dish_personal_info AS personal ON personal.dish_id = id
+        WHERE category == :categoryId
+        ORDER BY rating DESC
+    """)
+    fun findDishesByCategoryIdRatingDesc(categoryId: String): DataSource.Factory<Int, DishItem>
 }

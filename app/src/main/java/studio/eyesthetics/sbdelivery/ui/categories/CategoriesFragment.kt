@@ -12,6 +12,7 @@ import studio.eyesthetics.sbdelivery.ui.base.DelegationAdapter
 import studio.eyesthetics.sbdelivery.ui.base.ToolbarBuilder
 import studio.eyesthetics.sbdelivery.viewmodels.CategoriesViewModel
 import studio.eyesthetics.sbdelivery.viewmodels.CategoriesViewModelFactory
+import studio.eyesthetics.sbdelivery.viewmodels.base.NavigationCommand
 import studio.eyesthetics.sbdelivery.viewmodels.base.SavedStateViewModelFactory
 import javax.inject.Inject
 
@@ -46,7 +47,8 @@ class CategoriesFragment : BaseFragment<CategoriesViewModel>() {
         val displayWidth = resources.displayMetrics.widthPixels
 
         categoriesAdapter.delegatesManager.addDelegate(CategoryDelegate(displayWidth) {
-            //TODO open category
+            val action = CategoriesFragmentDirections.actionCategoriesFragmentToCategoryFragment(it)
+            viewModel.navigate(NavigationCommand.To(action.actionId, action.arguments))
         })
 
         rv_categories.apply {

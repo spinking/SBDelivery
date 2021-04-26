@@ -7,4 +7,5 @@ interface ICategoryRepository {
     suspend fun loadsCategoriesFromNetwork(offset: Int, limit: Int): Int
 
     fun getCategories(): LiveData<List<CategoryEntity>>
+    fun getCategoriesByParentId(categoryId: String): List<CategoryEntity>
 }
