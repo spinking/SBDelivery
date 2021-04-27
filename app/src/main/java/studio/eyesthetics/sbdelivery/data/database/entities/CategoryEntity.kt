@@ -3,6 +3,7 @@ package studio.eyesthetics.sbdelivery.data.database.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import studio.eyesthetics.sbdelivery.data.models.SearchItem
 
 @Entity(tableName = "categories")
 data class CategoryEntity(
@@ -17,4 +18,4 @@ data class CategoryEntity(
     val createdAt: Long,
     @ColumnInfo(name = "updated_at")
     val updatedAt: Long
-)
+) : SearchItem

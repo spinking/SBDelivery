@@ -11,6 +11,7 @@ import studio.eyesthetics.sbdelivery.ui.categories.CategoriesFragment
 import studio.eyesthetics.sbdelivery.ui.categories.category.CategoryFragment
 import studio.eyesthetics.sbdelivery.ui.home.HomeFragment
 import studio.eyesthetics.sbdelivery.ui.menu.MenuFragment
+import studio.eyesthetics.sbdelivery.ui.search.SearchFragment
 import studio.eyesthetics.sbdelivery.ui.splash.SplashActivity
 import studio.eyesthetics.sbdelivery.workers.SyncWorker
 import javax.inject.Singleton
@@ -53,6 +54,7 @@ interface AppComponent {
     fun inject(fragment: MenuFragment)
     fun inject(fragment: CategoriesFragment)
     fun inject(fragment: CategoryFragment)
+    fun inject(fragment: SearchFragment)
 
     //workers
     fun inject(worker: SyncWorker)
