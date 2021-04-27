@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
@@ -102,7 +103,7 @@ class ToolbarBuilder {
     private val views = mutableListOf<Int>()
     private val tempViews = mutableListOf<Int>()
 
-    fun setTitle(title: String): ToolbarBuilder {
+    fun setTitle(title: String?): ToolbarBuilder {
         this.title = title
         return this
     }
@@ -147,9 +148,14 @@ class ToolbarBuilder {
         with(context.toolbar) {
             toolbar.visible(this@ToolbarBuilder.visibility)
 
+            val title = toolbar.findViewById<TextView>(R.id.tv_label)
+
             if (this@ToolbarBuilder.visibility) {
                 if (this@ToolbarBuilder.title != null) {
+                    title.isVisible = true
                     this.title = this@ToolbarBuilder.title
+                } else {
+                    title.isVisible = false
                 }
                 if (this@ToolbarBuilder.isBackButtonVisible.not()) {
                     this.navigationIcon = null

@@ -79,6 +79,9 @@
         <action
             android:id="@+id/action_categoriesFragment_to_categoryFragment"
             app:destination="@id/categoryFragment" />
+        <action
+            android:id="@+id/action_categoriesFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/categoryFragment"
@@ -90,4 +93,8 @@
             app:nullable="true"
             android:defaultValue="@null" />
     </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="studio.eyesthetics.sbdelivery.ui.search.SearchFragment"
+        android:label="SearchFragment" />
 </navigation>
