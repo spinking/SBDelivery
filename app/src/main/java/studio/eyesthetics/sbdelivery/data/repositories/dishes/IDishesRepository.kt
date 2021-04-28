@@ -15,4 +15,6 @@ interface IDishesRepository {
     fun getPopularDishes(): LiveData<List<DishItem>>
 
     fun getDishes(categoryId: String, sortType: SortType): DataSource.Factory<Int, DishItem>
+
+    fun getDishesByName(query: String): List<DishItem>
 }

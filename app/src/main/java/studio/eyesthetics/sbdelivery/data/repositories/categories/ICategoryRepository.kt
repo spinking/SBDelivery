@@ -8,4 +8,6 @@ interface ICategoryRepository {
 
     fun getCategories(): LiveData<List<CategoryEntity>>
     fun getCategoriesByParentId(categoryId: String): List<CategoryEntity>
+
+    fun getCategoriesByName(query: String): List<CategoryEntity>
 }

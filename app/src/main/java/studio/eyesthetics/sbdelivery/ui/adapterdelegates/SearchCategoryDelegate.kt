@@ -30,6 +30,8 @@ class SearchCategoryDelegate(
         viewHolder.bind(item as CategoryEntity)
     }
 
+    override fun isForViewType(item: SearchItem, items: MutableList<SearchItem>, position: Int): Boolean = item is CategoryEntity
+
     inner class SearchCategoryViewHolder(convertView: View) : ViewHolder(convertView) {
         fun bind(item: CategoryEntity) {
 

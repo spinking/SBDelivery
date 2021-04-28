@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_search.*
 import studio.eyesthetics.sbdelivery.App
 import studio.eyesthetics.sbdelivery.R
+import studio.eyesthetics.sbdelivery.ui.adapterdelegates.DishSearchDelegate
 import studio.eyesthetics.sbdelivery.ui.adapterdelegates.SearchCategoryDelegate
 import studio.eyesthetics.sbdelivery.ui.adapterdelegates.SuggestionDelegate
 import studio.eyesthetics.sbdelivery.ui.adapterdelegates.decorators.VerticalItemDecorator
@@ -64,6 +65,10 @@ class SearchFragment : BaseFragment<SearchViewModel>() {
         viewModel.observeSuggestions(viewLifecycleOwner) {
             suggestionAdapter.items = it
         }
+
+        viewModel.observeSearchItems(viewLifecycleOwner) {
+            searchAdapter.items = it
+        }
     }
 
     private fun initSuggestionAdapter() {
@@ -71,6 +76,7 @@ class SearchFragment : BaseFragment<SearchViewModel>() {
             viewModel.handleDeleteSuggestion(it)
         }) {
             viewModel.getSearchResult(it.suggestion)
+            rv_suggestion.isVisible = false
         })
         rv_suggestion.apply {
             layoutManager = LinearLayoutManager(requireContext())
@@ -121,6 +127,13 @@ class SearchFragment : BaseFragment<SearchViewModel>() {
         val displayWidth = resources.displayMetrics.widthPixels
         searchAdapter.delegatesManager.addDelegate(SearchCategoryDelegate(displayWidth) {
 
+        })
+        searchAdapter.delegatesManager.addDelegate(DishSearchDelegate(displayWidth, {
+            //TODO dish click listener
+        }, {
+            //TODO add to basket click listener
+        }) { dishId, isChecked ->
+            //TODO add to favorite click listener
         })
 
         rv_search.apply {
