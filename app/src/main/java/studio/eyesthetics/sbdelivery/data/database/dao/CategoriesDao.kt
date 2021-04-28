@@ -19,7 +19,11 @@ interface CategoriesDao : BaseDao<CategoryEntity> {
     @Query("SELECT * FROM categories")
     fun getCategories(): LiveData<List<CategoryEntity>>
 
-    @Query("SELECT * FROM categories WHERE LOWER(name) LIKE LOWER('%' || :query || '%')")
+    @Query("""
+        SELECT * FROM categories
+        WHERE LOWER(name) LIKE LOWER('%' || :query || '%')
+        ORDER BY name ASC
+    """)
     fun getCategoriesByName(query: String): List<CategoryEntity>
 
     @Query("SELECT * FROM categories WHERE parent == :categoryId")

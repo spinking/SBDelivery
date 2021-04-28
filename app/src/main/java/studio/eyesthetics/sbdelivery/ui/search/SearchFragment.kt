@@ -18,12 +18,13 @@ import studio.eyesthetics.sbdelivery.ui.adapterdelegates.SuggestionDelegate
 import studio.eyesthetics.sbdelivery.ui.adapterdelegates.decorators.VerticalItemDecorator
 import studio.eyesthetics.sbdelivery.ui.adapterdelegates.diffcallbacks.SearchDiffCallback
 import studio.eyesthetics.sbdelivery.ui.adapterdelegates.diffcallbacks.SuggestionDiffCallback
-import studio.eyesthetics.sbdelivery.ui.base.BaseFragment
-import studio.eyesthetics.sbdelivery.ui.base.DelegationAdapter
-import studio.eyesthetics.sbdelivery.ui.base.MenuItemHolder
-import studio.eyesthetics.sbdelivery.ui.base.ToolbarBuilder
+import studio.eyesthetics.sbdelivery.ui.base.*
+import studio.eyesthetics.sbdelivery.ui.delegates.RenderProp
+import studio.eyesthetics.sbdelivery.viewmodels.SearchState
 import studio.eyesthetics.sbdelivery.viewmodels.SearchViewModel
 import studio.eyesthetics.sbdelivery.viewmodels.SearchViewModelFactory
+import studio.eyesthetics.sbdelivery.viewmodels.base.IViewModelState
+import studio.eyesthetics.sbdelivery.viewmodels.base.NavigationCommand
 import studio.eyesthetics.sbdelivery.viewmodels.base.SavedStateViewModelFactory
 import javax.inject.Inject
 
@@ -40,6 +41,7 @@ class SearchFragment : BaseFragment<SearchViewModel>() {
     override val viewModel: SearchViewModel by viewModels {
         SavedStateViewModelFactory(searchViewModelFactory, this)
     }
+    override val binding: SearchBinding by lazy { SearchBinding() }
     private val searchDiffCallback = SearchDiffCallback()
     private val suggestionDiffCallback = SuggestionDiffCallback()
     private val searchAdapter by lazy { DelegationAdapter(searchDiffCallback) }
@@ -76,7 +78,6 @@ class SearchFragment : BaseFragment<SearchViewModel>() {
             viewModel.handleDeleteSuggestion(it)
         }) {
             viewModel.getSearchResult(it.suggestion)
-            rv_suggestion.isVisible = false
         })
         rv_suggestion.apply {
             layoutManager = LinearLayoutManager(requireContext())
@@ -117,7 +118,7 @@ class SearchFragment : BaseFragment<SearchViewModel>() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                rv_suggestion.isVisible = newText?.trim().isNullOrEmpty()
+                viewModel.handleSuggestionVisibility(newText?.trim().isNullOrEmpty())
                 return true
             }
         })
@@ -126,7 +127,9 @@ class SearchFragment : BaseFragment<SearchViewModel>() {
     private fun initSearchAdapter() {
         val displayWidth = resources.displayMetrics.widthPixels
         searchAdapter.delegatesManager.addDelegate(SearchCategoryDelegate(displayWidth) {
-
+            viewModel.handleInsertSuggestion(it.name)
+            val action = SearchFragmentDirections.actionSearchFragmentToCategoryFragment(it.id)
+            viewModel.navigate(NavigationCommand.To(action.actionId, action.arguments))
         })
         searchAdapter.delegatesManager.addDelegate(DishSearchDelegate(displayWidth, {
             //TODO dish click listener
@@ -140,6 +143,16 @@ class SearchFragment : BaseFragment<SearchViewModel>() {
             addItemDecoration(VerticalItemDecorator())
             layoutManager = GridLayoutManager(requireContext(), 2)
             adapter = searchAdapter
+        }
+    }
+
+    inner class SearchBinding : Binding() {
+        private var isSuggestionsVisible: Boolean by RenderProp(true) {
+            rv_suggestion.isVisible = it
+        }
+        override fun bind(data: IViewModelState) {
+            data as SearchState
+            isSuggestionsVisible = data.isSuggestionsVisible
         }
     }
 }

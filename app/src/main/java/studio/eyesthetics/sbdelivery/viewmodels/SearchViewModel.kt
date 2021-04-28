@@ -50,6 +50,11 @@ class SearchViewModel(
             addAll(dishes)
         }
         searchItems.value = items
+        updateState { it.copy(isSuggestionsVisible = false) }
+    }
+
+    fun handleSuggestionVisibility(isVisible: Boolean) {
+        updateState { it.copy(isSuggestionsVisible = isVisible) }
     }
 
 }
@@ -64,4 +69,6 @@ class SearchViewModelFactory @Inject constructor(
     }
 }
 
-class SearchState : IViewModelState
+data class SearchState(
+    val isSuggestionsVisible: Boolean = true
+) : IViewModelState
