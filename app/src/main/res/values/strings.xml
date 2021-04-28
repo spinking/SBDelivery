@@ -63,4 +63,7 @@
         <item>По по рейтингу(по возр.)</item>
         <item>По по рейтингу(по убыв.)</item>
     </string-array>
+
+    <!--FavoritesFragment-->
+    <string name="favorites_label">Избранное</string>
 </resources>

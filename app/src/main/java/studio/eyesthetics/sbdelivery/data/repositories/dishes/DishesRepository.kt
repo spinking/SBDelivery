@@ -47,7 +47,7 @@ class DishesRepository @Inject constructor(
         return if (ids.isEmpty())
             mutableLiveData()
         else
-            dishesDao.findRecommendDishes(ids.map { it.id })
+            dishesDao.findDishesByIds(ids.map { it.id })
     }
 
     override fun getBestDishes(): LiveData<List<DishItem>> {
@@ -56,6 +56,10 @@ class DishesRepository @Inject constructor(
 
     override fun getPopularDishes(): LiveData<List<DishItem>> {
         return dishesDao.findPopularDishes()
+    }
+
+    override fun getFavoriteDishes(): LiveData<List<DishItem>> {
+        return dishesDao.findFavoriteDishes()
     }
 
     override fun getDishes(categoryId: String, sortType: SortType): DataSource.Factory<Int, DishItem> {
