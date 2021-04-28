@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.fragment_search.*
 import studio.eyesthetics.sbdelivery.App
 import studio.eyesthetics.sbdelivery.R
 import studio.eyesthetics.sbdelivery.ui.adapterdelegates.DishSearchDelegate
+import studio.eyesthetics.sbdelivery.ui.adapterdelegates.EmptySearchItemDelegate
 import studio.eyesthetics.sbdelivery.ui.adapterdelegates.SearchCategoryDelegate
 import studio.eyesthetics.sbdelivery.ui.adapterdelegates.SuggestionDelegate
 import studio.eyesthetics.sbdelivery.ui.adapterdelegates.decorators.VerticalItemDecorator
@@ -112,13 +113,12 @@ class SearchFragment : BaseFragment<SearchViewModel>() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                if (query != null)
-                    viewModel.handleInsertSuggestion(query)
+                viewModel.handleQuery(query)
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                viewModel.handleSuggestionVisibility(newText?.trim().isNullOrEmpty())
+                viewModel.handleQuery(newText)
                 return true
             }
         })
@@ -126,18 +126,24 @@ class SearchFragment : BaseFragment<SearchViewModel>() {
 
     private fun initSearchAdapter() {
         val displayWidth = resources.displayMetrics.widthPixels
-        searchAdapter.delegatesManager.addDelegate(SearchCategoryDelegate(displayWidth) {
-            viewModel.handleInsertSuggestion(it.name)
-            val action = SearchFragmentDirections.actionSearchFragmentToCategoryFragment(it.id)
-            viewModel.navigate(NavigationCommand.To(action.actionId, action.arguments))
-        })
-        searchAdapter.delegatesManager.addDelegate(DishSearchDelegate(displayWidth, {
-            //TODO dish click listener
-        }, {
-            //TODO add to basket click listener
-        }) { dishId, isChecked ->
-            //TODO add to favorite click listener
-        })
+        searchAdapter.delegatesManager.apply {
+            addDelegate(SearchCategoryDelegate(displayWidth) {
+                viewModel.handleInsertSuggestion()
+                val action = SearchFragmentDirections.actionSearchFragmentToCategoryFragment(it.id)
+                viewModel.navigate(NavigationCommand.To(action.actionId, action.arguments))
+            })
+
+            addDelegate(DishSearchDelegate(displayWidth, { dishItem ->
+                viewModel.handleInsertSuggestion()
+                //TODO dish click listener
+            }, {
+                //TODO add to basket click listener
+            }) { dishId, isChecked ->
+                //TODO add to favorite click listener
+            })
+
+            addDelegate(EmptySearchItemDelegate())
+        }
 
         rv_search.apply {
             addItemDecoration(VerticalItemDecorator())

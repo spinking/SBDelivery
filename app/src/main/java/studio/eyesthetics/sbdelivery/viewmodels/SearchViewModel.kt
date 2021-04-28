@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.SavedStateHandle
 import studio.eyesthetics.sbdelivery.data.database.entities.SuggestionEntity
 import studio.eyesthetics.sbdelivery.data.models.SearchItem
+import studio.eyesthetics.sbdelivery.data.models.categories.EmptySearchItem
 import studio.eyesthetics.sbdelivery.data.repositories.categories.ICategoryRepository
 import studio.eyesthetics.sbdelivery.data.repositories.dishes.IDishesRepository
 import studio.eyesthetics.sbdelivery.data.repositories.suggestion.ISuggestionRepository
@@ -37,8 +38,16 @@ class SearchViewModel(
         suggestionRepository.deleteSuggestion(suggestion)
     }
 
-    fun handleInsertSuggestion(suggestion: String) {
-        suggestionRepository.insertSuggestion(SuggestionEntity(suggestion))
+    fun handleInsertSuggestion() {
+        if (currentState.searchQuery.trim().isNotEmpty())
+            suggestionRepository.insertSuggestion(SuggestionEntity(currentState.searchQuery))
+    }
+
+    fun handleQuery(query: String?) {
+        updateState { it.copy(searchQuery = query ?: "", isSuggestionsVisible = query?.trim().isNullOrEmpty()) }
+        if (currentState.isSuggestionsVisible.not()) {
+            getSearchResult(currentState.searchQuery)
+        }
     }
 
     fun getSearchResult(query: String) {
@@ -47,16 +56,12 @@ class SearchViewModel(
         val items = mutableListOf<SearchItem>()
         items.apply {
             addAll(categories)
+            if (categories.size % 2 != 0) add(EmptySearchItem())
             addAll(dishes)
         }
         searchItems.value = items
         updateState { it.copy(isSuggestionsVisible = false) }
     }
-
-    fun handleSuggestionVisibility(isVisible: Boolean) {
-        updateState { it.copy(isSuggestionsVisible = isVisible) }
-    }
-
 }
 
 class SearchViewModelFactory @Inject constructor(
@@ -70,5 +75,6 @@ class SearchViewModelFactory @Inject constructor(
 }
 
 data class SearchState(
+    val searchQuery: String = "",
     val isSuggestionsVisible: Boolean = true
 ) : IViewModelState
