@@ -66,4 +66,9 @@
 
     <!--FavoritesFragment-->
     <string name="favorites_label">Избранное</string>
+
+    <!--DishFragment-->
+    <string name="dish_add_to_basket">Добавить в корзину</string>
+    <string name="dish_reviews_title">Отзывы</string>
+    <string name="dish_review_button">Добавить отзыв</string>
 </resources>
