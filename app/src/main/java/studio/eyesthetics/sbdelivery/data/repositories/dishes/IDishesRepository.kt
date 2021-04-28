@@ -13,6 +13,7 @@ interface IDishesRepository {
     fun getRecommendDishes(): LiveData<List<DishItem>>
     fun getBestDishes(): LiveData<List<DishItem>>
     fun getPopularDishes(): LiveData<List<DishItem>>
+    fun getFavoriteDishes(): LiveData<List<DishItem>>
 
     fun getDishes(categoryId: String, sortType: SortType): DataSource.Factory<Int, DishItem>
 

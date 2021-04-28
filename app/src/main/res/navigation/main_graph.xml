@@ -101,4 +101,8 @@
             android:id="@+id/action_searchFragment_to_categoryFragment"
             app:destination="@id/categoryFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="studio.eyesthetics.sbdelivery.ui.favorites.FavoritesFragment"
+        android:label="FavoritesFragment" />
 </navigation>

@@ -23,7 +23,7 @@ interface DishesDao : BaseDao<DishEntity>{
         LEFT JOIN dish_personal_info AS personal ON personal.dish_id = id
         WHERE id IN (:ids)
     """)
-    fun findRecommendDishes(ids: List<String>): LiveData<List<DishItem>>
+    fun findDishesByIds(ids: List<String>): LiveData<List<DishItem>>
 
     @Query("""
         SELECT * FROM dish_table
@@ -94,4 +94,11 @@ interface DishesDao : BaseDao<DishEntity>{
         ORDER BY name ASC
     """)
     fun findDishesByName(query: String): List<DishItem>
+
+    @Query("""
+        SELECT * FROM dish_table
+        LEFT JOIN dish_personal_info AS personal ON personal.dish_id = id
+        WHERE is_favorite = 1
+    """)
+    fun findFavoriteDishes(): LiveData<List<DishItem>>
 }
