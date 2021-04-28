@@ -80,7 +80,7 @@ class CategoryFragment : BaseFragment<CategoryViewModel>() {
             //TODO add dish to basket
 
         }) { dishId, isChecked ->
-            //viewModel.handleFavorite(dishId, isChecked)
+
         })
 
         rv_categories.apply {

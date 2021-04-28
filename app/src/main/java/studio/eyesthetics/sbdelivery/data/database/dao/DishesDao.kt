@@ -86,4 +86,12 @@ interface DishesDao : BaseDao<DishEntity>{
         ORDER BY rating DESC
     """)
     fun findDishesByCategoryIdRatingDesc(categoryId: String): DataSource.Factory<Int, DishItem>
+
+    @Query("""
+        SELECT * FROM dish_table
+        LEFT JOIN dish_personal_info AS personal ON personal.dish_id = id
+        WHERE LOWER(name) LIKE LOWER('%' || :query || '%')
+        ORDER BY name ASC
+    """)
+    fun findDishesByName(query: String): List<DishItem>
 }

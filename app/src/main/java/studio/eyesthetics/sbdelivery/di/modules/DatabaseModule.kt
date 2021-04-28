@@ -5,10 +5,7 @@ import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import studio.eyesthetics.sbdelivery.data.database.AppDatabase
-import studio.eyesthetics.sbdelivery.data.database.dao.CategoriesDao
-import studio.eyesthetics.sbdelivery.data.database.dao.DishPersonalInfoDao
-import studio.eyesthetics.sbdelivery.data.database.dao.DishesDao
-import studio.eyesthetics.sbdelivery.data.database.dao.RecommendIdDao
+import studio.eyesthetics.sbdelivery.data.database.dao.*
 import javax.inject.Singleton
 
 @Module
@@ -47,5 +44,11 @@ class DatabaseModule {
     @Singleton
     internal fun provideDishPersonalInfoDao(appDatabase: AppDatabase): DishPersonalInfoDao {
         return appDatabase.dishPersonalInfoDao()
+    }
+
+    @Provides
+    @Singleton
+    internal fun provideSuggestionsDao(appDatabase: AppDatabase): SuggestionsDao {
+        return appDatabase.suggestionsDao()
     }
 }

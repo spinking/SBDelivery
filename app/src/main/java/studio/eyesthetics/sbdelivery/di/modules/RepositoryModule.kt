@@ -2,10 +2,7 @@ package studio.eyesthetics.sbdelivery.di.modules
 
 import dagger.Module
 import dagger.Provides
-import studio.eyesthetics.sbdelivery.data.database.dao.CategoriesDao
-import studio.eyesthetics.sbdelivery.data.database.dao.DishPersonalInfoDao
-import studio.eyesthetics.sbdelivery.data.database.dao.DishesDao
-import studio.eyesthetics.sbdelivery.data.database.dao.RecommendIdDao
+import studio.eyesthetics.sbdelivery.data.database.dao.*
 import studio.eyesthetics.sbdelivery.data.mappers.CategoryToCategoryEntityMapper
 import studio.eyesthetics.sbdelivery.data.mappers.DishToDishEntityMapper
 import studio.eyesthetics.sbdelivery.data.mappers.LoginResponseToProfileMapper
@@ -21,6 +18,8 @@ import studio.eyesthetics.sbdelivery.data.repositories.dishes.DishesRepository
 import studio.eyesthetics.sbdelivery.data.repositories.dishes.IDishesRepository
 import studio.eyesthetics.sbdelivery.data.repositories.favorite.FavoriteRepository
 import studio.eyesthetics.sbdelivery.data.repositories.favorite.IFavoriteRepository
+import studio.eyesthetics.sbdelivery.data.repositories.suggestion.ISuggestionRepository
+import studio.eyesthetics.sbdelivery.data.repositories.suggestion.SuggestionRepository
 import studio.eyesthetics.sbdelivery.data.storage.Pref
 
 @Module
@@ -52,4 +51,9 @@ class RepositoryModule {
         pref: Pref,
         profileMapper: LoginResponseToProfileMapper
     ) : IAuthRepository = AuthRepository(authApi, pref, profileMapper)
+
+    @Provides
+    fun provideSuggestionRepository(
+        suggestionsDao: SuggestionsDao
+    ) : ISuggestionRepository = SuggestionRepository(suggestionsDao)
 }

@@ -96,6 +96,10 @@
         <item name="android:textColor">@color/color_text_light</item>
     </style>
 
+    <style name="Text.16.Orange">
+        <item name="android:textColor">@color/color_accent_orange</item>
+    </style>
+
     <style name="MediumText.10">
         <item name="android:textSize">@dimen/text_size_10sp</item>
     </style>

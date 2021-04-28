@@ -68,4 +68,8 @@ class DishesRepository @Inject constructor(
             else -> dishesDao.findDishesByCategoryIdNameAsc(categoryId)
         }
     }
+
+    override fun getDishesByName(query: String): List<DishItem> {
+        return dishesDao.findDishesByName(query)
+    }
 }

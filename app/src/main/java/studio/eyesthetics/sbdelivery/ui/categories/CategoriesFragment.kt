@@ -9,6 +9,7 @@ import studio.eyesthetics.sbdelivery.ui.adapterdelegates.CategoryDelegate
 import studio.eyesthetics.sbdelivery.ui.adapterdelegates.diffcallbacks.CategoryDiffCallback
 import studio.eyesthetics.sbdelivery.ui.base.BaseFragment
 import studio.eyesthetics.sbdelivery.ui.base.DelegationAdapter
+import studio.eyesthetics.sbdelivery.ui.base.MenuItemHolder
 import studio.eyesthetics.sbdelivery.ui.base.ToolbarBuilder
 import studio.eyesthetics.sbdelivery.viewmodels.CategoriesViewModel
 import studio.eyesthetics.sbdelivery.viewmodels.CategoriesViewModelFactory
@@ -30,12 +31,20 @@ class CategoriesFragment : BaseFragment<CategoriesViewModel>() {
         SavedStateViewModelFactory(categoriesViewModelFactory, this)
     }
 
-    override val prepareToolbar: (ToolbarBuilder.() -> Unit) = {}
+    override val prepareToolbar: (ToolbarBuilder.() -> Unit) = {
+        this.addMenuItem(MenuItemHolder(
+            getString(R.string.menu_search),
+            R.id.menu_search,
+            R.drawable.ic_search,
+            clickListener = { viewModel.navigate(NavigationCommand.To(R.id.searchFragment)) }
+        ))
+    }
 
     private val diffCallback = CategoryDiffCallback()
     private val categoriesAdapter by lazy { DelegationAdapter(diffCallback) }
 
     override fun setupViews() {
+        setHasOptionsMenu(true)
         initAdapter()
 
         viewModel.observeCategories(viewLifecycleOwner) {
