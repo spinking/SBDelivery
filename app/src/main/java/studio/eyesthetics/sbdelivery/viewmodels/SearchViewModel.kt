@@ -1,40 +1,46 @@
 package studio.eyesthetics.sbdelivery.viewmodels
 
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.SavedStateHandle
+import studio.eyesthetics.sbdelivery.data.database.entities.SuggestionEntity
+import studio.eyesthetics.sbdelivery.data.repositories.suggestion.ISuggestionRepository
 import studio.eyesthetics.sbdelivery.viewmodels.base.BaseViewModel
 import studio.eyesthetics.sbdelivery.viewmodels.base.IViewModelFactory
 import studio.eyesthetics.sbdelivery.viewmodels.base.IViewModelState
 import javax.inject.Inject
 
 class SearchViewModel(
-    handle: SavedStateHandle
+    handle: SavedStateHandle,
+    private val suggestionRepository: ISuggestionRepository
 ) : BaseViewModel<SearchState>(handle, SearchState()) {
 
-    private val suggestions = MutableLiveData<List<String>>()
+    private val suggestions = suggestionRepository.getSuggestions()
 
-    fun observeSuggestions(owner: LifecycleOwner, onchange: (List<String>) -> Unit) {
-        suggestions.observe(owner, Observer { onchange(it) })
+    fun observeSuggestions(owner: LifecycleOwner, onchange: (List<SuggestionEntity>) -> Unit) {
+        suggestions.observe(owner, Observer { onchange(it.take(5))
+        })
     }
 
-    fun showSuggestions() {
-        //TODO remove mocks
-        suggestions.value = listOf("Первый", "Второй", "Третий","Четвертый", "Пятый")
+    fun handleDeleteSuggestion(suggestion: SuggestionEntity) {
+        suggestionRepository.deleteSuggestion(suggestion)
     }
 
-    fun handleDeleteSuggestion(suggestion: String) {
-        //TODO delete suggestion from db
+    fun handleInsertSuggestion(suggestion: String) {
+        suggestionRepository.insertSuggestion(SuggestionEntity(suggestion))
+    }
+
+    fun getSearchResult(query: String) {
+        //TODO get categories and dishes
     }
 
 }
 
 class SearchViewModelFactory @Inject constructor(
-
+    private val suggestionRepository: ISuggestionRepository
 ) : IViewModelFactory<SearchViewModel> {
     override fun create(handle: SavedStateHandle): SearchViewModel {
-        return SearchViewModel(handle)
+        return SearchViewModel(handle, suggestionRepository)
     }
 }
 
