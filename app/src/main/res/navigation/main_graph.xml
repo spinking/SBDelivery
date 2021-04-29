@@ -125,5 +125,12 @@
         <argument
             android:name="dish"
             app:argType="studio.eyesthetics.sbdelivery.data.database.entities.DishItem" />
+        <action
+            android:id="@+id/action_dishFragment_to_reviewDialogFragment"
+            app:destination="@id/reviewDialogFragment" />
     </fragment>
+    <dialog
+        android:id="@+id/reviewDialogFragment"
+        android:name="studio.eyesthetics.sbdelivery.ui.dish.ReviewDialogFragment"
+        android:label="ReviewDialogFragment" />
 </navigation>

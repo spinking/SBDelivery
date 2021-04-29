@@ -71,4 +71,9 @@
     <string name="dish_add_to_basket">Добавить в корзину</string>
     <string name="dish_reviews_title">Отзывы</string>
     <string name="dish_review_button">Добавить отзыв</string>
+
+    <!--ReviewDialogFragment-->
+    <string name="review_dialog_title">Оставить отзыв</string>
+    <string name="review_dialog_hint">Введите отзыв</string>
+    <string name="review_dialog_send">Отправить</string>
 </resources>

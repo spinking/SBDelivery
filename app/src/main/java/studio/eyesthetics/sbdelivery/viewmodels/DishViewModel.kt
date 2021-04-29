@@ -89,14 +89,17 @@ class DishViewModel(
         updateState { it.copy(dishId = dishId) }
     }
 
-    fun handleAddReview() {
+    fun handleAddReview(rating: Int, review: String) {
         launchSafety {
-
-            //TODO remove mock
             reviewRepository.addReview(currentState.dishId, AddReviewRequest(
-                4,
-                "some test text"
+                rating,
+                review
             ))
+            reviewRepository.loadReviewsFromNetwork(
+                dishId = currentState.dishId,
+                offset = reviews.value?.size ?: 0,
+                limit = 1
+            )
         }
     }
 }
