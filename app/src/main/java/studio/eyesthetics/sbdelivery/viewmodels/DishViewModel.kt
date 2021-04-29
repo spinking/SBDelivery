@@ -1,15 +1,12 @@
 package studio.eyesthetics.sbdelivery.viewmodels
 
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.*
 import androidx.paging.DataSource
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import studio.eyesthetics.sbdelivery.data.database.entities.ReviewEntity
 import studio.eyesthetics.sbdelivery.data.models.favorites.FavoriteChangeRequest
+import studio.eyesthetics.sbdelivery.data.models.reviews.AddReviewRequest
 import studio.eyesthetics.sbdelivery.data.repositories.favorite.IFavoriteRepository
 import studio.eyesthetics.sbdelivery.data.repositories.reviews.IReviewRepository
 import studio.eyesthetics.sbdelivery.viewmodels.base.BaseViewModel
@@ -27,7 +24,7 @@ class DishViewModel(
     private var isLoadingInitial = false
     private var isLoadingAfter = false
 
-    private val reviews = Transformations.switchMap(state) {
+    private val reviews = Transformations.switchMap(state.map { it.dishId }.distinctUntilChanged()) {
         buildPagedList(reviewRepository.getReviews(currentState.dishId))
     }
 
@@ -37,8 +34,10 @@ class DishViewModel(
 
     private val listConfig by lazy {
         PagedList.Config.Builder()
-            .setEnablePlaceholders(true)
-            .setPageSize(5)
+            .setEnablePlaceholders(false)
+            .setPageSize(10)
+            .setPrefetchDistance(10)
+            .setInitialLoadSizeHint(20)
             .build()
     }
 
@@ -73,16 +72,31 @@ class DishViewModel(
         }
     }
 
-    private fun itemAtEndHandle(lastLoadDish: ReviewEntity) {
+    private fun itemAtEndHandle(lastReview: ReviewEntity) {
         if (isLoadingAfter) return
         else isLoadingAfter = true
 
         launchSafety(null, { isLoadingAfter = false }) {
             reviewRepository.loadReviewsFromNetwork(
                 dishId = currentState.dishId,
-                offset = 0,
+                offset = reviews.value?.size ?: 0,
                 limit = listConfig.pageSize
             )
+        }
+    }
+
+    fun handleDishId(dishId: String) {
+        updateState { it.copy(dishId = dishId) }
+    }
+
+    fun handleAddReview() {
+        launchSafety {
+
+            //TODO remove mock
+            reviewRepository.addReview(currentState.dishId, AddReviewRequest(
+                4,
+                "some test text"
+            ))
         }
     }
 }
@@ -108,10 +122,10 @@ class ReviewBoundaryCallback(
     private val itemAtEndHandle: (itemAtEnd: ReviewEntity) -> Unit
 ) : PagedList.BoundaryCallback<ReviewEntity>() {
     override fun onZeroItemsLoaded() {
-        zeroLoadingHandle
+        zeroLoadingHandle.invoke()
     }
 
     override fun onItemAtEndLoaded(itemAtEnd: ReviewEntity) {
-        itemAtEndHandle(itemAtEnd)
+        itemAtEndHandle.invoke(itemAtEnd)
     }
 }

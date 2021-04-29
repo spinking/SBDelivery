@@ -7,7 +7,7 @@ class ReviewToReviewEntityMapper : Mapper<Review, ReviewEntity> {
 
     override fun mapFromEntity(type: Review): ReviewEntity {
         return ReviewEntity(
-            id = type.id,
+            id = type.id ?: 0L,
             dishId = type.dishId,
             author = type.author,
             date = type.date,

@@ -7,7 +7,7 @@ import studio.eyesthetics.sbdelivery.data.models.reviews.Review
 
 interface IReviewApi {
 
-    @GET("reviews")
+    @GET("reviews/{dishId}")
     suspend fun getReviews(
         @Path("dishId", encoded = false) dishId: String,
         @Query("offset") offset: Int,

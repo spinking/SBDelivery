@@ -51,6 +51,7 @@ class DishFragment : BaseFragment<DishViewModel>() {
     private val reviewAdapter by lazy { DelegationPageListAdapter(reviewDiffCallback) }
 
     override fun setupViews() {
+        viewModel.handleDishId(args.dish.id)
         initViews()
         initAdapter()
 
@@ -94,12 +95,14 @@ class DishFragment : BaseFragment<DishViewModel>() {
             viewModel.handleCount(1)
         }
         btn_add.setOnClickListener {
+            //tODO add to basket
         }
         val ratingText = "${dishItem.rating.roundTo()}/5"
         tv_reviews_rating.text = ratingText
 
         btn_add_review.setOnClickListener {
             //TODO show review dialog
+            viewModel.handleAddReview()
         }
     }
 

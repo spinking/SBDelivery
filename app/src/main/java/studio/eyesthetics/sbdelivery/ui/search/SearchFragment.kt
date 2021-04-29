@@ -135,7 +135,8 @@ class SearchFragment : BaseFragment<SearchViewModel>() {
 
             addDelegate(DishSearchDelegate(displayWidth, { dishItem ->
                 viewModel.handleInsertSuggestion()
-                //TODO dish click listener
+                val action = SearchFragmentDirections.actionSearchFragmentToDishFragment(dishItem)
+                viewModel.navigate(NavigationCommand.To(action.actionId, action.arguments))
             }, {
                 //TODO add to basket click listener
             }) { dishId, isChecked ->

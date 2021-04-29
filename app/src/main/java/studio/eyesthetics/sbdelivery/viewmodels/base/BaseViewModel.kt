@@ -12,6 +12,7 @@ import kotlinx.coroutines.plus
 import studio.eyesthetics.sbdelivery.R
 import studio.eyesthetics.sbdelivery.data.network.errors.ApiError
 import studio.eyesthetics.sbdelivery.data.network.errors.NoNetworkError
+import java.io.EOFException
 import java.net.SocketTimeoutException
 
 abstract class BaseViewModel<T : IViewModelState>(
@@ -65,6 +66,8 @@ abstract class BaseViewModel<T : IViewModelState>(
     ) {
         val errHand = CoroutineExceptionHandler { _, err ->
             errHandler?.invoke(err) ?: when (err) {
+                //Почему-то выбрасывается вместо 304 при запросе пагинированного списка, если ничего не приходит
+                is EOFException -> {}
                 is NoNetworkError -> notify(Notify.TextMessage("Network not available, check internet connection"))
 
                 is SocketTimeoutException -> notify(

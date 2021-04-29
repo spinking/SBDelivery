@@ -7,8 +7,8 @@ import studio.eyesthetics.sbdelivery.data.models.reviews.AddReviewRequest
 
 interface IAddReviewApi {
 
-    @POST("reviews")
-    fun sendReview(
+    @POST("reviews/{dishId}")
+    suspend fun sendReview(
         @Path("dishId") dishId: String,
         @Body reviewRequest: AddReviewRequest
     )
