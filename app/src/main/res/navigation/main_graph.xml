@@ -10,6 +10,9 @@
         <action
             android:id="@+id/action_homeFragment_to_categoriesFragment"
             app:destination="@id/categoriesFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_dishFragment"
+            app:destination="@id/dishFragment" />
     </fragment>
 
     <navigation
@@ -92,6 +95,9 @@
             app:argType="string"
             app:nullable="true"
             android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_categoryFragment_to_dishFragment"
+            app:destination="@id/dishFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -100,9 +106,24 @@
         <action
             android:id="@+id/action_searchFragment_to_categoryFragment"
             app:destination="@id/categoryFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_dishFragment"
+            app:destination="@id/dishFragment" />
     </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
         android:name="studio.eyesthetics.sbdelivery.ui.favorites.FavoritesFragment"
-        android:label="FavoritesFragment" />
+        android:label="FavoritesFragment" >
+        <action
+            android:id="@+id/action_favoritesFragment_to_dishFragment"
+            app:destination="@id/dishFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dishFragment"
+        android:name="studio.eyesthetics.sbdelivery.ui.dish.DishFragment"
+        android:label="DishFragment" >
+        <argument
+            android:name="dish"
+            app:argType="studio.eyesthetics.sbdelivery.data.database.entities.DishItem" />
+    </fragment>
 </navigation>

@@ -16,6 +16,7 @@ import studio.eyesthetics.sbdelivery.ui.base.DelegationAdapter
 import studio.eyesthetics.sbdelivery.ui.base.ToolbarBuilder
 import studio.eyesthetics.sbdelivery.viewmodels.HomeViewModel
 import studio.eyesthetics.sbdelivery.viewmodels.HomeViewModelFactory
+import studio.eyesthetics.sbdelivery.viewmodels.base.NavigationCommand
 import studio.eyesthetics.sbdelivery.viewmodels.base.SavedStateViewModelFactory
 import javax.inject.Inject
 
@@ -72,7 +73,8 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         val displayWidth = resources.displayMetrics.widthPixels
 
         recommendAdapter.delegatesManager.addDelegate(RecommendDelegate(displayWidth, {
-            //TODO transition to dish
+            val action = HomeFragmentDirections.actionHomeFragmentToDishFragment(it)
+            viewModel.navigate(NavigationCommand.To(action.actionId, action.arguments))
         }, {
             //TODO add dish to basket
 
@@ -81,7 +83,8 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         })
 
         bestAdapter.delegatesManager.addDelegate(RecommendDelegate(displayWidth, {
-            //TODO transition to dish
+            val action = HomeFragmentDirections.actionHomeFragmentToDishFragment(it)
+            viewModel.navigate(NavigationCommand.To(action.actionId, action.arguments))
         }, {
             //TODO add dish to basket
 
@@ -90,7 +93,8 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         })
 
         popularAdapter.delegatesManager.addDelegate(RecommendDelegate(displayWidth, {
-            //TODO transition to dish
+            val action = HomeFragmentDirections.actionHomeFragmentToDishFragment(it)
+            viewModel.navigate(NavigationCommand.To(action.actionId, action.arguments))
         }, {
             //TODO add dish to basket
 

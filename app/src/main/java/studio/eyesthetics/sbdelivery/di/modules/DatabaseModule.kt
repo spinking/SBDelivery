@@ -51,4 +51,10 @@ class DatabaseModule {
     internal fun provideSuggestionsDao(appDatabase: AppDatabase): SuggestionsDao {
         return appDatabase.suggestionsDao()
     }
+
+    @Provides
+    @Singleton
+    internal fun provideReviewsDao(appDatabase: AppDatabase): ReviewsDao {
+        return appDatabase.reviewsDao()
+    }
 }

@@ -16,6 +16,7 @@
             android:id="@+id/iv_picture"
             android:layout_width="match_parent"
             android:layout_height="250dp"
+            android:scaleType="centerCrop"
             app:layout_constraintTop_toTopOf="parent"
             />
 
@@ -172,7 +173,7 @@
                 />
 
             <TextView
-                android:id="@+id/tv_reviews_count"
+                android:id="@+id/tv_reviews_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="13dp"

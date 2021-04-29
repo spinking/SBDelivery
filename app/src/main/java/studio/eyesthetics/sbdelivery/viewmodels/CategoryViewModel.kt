@@ -6,8 +6,10 @@ import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import studio.eyesthetics.sbdelivery.data.database.entities.CategoryEntity
 import studio.eyesthetics.sbdelivery.data.database.entities.DishItem
+import studio.eyesthetics.sbdelivery.data.models.favorites.FavoriteChangeRequest
 import studio.eyesthetics.sbdelivery.data.repositories.categories.ICategoryRepository
 import studio.eyesthetics.sbdelivery.data.repositories.dishes.IDishesRepository
+import studio.eyesthetics.sbdelivery.data.repositories.favorite.IFavoriteRepository
 import studio.eyesthetics.sbdelivery.data.storage.Pref
 import studio.eyesthetics.sbdelivery.viewmodels.base.BaseViewModel
 import studio.eyesthetics.sbdelivery.viewmodels.base.IViewModelFactory
@@ -19,6 +21,7 @@ class CategoryViewModel(
     handle: SavedStateHandle,
     private val dishesRepository: IDishesRepository,
     private val categoryRepository: ICategoryRepository,
+    private val favoriteRepository: IFavoriteRepository,
     private val pref: Pref
 ) : BaseViewModel<CategoryState>(handle, CategoryState()) {
 
@@ -104,15 +107,22 @@ class CategoryViewModel(
     fun handleSort(sortType: SortType) {
         pref.sortType = sortType
     }
+
+    fun handleFavorite(dishId: String, isChecked: Boolean) {
+        launchSafety {
+            favoriteRepository.changeToFavorite(FavoriteChangeRequest(dishId, isChecked))
+        }
+    }
 }
 
 class CategoryViewModelFactory @Inject constructor(
     private val dishesRepository: IDishesRepository,
     private val categoryRepository: ICategoryRepository,
+    private val favoriteRepository: IFavoriteRepository,
     private val pref: Pref
 ) : IViewModelFactory<CategoryViewModel> {
     override fun create(handle: SavedStateHandle): CategoryViewModel {
-        return CategoryViewModel(handle, dishesRepository, categoryRepository, pref)
+        return CategoryViewModel(handle, dishesRepository, categoryRepository, favoriteRepository, pref)
     }
 }
 

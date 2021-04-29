@@ -21,6 +21,7 @@ import studio.eyesthetics.sbdelivery.viewmodels.CategoryViewModel
 import studio.eyesthetics.sbdelivery.viewmodels.CategoryViewModelFactory
 import studio.eyesthetics.sbdelivery.viewmodels.SortType
 import studio.eyesthetics.sbdelivery.viewmodels.base.IViewModelState
+import studio.eyesthetics.sbdelivery.viewmodels.base.NavigationCommand
 import studio.eyesthetics.sbdelivery.viewmodels.base.SavedStateViewModelFactory
 import javax.inject.Inject
 
@@ -75,12 +76,13 @@ class CategoryFragment : BaseFragment<CategoryViewModel>() {
             viewModel.handleCategoryId(it)
         })
         dishesAdapter.delegatesManager.addDelegate(DishDelegate(displayWidth, {
-            //TODO transition to dish
+            val action = CategoryFragmentDirections.actionCategoryFragmentToDishFragment(it)
+            viewModel.navigate(NavigationCommand.To(action.actionId, action.arguments))
         }, {
             //TODO add dish to basket
 
         }) { dishId, isChecked ->
-
+            viewModel.handleFavorite(dishId, isChecked)
         })
 
         rv_categories.apply {

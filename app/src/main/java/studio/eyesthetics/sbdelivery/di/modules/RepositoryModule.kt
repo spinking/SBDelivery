@@ -6,10 +6,8 @@ import studio.eyesthetics.sbdelivery.data.database.dao.*
 import studio.eyesthetics.sbdelivery.data.mappers.CategoryToCategoryEntityMapper
 import studio.eyesthetics.sbdelivery.data.mappers.DishToDishEntityMapper
 import studio.eyesthetics.sbdelivery.data.mappers.LoginResponseToProfileMapper
-import studio.eyesthetics.sbdelivery.data.network.IAuthApi
-import studio.eyesthetics.sbdelivery.data.network.ICategoryApi
-import studio.eyesthetics.sbdelivery.data.network.IDishesApi
-import studio.eyesthetics.sbdelivery.data.network.IFavoriteApi
+import studio.eyesthetics.sbdelivery.data.mappers.ReviewToReviewEntityMapper
+import studio.eyesthetics.sbdelivery.data.network.*
 import studio.eyesthetics.sbdelivery.data.repositories.auth.AuthRepository
 import studio.eyesthetics.sbdelivery.data.repositories.auth.IAuthRepository
 import studio.eyesthetics.sbdelivery.data.repositories.categories.CategoryRepository
@@ -18,6 +16,8 @@ import studio.eyesthetics.sbdelivery.data.repositories.dishes.DishesRepository
 import studio.eyesthetics.sbdelivery.data.repositories.dishes.IDishesRepository
 import studio.eyesthetics.sbdelivery.data.repositories.favorite.FavoriteRepository
 import studio.eyesthetics.sbdelivery.data.repositories.favorite.IFavoriteRepository
+import studio.eyesthetics.sbdelivery.data.repositories.reviews.IReviewRepository
+import studio.eyesthetics.sbdelivery.data.repositories.reviews.ReviewRepository
 import studio.eyesthetics.sbdelivery.data.repositories.suggestion.ISuggestionRepository
 import studio.eyesthetics.sbdelivery.data.repositories.suggestion.SuggestionRepository
 import studio.eyesthetics.sbdelivery.data.storage.Pref
@@ -56,4 +56,12 @@ class RepositoryModule {
     fun provideSuggestionRepository(
         suggestionsDao: SuggestionsDao
     ) : ISuggestionRepository = SuggestionRepository(suggestionsDao)
+
+    @Provides
+    fun provideReviewRepository(
+        reviewApi: IReviewApi,
+        addReviewApi: IAddReviewApi,
+        reviewsDao: ReviewsDao,
+        reviewMapper: ReviewToReviewEntityMapper
+    ) : IReviewRepository = ReviewRepository(reviewApi, addReviewApi, reviewsDao, reviewMapper)
 }
