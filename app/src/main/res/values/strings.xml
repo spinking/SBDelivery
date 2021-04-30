@@ -76,4 +76,5 @@
     <string name="review_dialog_title">Оставить отзыв</string>
     <string name="review_dialog_hint">Введите отзыв</string>
     <string name="review_dialog_send">Отправить</string>
+    <string name="dish_complete_add_review">Отзыв будет опубликован после проверки модератором</string>
 </resources>

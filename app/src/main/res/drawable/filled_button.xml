@@ -4,6 +4,7 @@
         <layer-list>
             <item>
                 <shape android:shape="rectangle">
+                    <corners android:radius="@dimen/corner_6dp"/>
                     <solid android:color="@color/color_accent_orange"/>
                 </shape>
             </item>
@@ -13,6 +14,7 @@
         <layer-list>
             <item>
                 <shape android:shape="rectangle">
+                    <corners android:radius="@dimen/corner_6dp"/>
                     <solid android:color="@color/color_accent_orange_opacity"/>
                 </shape>
             </item>

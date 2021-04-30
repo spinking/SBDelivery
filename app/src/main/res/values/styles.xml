@@ -216,4 +216,8 @@
         <item name="colorControlActivated">@color/color_accent_orange</item>
     </style>
 
+    <style name="AlertDialogWithTransparentBackground" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
 </resources>

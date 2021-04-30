@@ -88,8 +88,8 @@ class NetworkModule {
         tokenAuthenticator: TokenAuthenticator
     ): OkHttpClient =
         OkHttpClient.Builder()
-            .readTimeout(30, TimeUnit.SECONDS)
-            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(3, TimeUnit.SECONDS)
+            .connectTimeout(3, TimeUnit.SECONDS)
             .addInterceptor(tokenInterceptor)
             .addInterceptor(networkStatusInterceptor)
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))

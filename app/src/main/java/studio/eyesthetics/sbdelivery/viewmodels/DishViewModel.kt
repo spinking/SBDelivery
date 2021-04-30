@@ -6,12 +6,12 @@ import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import studio.eyesthetics.sbdelivery.data.database.entities.ReviewEntity
 import studio.eyesthetics.sbdelivery.data.models.favorites.FavoriteChangeRequest
-import studio.eyesthetics.sbdelivery.data.models.reviews.AddReviewRequest
 import studio.eyesthetics.sbdelivery.data.repositories.favorite.IFavoriteRepository
 import studio.eyesthetics.sbdelivery.data.repositories.reviews.IReviewRepository
 import studio.eyesthetics.sbdelivery.viewmodels.base.BaseViewModel
 import studio.eyesthetics.sbdelivery.viewmodels.base.IViewModelFactory
 import studio.eyesthetics.sbdelivery.viewmodels.base.IViewModelState
+import studio.eyesthetics.sbdelivery.viewmodels.base.Notify
 import java.util.concurrent.Executors
 import javax.inject.Inject
 
@@ -89,18 +89,8 @@ class DishViewModel(
         updateState { it.copy(dishId = dishId) }
     }
 
-    fun handleAddReview(rating: Int, review: String) {
-        launchSafety {
-            reviewRepository.addReview(currentState.dishId, AddReviewRequest(
-                rating,
-                review
-            ))
-            reviewRepository.loadReviewsFromNetwork(
-                dishId = currentState.dishId,
-                offset = reviews.value?.size ?: 0,
-                limit = 1
-            )
-        }
+    fun handleAddReview(message: String) {
+        notify(Notify.TextMessage(message))
     }
 }
 

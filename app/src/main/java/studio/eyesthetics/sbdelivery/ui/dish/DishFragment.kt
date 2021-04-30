@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.StrikethroughSpan
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
@@ -55,11 +56,8 @@ class DishFragment : BaseFragment<DishViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setFragmentResultListener(ReviewDialogFragment.Add_KEY) { _, bundle ->
-            viewModel.handleAddReview(
-                bundle[ReviewDialogFragment.RATING_KEY] as Int,
-                bundle[ReviewDialogFragment.REVIEW_KEY] as String
-            )
+        setFragmentResultListener(ReviewDialogFragment.Add_KEY) { _, _ ->
+            viewModel.handleAddReview(getString(R.string.dish_complete_add_review))
         }
     }
 
@@ -114,8 +112,7 @@ class DishFragment : BaseFragment<DishViewModel>() {
         tv_reviews_rating.text = ratingText
 
         btn_add_review.setOnClickListener {
-            val action = DishFragmentDirections.actionDishFragmentToReviewDialogFragment()
-            viewModel.navigate(NavigationCommand.To(action.actionId))
+            viewModel.navigate(NavigationCommand.To(R.id.reviewDialogFragment, bundleOf("dishId" to args.dish.id)))
         }
     }
 

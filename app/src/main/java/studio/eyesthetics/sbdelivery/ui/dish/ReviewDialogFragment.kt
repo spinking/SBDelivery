@@ -1,24 +1,52 @@
 package studio.eyesthetics.sbdelivery.ui.dish
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.viewModels
 import kotlinx.android.synthetic.main.fragment_review_dialog.*
+import studio.eyesthetics.sbdelivery.App
 import studio.eyesthetics.sbdelivery.R
 import studio.eyesthetics.sbdelivery.extensions.dpToPx
+import studio.eyesthetics.sbdelivery.ui.base.BaseDialogFragment
+import studio.eyesthetics.sbdelivery.ui.base.Binding
+import studio.eyesthetics.sbdelivery.ui.delegates.RenderProp
+import studio.eyesthetics.sbdelivery.viewmodels.ReviewDialogState
+import studio.eyesthetics.sbdelivery.viewmodels.ReviewDialogViewModel
+import studio.eyesthetics.sbdelivery.viewmodels.ReviewDialogViewModelFactory
+import studio.eyesthetics.sbdelivery.viewmodels.base.IViewModelState
+import studio.eyesthetics.sbdelivery.viewmodels.base.SavedStateViewModelFactory
+import javax.inject.Inject
 
-class ReviewDialogFragment : DialogFragment() {
+class ReviewDialogFragment : BaseDialogFragment<ReviewDialogViewModel>() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_review_dialog, container, false)
+    init {
+        App.INSTANCE.appComponent.inject(this@ReviewDialogFragment)
+    }
+
+    @Inject
+    internal lateinit var reviewDialogViewModelFactory: ReviewDialogViewModelFactory
+
+    override val layout: Int = R.layout.fragment_review_dialog
+    override val viewModel: ReviewDialogViewModel by viewModels {
+        SavedStateViewModelFactory(reviewDialogViewModelFactory, this)
+    }
+    override val binding: ReviewDialogBinding by lazy { ReviewDialogBinding() }
+
+    override fun setupViews() {
+
+        btn_cancel.setOnClickListener { dismiss() }
+
+        rb_rate_user.setOnRatingChangeListener { _, rating ->
+            viewModel.handleAddButtonEnabling(rating > 0)
+        }
+
+        btn_add.setOnClickListener {
+            val rating = rb_rate_user.rating.toInt()
+            if (rating > 0) {
+                val dishId = requireArguments().getString("dishId") ?: ""
+                viewModel.handleAddReview(dishId, rating, et_review.text.toString())
+            }
+        }
     }
 
     override fun onResume() {
@@ -29,21 +57,29 @@ class ReviewDialogFragment : DialogFragment() {
         dialog?.window?.attributes = params
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        btn_cancel.setOnClickListener { dismiss() }
-
-        btn_add.setOnClickListener {
-            setFragmentResult(Add_KEY, bundleOf(RATING_KEY to rb_rate_user.rating.toInt(), REVIEW_KEY to et_review.text.toString()))
-            dismiss()
-        }
+    private fun resumeToDishFragment() {
+        setFragmentResult(Add_KEY, bundleOf())
+        dismiss()
     }
 
     companion object {
         private const val DEFAULT_MARGIN = 30
         const val Add_KEY = "ADD_KEY"
-        const val RATING_KEY = "RATING_KEY"
-        const val REVIEW_KEY = "REVIEW_KEY"
+    }
+
+    inner class ReviewDialogBinding : Binding() {
+        private var isAddButtonEnabled: Boolean by RenderProp(false) {
+            btn_add.isEnabled = it
+            btn_add.isActivated = it
+        }
+
+        private var isReviewAdded: Boolean by RenderProp(false) {
+            if (it) resumeToDishFragment()
+        }
+        override fun bind(data: IViewModelState) {
+            data as ReviewDialogState
+            isAddButtonEnabled = data.isAddButtonEnabled
+            isReviewAdded = data.isReviewAdded
+        }
     }
 }
