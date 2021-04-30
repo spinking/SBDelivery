@@ -1,25 +1,32 @@
 package studio.eyesthetics.sbdelivery.viewmodels
 
+import androidx.core.os.bundleOf
 import androidx.lifecycle.*
 import androidx.paging.DataSource
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
+import studio.eyesthetics.sbdelivery.R
 import studio.eyesthetics.sbdelivery.data.database.entities.ReviewEntity
 import studio.eyesthetics.sbdelivery.data.models.favorites.FavoriteChangeRequest
+import studio.eyesthetics.sbdelivery.data.repositories.auth.IAuthRepository
 import studio.eyesthetics.sbdelivery.data.repositories.favorite.IFavoriteRepository
 import studio.eyesthetics.sbdelivery.data.repositories.reviews.IReviewRepository
-import studio.eyesthetics.sbdelivery.viewmodels.base.BaseViewModel
-import studio.eyesthetics.sbdelivery.viewmodels.base.IViewModelFactory
-import studio.eyesthetics.sbdelivery.viewmodels.base.IViewModelState
-import studio.eyesthetics.sbdelivery.viewmodels.base.Notify
+import studio.eyesthetics.sbdelivery.viewmodels.base.*
 import java.util.concurrent.Executors
 import javax.inject.Inject
 
 class DishViewModel(
     handle: SavedStateHandle,
     private val favoriteRepository: IFavoriteRepository,
-    private val reviewRepository: IReviewRepository
+    private val reviewRepository: IReviewRepository,
+    private val authRepository: IAuthRepository
 ) : BaseViewModel<DishState>(handle, DishState()) {
+
+    init {
+        subscribeOnDataSource(authRepository.isAuth()) { isAuth, state ->
+            state.copy(isAuth = isAuth)
+        }
+    }
 
     private var isLoadingInitial = false
     private var isLoadingAfter = false
@@ -92,18 +99,36 @@ class DishViewModel(
     fun handleAddReview(message: String) {
         notify(Notify.TextMessage(message))
     }
+
+    fun handleAddToBasket(message: String) {
+        launchSafety {
+            //TODO add to basket
+            updateState { it.copy(itemsCount = 1, isDecrementButtonActive = false) }
+            notify(Notify.TextMessage(message))
+        }
+    }
+
+    fun handleClickReview() {
+        if (currentState.isAuth) {
+            navigate(NavigationCommand.To(R.id.reviewDialogFragment, bundleOf("dishId" to currentState.dishId)))
+        } else {
+            navigate(NavigationCommand.StartLogin(R.id.dishFragment))
+        }
+    }
 }
 
 class DishViewModelFactory @Inject constructor(
     private val favoriteRepository: IFavoriteRepository,
-    private val reviewRepository: IReviewRepository
+    private val reviewRepository: IReviewRepository,
+    private val authRepository: IAuthRepository
 ) : IViewModelFactory<DishViewModel> {
     override fun create(handle: SavedStateHandle): DishViewModel {
-        return DishViewModel(handle, favoriteRepository, reviewRepository)
+        return DishViewModel(handle, favoriteRepository, reviewRepository, authRepository)
     }
 }
 
 data class DishState(
+    val isAuth: Boolean = false,
     val dishId: String = "",
     val itemsCount: Int = 1,
     val isDecrementButtonActive: Boolean = false,

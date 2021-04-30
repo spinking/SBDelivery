@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.StrikethroughSpan
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
@@ -29,7 +28,6 @@ import studio.eyesthetics.sbdelivery.viewmodels.DishState
 import studio.eyesthetics.sbdelivery.viewmodels.DishViewModel
 import studio.eyesthetics.sbdelivery.viewmodels.DishViewModelFactory
 import studio.eyesthetics.sbdelivery.viewmodels.base.IViewModelState
-import studio.eyesthetics.sbdelivery.viewmodels.base.NavigationCommand
 import studio.eyesthetics.sbdelivery.viewmodels.base.SavedStateViewModelFactory
 import javax.inject.Inject
 
@@ -82,9 +80,12 @@ class DishFragment : BaseFragment<DishViewModel>() {
 
     private fun initViews() {
         val dishItem: DishItem = args.dish
-        val oldPriceText = SpannableString(dishItem.oldPrice.formatToRub())
-        oldPriceText.setSpan(StrikethroughSpan(), 0, oldPriceText.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        tv_old_price.text = oldPriceText
+
+        if (dishItem.oldPrice.isNotEmpty()) {
+            val oldPriceText = SpannableString(dishItem.oldPrice.formatToRub())
+            oldPriceText.setSpan(StrikethroughSpan(), 0, oldPriceText.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            tv_old_price.text = oldPriceText
+        }
 
         iv_picture.load(dishItem.image) {
             diskCachePolicy(CachePolicy.ENABLED)
@@ -106,13 +107,14 @@ class DishFragment : BaseFragment<DishViewModel>() {
             viewModel.handleCount(1)
         }
         btn_add.setOnClickListener {
-            //tODO add to basket
+            val message = "${getString(R.string.dish_label)} \"${dishItem.name}\" ${getString(R.string.dish_add)} (${tv_count.text} ${getString(R.string.dish_unit)}.)"
+            viewModel.handleAddToBasket(message)
         }
         val ratingText = "${dishItem.rating.roundTo()}/5"
         tv_reviews_rating.text = ratingText
 
         btn_add_review.setOnClickListener {
-            viewModel.navigate(NavigationCommand.To(R.id.reviewDialogFragment, bundleOf("dishId" to args.dish.id)))
+            viewModel.handleClickReview()
         }
     }
 

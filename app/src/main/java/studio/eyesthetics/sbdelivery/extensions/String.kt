@@ -1,5 +1,6 @@
 package studio.eyesthetics.sbdelivery.extensions
 
+import com.google.gson.internal.bind.util.ISO8601Utils
 import java.text.ParsePosition
 import java.text.SimpleDateFormat
 import java.util.*
@@ -22,8 +23,7 @@ fun String.stripHtml(): String {
     return str
 }
 
-/*
-fun String.formatDateWithTime() : String {
+/*fun String.formatDateWithTime() : String {
 
     val currDate = ISO8601Utils.parse(this, ParsePosition(0))
     val simpleDateFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
@@ -35,14 +35,13 @@ fun String.formatDateWithTime() : String {
     if(time == null) time = ""
 
     return "$time   $date"
-}
+}*/
 
-fun String.formatDate() : String {
+fun String.formatToDate() : String {
     val currDate = ISO8601Utils.parse(this, ParsePosition(0))
-    val simpleDateFormat = SimpleDateFormat("d MMMM yyyy", Locale.getDefault())
+    val simpleDateFormat = SimpleDateFormat("dd.MM.yy", Locale.getDefault())
     return simpleDateFormat.format(currDate)
 }
-*/
 
 fun String.validEmail():Boolean {
     val pattern = "^(.+)@(.+)\\.(.+){2,64}$".toRegex()

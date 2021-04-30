@@ -23,22 +23,21 @@
         tools:text="Екатерина, 19.03.20"
         />
 
-    <RatingBar
+    <per.wsj.library.AndRatingBar
         android:id="@+id/rb_rate_user"
         style="?android:attr/ratingBarStyleSmall"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="12dp"
         android:layout_marginEnd="@dimen/mini_margin_14dp"
         android:layout_marginTop="11dp"
         android:numStars="5"
-        android:progressBackgroundTint="@android:color/transparent"
-        android:progressBackgroundTintMode="multiply"
-        android:progressTint="@color/color_accent_orange"
         android:rating="5"
         android:scaleX="-1"
-        android:theme="@style/RatingBar"
+        app:starSpacing="3dp"
+        app:starDrawable="@drawable/ic_star_mini"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <TextView
         android:id="@+id/tv_review_description"
