@@ -5,7 +5,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Review(
-    val id: String,
+    val id: Long?,
     val dishId: String,
     val author: String,
     val date: String,

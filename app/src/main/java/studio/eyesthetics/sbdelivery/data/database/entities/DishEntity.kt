@@ -1,9 +1,11 @@
 package studio.eyesthetics.sbdelivery.data.database.entities
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.DatabaseView
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.android.parcel.Parcelize
 import studio.eyesthetics.sbdelivery.data.models.SearchItem
 
 @Entity(tableName = "dish_table")
@@ -29,6 +31,7 @@ data class DishEntity(
     FROM dish_table
     LEFT JOIN dish_personal_info AS personal ON personal.dish_id = id
 """)
+@Parcelize
 data class DishItem(
     val id: String,
     val name: String,
@@ -44,4 +47,4 @@ data class DishItem(
     @ColumnInfo(name = "created_at") val createdAt: Long,
     @ColumnInfo(name = "updated_at") val updatedAt: Long,
     @ColumnInfo(name = "is_favorite") val isFavorite: Boolean = false
-) : SearchItem
+) : SearchItem, Parcelable

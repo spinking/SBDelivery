@@ -154,4 +154,7 @@ dependencies {
 
     //PinnedEditText
     implementation "com.poovam:pin-edittext-field:$pin_edit_text"
+
+    //RatingBar
+    implementation "com.github.giswangsj:AndRatingBar:$and_rating_bar"
 }

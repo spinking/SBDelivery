@@ -24,6 +24,7 @@ abstract class BaseActivity<T : BaseViewModel<out IViewModelState>> : AppCompatA
     lateinit var navController: NavController
 
     val toolbarBuilder = ToolbarBuilder()
+    private val progressDialogManager = ProgressDialogManager(supportFragmentManager)
 
     abstract fun subscribeOnState(state: IViewModelState)
 
@@ -58,13 +59,24 @@ abstract class BaseActivity<T : BaseViewModel<out IViewModelState>> : AppCompatA
 
     open fun renderLoading(loadingState: Loading) {
         when(loadingState) {
-            Loading.SHOW_LOADING -> progress.isVisible = true
-            Loading.SHOW_BLOCKING_LOADING -> {
+            Loading.SHOW_LOADING -> {
                 progress.isVisible = true
-                //TODO block interact with UI
             }
-            Loading.HIDE_LOADING -> progress.isVisible = false
+            Loading.SHOW_BLOCKING_LOADING -> {
+                progressDialogManager.showedProgressCount++
+            }
+            Loading.HIDE_LOADING -> {
+                progress.isVisible = false
+            }
+            Loading.HIDE_BLOCKING_LOADING -> {
+                progressDialogManager.showedProgressCount--
+            }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        progressDialogManager.showProgressBar()
     }
 
     private fun subscribeOnNavigation(navigationCommand: NavigationCommand) {

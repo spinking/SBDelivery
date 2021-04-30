@@ -11,10 +11,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import studio.eyesthetics.sbdelivery.BuildConfig
-import studio.eyesthetics.sbdelivery.data.network.IAuthApi
-import studio.eyesthetics.sbdelivery.data.network.ICategoryApi
-import studio.eyesthetics.sbdelivery.data.network.IDishesApi
-import studio.eyesthetics.sbdelivery.data.network.IFavoriteApi
+import studio.eyesthetics.sbdelivery.data.network.*
 import studio.eyesthetics.sbdelivery.data.network.interceptors.*
 import studio.eyesthetics.sbdelivery.data.storage.Pref
 import java.util.concurrent.TimeUnit
@@ -91,8 +88,8 @@ class NetworkModule {
         tokenAuthenticator: TokenAuthenticator
     ): OkHttpClient =
         OkHttpClient.Builder()
-            .readTimeout(30, TimeUnit.SECONDS)
-            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(3, TimeUnit.SECONDS)
+            .connectTimeout(3, TimeUnit.SECONDS)
             .addInterceptor(tokenInterceptor)
             .addInterceptor(networkStatusInterceptor)
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
@@ -134,6 +131,14 @@ class NetworkModule {
     @Provides
     fun provideAuthApi(@Named(WITHOUT_AUTH_RETROFIT) retrofit: Retrofit): IAuthApi =
         retrofit.create(IAuthApi::class.java)
+
+    @Provides
+    fun provideReviewApi(@Named(WITHOUT_AUTH_RETROFIT) retrofit: Retrofit): IReviewApi =
+        retrofit.create(IReviewApi::class.java)
+
+    @Provides
+    fun provideAddReviewApi(@Named(AUTH_RETROFIT) retrofit: Retrofit): IAddReviewApi =
+        retrofit.create(IAddReviewApi::class.java)
 
     companion object {
         private const val WITHOUT_AUTH_CLIENT = "without_auth_client"

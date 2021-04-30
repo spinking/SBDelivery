@@ -11,6 +11,7 @@ import studio.eyesthetics.sbdelivery.data.database.entities.*
         CategoryEntity::class,
         RecommendIdEntity::class,
         SuggestionEntity::class,
+        ReviewEntity::class,
         DishPersonalInfoEntity::class],
     version = 1,
     exportSchema = false,
@@ -21,5 +22,6 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun categoriesDao(): CategoriesDao
     abstract fun recommendIdDao(): RecommendIdDao
     abstract fun suggestionsDao(): SuggestionsDao
+    abstract fun reviewsDao(): ReviewsDao
     abstract fun dishPersonalInfoDao(): DishPersonalInfoDao
 }

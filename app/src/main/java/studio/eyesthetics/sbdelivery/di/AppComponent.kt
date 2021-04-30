@@ -9,6 +9,8 @@ import studio.eyesthetics.sbdelivery.ui.MainActivity
 import studio.eyesthetics.sbdelivery.ui.auth.*
 import studio.eyesthetics.sbdelivery.ui.categories.CategoriesFragment
 import studio.eyesthetics.sbdelivery.ui.categories.category.CategoryFragment
+import studio.eyesthetics.sbdelivery.ui.dish.DishFragment
+import studio.eyesthetics.sbdelivery.ui.dish.ReviewDialogFragment
 import studio.eyesthetics.sbdelivery.ui.favorites.FavoritesFragment
 import studio.eyesthetics.sbdelivery.ui.home.HomeFragment
 import studio.eyesthetics.sbdelivery.ui.menu.MenuFragment
@@ -57,6 +59,8 @@ interface AppComponent {
     fun inject(fragment: CategoryFragment)
     fun inject(fragment: SearchFragment)
     fun inject(fragment: FavoritesFragment)
+    fun inject(fragment: DishFragment)
+    fun inject(fragment: ReviewDialogFragment)
 
     //workers
     fun inject(worker: SyncWorker)

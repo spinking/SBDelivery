@@ -10,6 +10,7 @@
         <item name="android:statusBarColor">@color/color_black</item>
         <item name="android:windowBackground">@color/color_primary</item>
         <item name="android:navigationBarColor">@color/color_black</item>
+        <item name="android:dialogTheme">@style/ReviewDialogTheme</item>
 
         <!--<item name="selectableItemBackground">@color/color_background_test</item>-->
 
@@ -18,6 +19,13 @@
        <!-- <item name="md_color_button_text">@color/color_accent_yellow</item>-->
 
         <item name="searchViewStyle">@style/MySearchViewStyle</item>
+    </style>
+
+    <style name="ReviewDialogTheme" parent="AppTheme">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
     </style>
 
     <style name="MySearchViewStyle" parent="Widget.AppCompat.SearchView">
@@ -64,6 +72,22 @@
         <item name="android:fontFamily">@font/roboto_light</item>
     </style>
 
+    <style name="LightText.12">
+        <item name="android:textSize">@dimen/text_size_12sp</item>
+    </style>
+
+    <style name="LightText.12.Gray">
+        <item name="android:textColor">@color/color_hint_gray</item>
+    </style>
+
+    <style name="LightText.13">
+        <item name="android:textSize">@dimen/text_size_13sp</item>
+    </style>
+
+    <style name="LightText.13.Gray">
+        <item name="android:textColor">@color/color_hint_gray</item>
+    </style>
+
     <style name="LightText.14">
         <item name="android:textSize">@dimen/text_size_14sp</item>
     </style>
@@ -72,12 +96,24 @@
         <item name="android:textColor">@color/color_hint_gray</item>
     </style>
 
+    <style name="LightText.24">
+        <item name="android:textSize">@dimen/text_size_24sp</item>
+    </style>
+
+    <style name="LightText.24.White">
+        <item name="android:textColor">@color/color_text_light</item>
+    </style>
+
     <style name="Text" parent="AppTheme">
         <item name="android:textSize">14sp</item>
     </style>
 
     <style name="MediumText" parent="Text">
         <item name="android:fontFamily">@font/roboto_medium</item>
+    </style>
+
+    <style name="MediumText.White">
+        <item name="android:textColor">@color/color_text_light</item>
     </style>
 
     <style name="Text.18">
@@ -102,6 +138,30 @@
 
     <style name="MediumText.10">
         <item name="android:textSize">@dimen/text_size_10sp</item>
+    </style>
+
+    <style name="MediumText.18">
+        <item name="android:textSize">@dimen/text_size_18sp</item>
+    </style>
+
+    <style name="MediumText.18.White">
+        <item name="android:textColor">@color/color_text_light</item>
+    </style>
+
+    <style name="MediumText.24">
+        <item name="android:textSize">@dimen/text_size_24sp</item>
+    </style>
+
+    <style name="MediumText.24.White">
+        <item name="android:textColor">@color/color_text_light</item>
+    </style>
+
+    <style name="MediumText.24.Orange">
+        <item name="android:textColor">@color/color_accent_orange</item>
+    </style>
+
+    <style name="MediumText.Dark">
+        <item name="android:textColor">@color/color_text_dark</item>
     </style>
 
     <style name="MediumText.10.Dark">
@@ -149,6 +209,15 @@
         <item name="cornerSizeTopRight">6dp</item>
         <item name="cornerSizeBottomLeft">0dp</item>
         <item name="cornerSizeBottomRight">0dp</item>
+    </style>
+
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@android:color/transparent</item>
+        <item name="colorControlActivated">@color/color_accent_orange</item>
+    </style>
+
+    <style name="AlertDialogWithTransparentBackground" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
 </resources>

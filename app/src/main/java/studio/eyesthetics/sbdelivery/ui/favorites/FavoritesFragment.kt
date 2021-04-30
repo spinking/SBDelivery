@@ -13,6 +13,7 @@ import studio.eyesthetics.sbdelivery.ui.base.DelegationAdapter
 import studio.eyesthetics.sbdelivery.ui.base.ToolbarBuilder
 import studio.eyesthetics.sbdelivery.viewmodels.FavoritesViewModel
 import studio.eyesthetics.sbdelivery.viewmodels.FavoritesViewModelFactory
+import studio.eyesthetics.sbdelivery.viewmodels.base.NavigationCommand
 import studio.eyesthetics.sbdelivery.viewmodels.base.SavedStateViewModelFactory
 import javax.inject.Inject
 
@@ -48,7 +49,8 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel>() {
     private fun initFavoriteAdapter() {
         val displayWidth = resources.displayMetrics.widthPixels
         favoritesAdapter.delegatesManager.addDelegate(DishDelegate(displayWidth, {
-            //TODO dish click listener
+            val action = FavoritesFragmentDirections.actionFavoritesFragmentToDishFragment(it)
+            viewModel.navigate(NavigationCommand.To(action.actionId, action.arguments))
         }, {
             //TODO add to basket click listener
         }) { dishId, isChecked ->

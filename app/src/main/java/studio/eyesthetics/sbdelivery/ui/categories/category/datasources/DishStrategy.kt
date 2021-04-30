@@ -4,7 +4,7 @@ import studio.eyesthetics.sbdelivery.data.database.entities.DishItem
 
 sealed class DishStrategy {
     abstract fun getItems(size: Int, start: Int): List<DishItem>
-    class DishesByCourseId(
+    class DishesByCategoryId(
         private val itemProvider: (Int, Int, String) -> List<DishItem>,
         private val categoryId: String
     ) : DishStrategy() {

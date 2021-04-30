@@ -2,10 +2,7 @@ package studio.eyesthetics.sbdelivery.di.modules
 
 import dagger.Module
 import dagger.Provides
-import studio.eyesthetics.sbdelivery.data.mappers.CategoryToCategoryEntityMapper
-import studio.eyesthetics.sbdelivery.data.mappers.DishToDishEntityMapper
-import studio.eyesthetics.sbdelivery.data.mappers.LoginResponseToProfileMapper
-import studio.eyesthetics.sbdelivery.data.mappers.ProfileResponseToProfileMapper
+import studio.eyesthetics.sbdelivery.data.mappers.*
 
 @Module
 class MapperModule {
@@ -20,4 +17,7 @@ class MapperModule {
 
     @Provides
     fun provideLoginResponseToProfileMapper(): LoginResponseToProfileMapper = LoginResponseToProfileMapper()
+
+    @Provides
+    fun provideReviewMapper(): ReviewToReviewEntityMapper = ReviewToReviewEntityMapper()
 }

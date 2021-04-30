@@ -12,6 +12,7 @@ import kotlinx.coroutines.plus
 import studio.eyesthetics.sbdelivery.R
 import studio.eyesthetics.sbdelivery.data.network.errors.ApiError
 import studio.eyesthetics.sbdelivery.data.network.errors.NoNetworkError
+import java.io.EOFException
 import java.net.SocketTimeoutException
 
 abstract class BaseViewModel<T : IViewModelState>(
@@ -54,30 +55,33 @@ abstract class BaseViewModel<T : IViewModelState>(
         loading.value = loadingType
     }
 
-    protected fun hideLoading() {
-        loading.value = Loading.HIDE_LOADING
+    protected fun hideLoading(loadingType: Loading = Loading.HIDE_LOADING) {
+        loading.value = loadingType
     }
 
     protected fun launchSafety(
         errHandler: ((Throwable) -> Unit)? = null,
         compHandler: ((Throwable?) -> Unit)? = null,
+        isShowBlockingLoading: Boolean? = false,
         block: suspend CoroutineScope.() -> Unit
     ) {
         val errHand = CoroutineExceptionHandler { _, err ->
             errHandler?.invoke(err) ?: when (err) {
+                //Почему-то выбрасывается вместо 304 при запросе пагинированного списка, если ничего не приходит
+                is EOFException -> {}
                 is NoNetworkError -> notify(Notify.TextMessage("Network not available, check internet connection"))
 
                 is SocketTimeoutException -> notify(
                     Notify.ActionMessage(
                         "Network timeout exception - please try again",
                         "Retry"
-                    ) { launchSafety(errHandler, compHandler, block) })
+                    ) { launchSafety(errHandler, compHandler, isShowBlockingLoading, block) })
 
                 is ApiError.InternalServerError -> notify(
                     Notify.ErrorMessage(
                         err.message,
                         "Retry"
-                    ) { launchSafety(errHandler, compHandler, block) })
+                    ) { launchSafety(errHandler, compHandler, isShowBlockingLoading, block) })
 
                 is ApiError.Forbidden -> {
                     notify(Notify.ErrorMessage(err.message))
@@ -94,10 +98,20 @@ abstract class BaseViewModel<T : IViewModelState>(
         }
 
         (viewModelScope + errHand).launch {
-            showLoading()
+            if (isShowBlockingLoading != null) {
+                if (isShowBlockingLoading)
+                    showLoading(Loading.SHOW_BLOCKING_LOADING)
+                else
+                    showLoading(Loading.SHOW_LOADING)
+            }
             block()
         }.invokeOnCompletion {
-            hideLoading()
+            if (isShowBlockingLoading != null) {
+                if (isShowBlockingLoading)
+                    hideLoading(Loading.HIDE_BLOCKING_LOADING)
+                else
+                    hideLoading(Loading.HIDE_LOADING)
+            }
             compHandler?.invoke(it)
         }
     }
@@ -213,5 +227,5 @@ sealed class NavigationCommand() {
     ) : NavigationCommand()
 }
 enum class Loading {
-    SHOW_LOADING, SHOW_BLOCKING_LOADING, HIDE_LOADING
+    SHOW_LOADING, SHOW_BLOCKING_LOADING, HIDE_LOADING, HIDE_BLOCKING_LOADING
 }
