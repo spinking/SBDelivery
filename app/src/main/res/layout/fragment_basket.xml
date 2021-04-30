@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/color_background">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_basket"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/standart_margin_16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tv_sum_label"
+        />
+
+    <TextView
+        android:id="@+id/tv_sum_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/standart_margin_20dp"
+        android:layout_marginStart="@dimen/standart_margin_16dp"
+        android:text="@string/basket_sum_label"
+        style="@style/MediumText.24.White"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btn_order"
+        />
+
+    <TextView
+        android:id="@+id/tv_sum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/standart_margin_16dp"
+        android:layout_marginBottom="@dimen/standart_margin_20dp"
+        style="@style/MediumText.24.Orange"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btn_order"
+        tools:text="1960 ₽"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/standart_margin_16dp"
+        android:layout_marginEnd="@dimen/standart_margin_16dp"
+        android:layout_marginBottom="@dimen/standart_margin_16dp"
+        android:background="@drawable/filled_button"
+        android:gravity="center"
+        android:text="@string/basket_order_title"
+        style="@style/LightMediumTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

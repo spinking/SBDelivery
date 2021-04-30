@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/color_background">
+
+    <ImageView
+        android:id="@+id/iv_picture"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="@dimen/standart_margin_20dp"
+        android:layout_marginStart="@dimen/standart_margin_16dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:src="@drawable/mock_dish"
+        />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/standart_margin_16dp"
+        android:layout_marginStart="@dimen/standart_margin_16dp"
+        style="@style/MediumText.18.White"
+        app:layout_constraintTop_toTopOf="@id/iv_picture"
+        app:layout_constraintStart_toEndOf="@id/iv_picture"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="Сет Королевский"
+        />
+
+    <CheckedTextView
+        android:id="@+id/btn_decrement"
+        android:layout_width="30dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="@dimen/standart_margin_16dp"
+        android:background="@drawable/background_decrement"
+        app:layout_constraintBottom_toBottomOf="@id/iv_picture"
+        app:layout_constraintStart_toEndOf="@id/iv_picture"
+        />
+
+    <TextView
+        android:id="@+id/tv_count"
+        android:layout_width="wrap_content"
+        android:layout_height="34dp"
+        android:minWidth="50dp"
+        android:gravity="center"
+        android:background="@drawable/background_count"
+        style="@style/MediumText.18.Orange"
+        app:layout_constraintTop_toTopOf="@id/btn_decrement"
+        app:layout_constraintBottom_toBottomOf="@id/btn_decrement"
+        app:layout_constraintStart_toEndOf="@id/btn_decrement"
+        tools:text="1"
+        />
+
+    <ImageView
+        android:id="@+id/btn_increment"
+        android:layout_width="30dp"
+        android:layout_height="34dp"
+        android:layout_marginEnd="@dimen/standart_margin_16dp"
+        android:background="@drawable/background_increment"
+        app:layout_constraintTop_toTopOf="@id/tv_count"
+        app:layout_constraintBottom_toBottomOf="@id/tv_count"
+        app:layout_constraintStart_toEndOf="@id/tv_count"
+        />
+
+    <TextView
+        android:id="@+id/tv_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/standart_margin_16dp"
+        android:layout_marginBottom="@dimen/standart_margin_24dp"
+        style="@style/MediumText.18.Orange"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:text="1280 ₽"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

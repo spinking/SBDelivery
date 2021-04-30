@@ -80,4 +80,11 @@
     <string name="review_dialog_title">Оставить отзыв</string>
     <string name="review_dialog_hint">Введите отзыв</string>
     <string name="review_dialog_send">Отправить</string>
+
+    <!--BasketFragment-->
+    <string name="basket_accept">Применить</string>
+    <string name="basket_promo_hint">Введите промокод</string>
+    <string name="basket_sum_label">Итого</string>
+    <string name="basket_order_title">Оформить заказ</string>
+    <string name="basket_label">Корзина</string>
 </resources>
