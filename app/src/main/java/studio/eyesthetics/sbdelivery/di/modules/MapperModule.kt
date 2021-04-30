@@ -20,4 +20,10 @@ class MapperModule {
 
     @Provides
     fun provideReviewMapper(): ReviewToReviewEntityMapper = ReviewToReviewEntityMapper()
+
+    @Provides
+    fun provideBasketItemMapper(): BasketItemToBasketItemEntity = BasketItemToBasketItemEntity()
+
+    @Provides
+    fun provideBasketMapper(): BasketResponseToBasketEntity = BasketResponseToBasketEntity()
 }

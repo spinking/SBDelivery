@@ -57,4 +57,16 @@ class DatabaseModule {
     internal fun provideReviewsDao(appDatabase: AppDatabase): ReviewsDao {
         return appDatabase.reviewsDao()
     }
+
+    @Provides
+    @Singleton
+    internal fun provideBasketDao(appDatabase: AppDatabase): BasketDao {
+        return appDatabase.basketDao()
+    }
+
+    @Provides
+    @Singleton
+    internal fun provideBasketItemDao(appDatabase: AppDatabase): BasketItemDao {
+        return appDatabase.basketItemDao()
+    }
 }
