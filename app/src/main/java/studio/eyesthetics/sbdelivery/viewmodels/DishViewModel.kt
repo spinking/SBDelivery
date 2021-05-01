@@ -6,9 +6,12 @@ import androidx.paging.DataSource
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import studio.eyesthetics.sbdelivery.R
+import studio.eyesthetics.sbdelivery.data.database.entities.BasketItemEntity
 import studio.eyesthetics.sbdelivery.data.database.entities.ReviewEntity
+import studio.eyesthetics.sbdelivery.data.models.basket.BasketItemShort
 import studio.eyesthetics.sbdelivery.data.models.favorites.FavoriteChangeRequest
 import studio.eyesthetics.sbdelivery.data.repositories.auth.IAuthRepository
+import studio.eyesthetics.sbdelivery.data.repositories.basket.IBasketRepository
 import studio.eyesthetics.sbdelivery.data.repositories.favorite.IFavoriteRepository
 import studio.eyesthetics.sbdelivery.data.repositories.reviews.IReviewRepository
 import studio.eyesthetics.sbdelivery.viewmodels.base.*
@@ -19,7 +22,8 @@ class DishViewModel(
     handle: SavedStateHandle,
     private val favoriteRepository: IFavoriteRepository,
     private val reviewRepository: IReviewRepository,
-    private val authRepository: IAuthRepository
+    private val authRepository: IAuthRepository,
+    private val basketRepository: IBasketRepository
 ) : BaseViewModel<DishState>(handle, DishState()) {
 
     init {
@@ -92,8 +96,8 @@ class DishViewModel(
         }
     }
 
-    fun handleDishId(dishId: String) {
-        updateState { it.copy(dishId = dishId) }
+    fun handleDishInfo(dishId: String, dishPrice: Int) {
+        updateState { it.copy(dishId = dishId, price = dishPrice) }
     }
 
     fun handleAddReview(message: String) {
@@ -102,7 +106,16 @@ class DishViewModel(
 
     fun handleAddToBasket(message: String) {
         launchSafety {
-            //TODO add to basket
+            if (currentState.isAuth) {
+                basketRepository.updateBasket(BasketItemShort(currentState.dishId, currentState.itemsCount))
+            } else {
+                basketRepository.updateLocalBasket(BasketItemEntity(
+                    currentState.dishId,
+                    1L,
+                    currentState.itemsCount,
+                    currentState.price
+                ))
+            }
             updateState { it.copy(itemsCount = 1, isDecrementButtonActive = false) }
             notify(Notify.TextMessage(message))
         }
@@ -120,10 +133,11 @@ class DishViewModel(
 class DishViewModelFactory @Inject constructor(
     private val favoriteRepository: IFavoriteRepository,
     private val reviewRepository: IReviewRepository,
-    private val authRepository: IAuthRepository
+    private val authRepository: IAuthRepository,
+    private val basketRepository: IBasketRepository
 ) : IViewModelFactory<DishViewModel> {
     override fun create(handle: SavedStateHandle): DishViewModel {
-        return DishViewModel(handle, favoriteRepository, reviewRepository, authRepository)
+        return DishViewModel(handle, favoriteRepository, reviewRepository, authRepository, basketRepository)
     }
 }
 
@@ -132,7 +146,8 @@ data class DishState(
     val dishId: String = "",
     val itemsCount: Int = 1,
     val isDecrementButtonActive: Boolean = false,
-    val listIsEmpty: Boolean = false
+    val listIsEmpty: Boolean = false,
+    val price: Int = 0
 ) : IViewModelState
 
 class ReviewBoundaryCallback(

@@ -9,7 +9,7 @@ data class Dish(
     val name: String,
     val description: String,
     val image: String,
-    val oldPrice: String?,
+    val oldPrice: Int?,
     val price: Int,
     val rating: Float,
     val likes: Int,

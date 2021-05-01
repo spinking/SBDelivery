@@ -148,6 +148,10 @@
         <item name="android:textColor">@color/color_text_light</item>
     </style>
 
+    <style name="MediumText.18.Orange">
+        <item name="android:textColor">@color/color_accent_orange</item>
+    </style>
+
     <style name="MediumText.24">
         <item name="android:textSize">@dimen/text_size_24sp</item>
     </style>

@@ -60,7 +60,7 @@ class DishFragment : BaseFragment<DishViewModel>() {
     }
 
     override fun setupViews() {
-        viewModel.handleDishId(args.dish.id)
+        viewModel.handleDishInfo(args.dish.id, args.dish.price)
         initViews()
         initAdapter()
 
@@ -81,7 +81,7 @@ class DishFragment : BaseFragment<DishViewModel>() {
     private fun initViews() {
         val dishItem: DishItem = args.dish
 
-        if (dishItem.oldPrice.isNotEmpty()) {
+        if (dishItem.oldPrice != 0) {
             val oldPriceText = SpannableString(dishItem.oldPrice.formatToRub())
             oldPriceText.setSpan(StrikethroughSpan(), 0, oldPriceText.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
             tv_old_price.text = oldPriceText
@@ -90,7 +90,7 @@ class DishFragment : BaseFragment<DishViewModel>() {
         iv_picture.load(dishItem.image) {
             diskCachePolicy(CachePolicy.ENABLED)
         }
-        tv_stock.isVisible = dishItem.oldPrice.isNotEmpty()
+        tv_stock.isVisible = dishItem.oldPrice != 0
         cb_favorite.apply {
             isChecked = dishItem.isFavorite
             setOnClickListener {

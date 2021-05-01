@@ -133,4 +133,8 @@
         android:id="@+id/reviewDialogFragment"
         android:name="studio.eyesthetics.sbdelivery.ui.dish.ReviewDialogFragment"
         android:label="ReviewDialogFragment" />
+    <fragment
+        android:id="@+id/basketFragment"
+        android:name="studio.eyesthetics.sbdelivery.ui.basket.BasketFragment"
+        android:label="BasketFragment" />
 </navigation>

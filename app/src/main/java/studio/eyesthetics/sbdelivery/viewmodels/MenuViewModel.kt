@@ -57,7 +57,7 @@ class MenuViewModel(
                 R.string.menu_basket,
                 R.drawable.ic_basket,
                 -1,
-                R.id.homeFragment
+                R.id.basketFragment
             ),
             MenuItem(
                 R.string.menu_profile,

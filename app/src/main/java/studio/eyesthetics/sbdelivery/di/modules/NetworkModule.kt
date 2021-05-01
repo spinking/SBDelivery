@@ -140,6 +140,10 @@ class NetworkModule {
     fun provideAddReviewApi(@Named(AUTH_RETROFIT) retrofit: Retrofit): IAddReviewApi =
         retrofit.create(IAddReviewApi::class.java)
 
+    @Provides
+    fun provideBasketApi(@Named(AUTH_RETROFIT) retrofit: Retrofit): IBasketApi =
+        retrofit.create(IBasketApi::class.java)
+
     companion object {
         private const val WITHOUT_AUTH_CLIENT = "without_auth_client"
         private const val WITHOUT_AUTH_RETROFIT = "without_auth_retrofit"

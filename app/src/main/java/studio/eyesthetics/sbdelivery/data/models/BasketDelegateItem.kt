@@ -1,0 +1,3 @@
+package studio.eyesthetics.sbdelivery.data.models
+
+interface BasketDelegateItem

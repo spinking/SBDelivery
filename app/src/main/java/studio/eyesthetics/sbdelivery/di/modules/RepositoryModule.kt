@@ -3,13 +3,12 @@ package studio.eyesthetics.sbdelivery.di.modules
 import dagger.Module
 import dagger.Provides
 import studio.eyesthetics.sbdelivery.data.database.dao.*
-import studio.eyesthetics.sbdelivery.data.mappers.CategoryToCategoryEntityMapper
-import studio.eyesthetics.sbdelivery.data.mappers.DishToDishEntityMapper
-import studio.eyesthetics.sbdelivery.data.mappers.LoginResponseToProfileMapper
-import studio.eyesthetics.sbdelivery.data.mappers.ReviewToReviewEntityMapper
+import studio.eyesthetics.sbdelivery.data.mappers.*
 import studio.eyesthetics.sbdelivery.data.network.*
 import studio.eyesthetics.sbdelivery.data.repositories.auth.AuthRepository
 import studio.eyesthetics.sbdelivery.data.repositories.auth.IAuthRepository
+import studio.eyesthetics.sbdelivery.data.repositories.basket.BasketRepository
+import studio.eyesthetics.sbdelivery.data.repositories.basket.IBasketRepository
 import studio.eyesthetics.sbdelivery.data.repositories.categories.CategoryRepository
 import studio.eyesthetics.sbdelivery.data.repositories.categories.ICategoryRepository
 import studio.eyesthetics.sbdelivery.data.repositories.dishes.DishesRepository
@@ -64,4 +63,14 @@ class RepositoryModule {
         reviewsDao: ReviewsDao,
         reviewMapper: ReviewToReviewEntityMapper
     ) : IReviewRepository = ReviewRepository(reviewApi, addReviewApi, reviewsDao, reviewMapper)
+
+    @Provides
+    fun provideBasketRepository(
+        basketApi: IBasketApi,
+        basketDao: BasketDao,
+        basketItemDao: BasketItemDao,
+        basketMapper: BasketResponseToBasketEntity,
+        basketItemMapper: BasketItemToBasketItemEntity,
+        basketShortMapper: BasketEntityToBasketShortMapper
+    ) : IBasketRepository = BasketRepository(basketApi, basketDao, basketItemDao, basketMapper, basketItemMapper, basketShortMapper)
 }
