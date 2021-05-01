@@ -70,6 +70,7 @@ class RepositoryModule {
         basketDao: BasketDao,
         basketItemDao: BasketItemDao,
         basketMapper: BasketResponseToBasketEntity,
-        basketItemMapper: BasketItemToBasketItemEntity
-    ) : IBasketRepository = BasketRepository(basketApi, basketDao, basketItemDao, basketMapper, basketItemMapper)
+        basketItemMapper: BasketItemToBasketItemEntity,
+        basketShortMapper: BasketEntityToBasketShortMapper
+    ) : IBasketRepository = BasketRepository(basketApi, basketDao, basketItemDao, basketMapper, basketItemMapper, basketShortMapper)
 }

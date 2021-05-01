@@ -26,4 +26,7 @@ class MapperModule {
 
     @Provides
     fun provideBasketMapper(): BasketResponseToBasketEntity = BasketResponseToBasketEntity()
+
+    @Provides
+    fun provideBasketShortMapper(): BasketEntityToBasketShortMapper = BasketEntityToBasketShortMapper()
 }

@@ -47,7 +47,7 @@ class RecommendDelegate(
             tv_price.text = item.price.formatToRub()
             tv_title.text = item.name
             cb_favorite.isChecked = item.isFavorite
-            tv_stock.isVisible = item.oldPrice.isNotEmpty()
+            tv_stock.isVisible = item.oldPrice != 0
 
             cb_favorite.setOnClickListener {
                 addToFavoriteClickListener.invoke(item.id, cb_favorite.isChecked)

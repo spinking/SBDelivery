@@ -60,8 +60,10 @@ class BasketFragment : BaseFragment<BasketViewModel>() {
 
     private fun initAdapter() {
         basketAdapter.delegatesManager.apply {
-            addDelegate(BasketDelegate {
-                //TODO delete item
+            addDelegate(BasketDelegate({ itemId, itemCount, price ->
+                viewModel.handleChangeItemCount(itemId, itemCount, price)
+            }) {
+                viewModel.handleDeleteBasketItem(it)
             })
             addDelegate(PromoDelegate())
         }

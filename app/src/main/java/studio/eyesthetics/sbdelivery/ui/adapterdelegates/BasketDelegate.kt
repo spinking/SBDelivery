@@ -9,6 +9,7 @@ import studio.eyesthetics.sbdelivery.extensions.formatToRub
 import studio.eyesthetics.sbdelivery.ui.base.BaseAdapterDelegate
 
 class BasketDelegate(
+    private val onItemCountChanged: (String, Int, Int) -> Unit,
     private val onDeleteItem: (String) -> Unit
 ) : BaseAdapterDelegate<BasketDelegateItem>() {
     override val layoutRes: Int = R.layout.item_basket
@@ -28,10 +29,12 @@ class BasketDelegate(
             iv_picture
             tv_title
             btn_decrement.setOnClickListener {
-                val currentCount = item.amount--
+                val currentCount = item.amount - 1
                 if (currentCount > 0) {
                     item.amount = currentCount
                     tv_count.text = currentCount.toString()
+                    tv_price.text = (currentCount * item.price).formatToRub()
+                    onItemCountChanged.invoke(item.id, currentCount, item.price)
                 } else {
                     onDeleteItem.invoke(item.id)
                 }
@@ -40,6 +43,7 @@ class BasketDelegate(
             btn_increment.setOnClickListener {
                 item.amount++
                 tv_count.text = item.amount.toString()
+                onItemCountChanged.invoke(item.id, item.amount, item.price)
             }
             val priceText = (item.amount * item.price).formatToRub()
             tv_price.text = priceText

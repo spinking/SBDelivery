@@ -2,6 +2,8 @@ package studio.eyesthetics.sbdelivery.viewmodels
 
 import androidx.lifecycle.*
 import studio.eyesthetics.sbdelivery.data.database.entities.Basket
+import studio.eyesthetics.sbdelivery.data.database.entities.BasketItemEntity
+import studio.eyesthetics.sbdelivery.data.models.basket.BasketItemShort
 import studio.eyesthetics.sbdelivery.data.repositories.auth.IAuthRepository
 import studio.eyesthetics.sbdelivery.data.repositories.basket.IBasketRepository
 import studio.eyesthetics.sbdelivery.viewmodels.base.BaseViewModel
@@ -36,6 +38,21 @@ class BasketViewModel(
 
     fun handleEmptyBasket(isEmpty: Boolean) {
         updateState { it.copy(isEmptyBasket = isEmpty) }
+    }
+
+    fun handleDeleteBasketItem(itemId: String) {
+        launchSafety {
+            basketRepository.deleteBasketItem(itemId)
+        }
+    }
+
+    fun handleChangeItemCount(itemId: String, itemCount: Int, price: Int) {
+        launchSafety {
+            if (currentState.isAuth) {
+                basketRepository.updateBasket(BasketItemShort(itemId, itemCount))
+            } else
+                basketRepository.updateLocalBasket(BasketItemEntity(itemId, 1L, itemCount, price))
+        }
     }
 
 }

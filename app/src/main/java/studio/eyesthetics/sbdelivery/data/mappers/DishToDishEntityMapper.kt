@@ -10,7 +10,7 @@ class DishToDishEntityMapper : Mapper<Dish, DishEntity> {
                     name = type.name,
                     description = type.description,
                     image = type.image,
-                    oldPrice = type.oldPrice ?: "",
+                    oldPrice = type.oldPrice ?: 0,
                     price = type.price,
                     rating = type.rating,
                     likes = type.likes,
