@@ -41,6 +41,13 @@
         tools:text="1960 ₽"
         />
 
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/gp_sum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="tv_sum, tv_sum_label, btn_order"
+        />
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_order"
         android:layout_width="match_parent"
@@ -55,6 +62,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/tv_empty"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/standart_margin_16dp"
+        android:layout_marginEnd="@dimen/standart_margin_16dp"
+        android:text="@string/basket_empty"
+        android:visibility="gone"
+        style="@style/LightText.14.Gray"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:visibility="visible"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

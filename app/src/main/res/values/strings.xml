@@ -87,4 +87,5 @@
     <string name="basket_sum_label">Итого</string>
     <string name="basket_order_title">Оформить заказ</string>
     <string name="basket_label">Корзина</string>
+    <string name="basket_empty">Корзина пуста. Добавьте блюда в корзину, чтобы увидеть их здесь</string>
 </resources>

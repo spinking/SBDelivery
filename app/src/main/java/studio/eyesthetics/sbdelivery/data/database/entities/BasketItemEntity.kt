@@ -1,6 +1,7 @@
 package studio.eyesthetics.sbdelivery.data.database.entities
 
 import androidx.room.*
+import studio.eyesthetics.sbdelivery.data.models.BasketDelegateItem
 
 @Entity(
     tableName = "basket_item",
@@ -15,9 +16,9 @@ data class BasketItemEntity(
     @PrimaryKey
     val id: String,
     @ColumnInfo(name = "basket_id") val basketId: Long,
-    val amount: Int,
+    var amount: Int,
     val price: Int
-)
+) : BasketDelegateItem
 
 class Basket(
     @Embedded
