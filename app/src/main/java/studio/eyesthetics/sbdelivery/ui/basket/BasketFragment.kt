@@ -12,6 +12,7 @@ import studio.eyesthetics.sbdelivery.data.models.basket.PromoItem
 import studio.eyesthetics.sbdelivery.extensions.formatToRub
 import studio.eyesthetics.sbdelivery.ui.adapterdelegates.BasketDelegate
 import studio.eyesthetics.sbdelivery.ui.adapterdelegates.PromoDelegate
+import studio.eyesthetics.sbdelivery.ui.adapterdelegates.decorators.DividerItemDecorator
 import studio.eyesthetics.sbdelivery.ui.adapterdelegates.diffcallbacks.BasketDiffCallback
 import studio.eyesthetics.sbdelivery.ui.base.BaseFragment
 import studio.eyesthetics.sbdelivery.ui.base.Binding
@@ -74,6 +75,7 @@ class BasketFragment : BaseFragment<BasketViewModel>() {
         }
 
         rv_basket.apply {
+            addItemDecoration(DividerItemDecorator(requireContext(), R.drawable.divider_with_start_margin))
             (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
             layoutManager = LinearLayoutManager(requireContext())
             adapter = basketAdapter
