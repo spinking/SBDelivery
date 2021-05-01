@@ -10,7 +10,7 @@ import studio.eyesthetics.sbdelivery.ui.base.BaseAdapterDelegate
 
 class BasketDelegate(
     private val onItemCountChanged: (String, Int, Int) -> Unit,
-    private val onDeleteItem: (String) -> Unit
+    private val onDeleteItem: (BasketDelegateItem) -> Unit
 ) : BaseAdapterDelegate<BasketDelegateItem>() {
     override val layoutRes: Int = R.layout.item_basket
 
@@ -21,7 +21,7 @@ class BasketDelegate(
         viewHolder.bind(item as BasketItemEntity)
     }
 
-    override fun isForViewType(item: BasketDelegateItem, items: MutableList<BasketDelegateItem>, position: Int): Boolean = item is BasketItemEntity
+    override fun isForItem(item: BasketDelegateItem, items: MutableList<BasketDelegateItem>, position: Int): Boolean = item is BasketItemEntity
 
     inner class BasketViewHolder(convertView: View) : ViewHolder(convertView) {
         fun bind(item: BasketItemEntity) {
@@ -36,13 +36,14 @@ class BasketDelegate(
                     tv_price.text = (currentCount * item.price).formatToRub()
                     onItemCountChanged.invoke(item.id, currentCount, item.price)
                 } else {
-                    onDeleteItem.invoke(item.id)
+                    onDeleteItem.invoke(item)
                 }
             }
             tv_count.text = item.amount.toString()
             btn_increment.setOnClickListener {
                 item.amount++
                 tv_count.text = item.amount.toString()
+                tv_price.text = (item.amount * item.price).formatToRub()
                 onItemCountChanged.invoke(item.id, item.amount, item.price)
             }
             val priceText = (item.amount * item.price).formatToRub()

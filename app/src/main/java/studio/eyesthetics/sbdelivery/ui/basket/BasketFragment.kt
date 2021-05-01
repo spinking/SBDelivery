@@ -3,9 +3,11 @@ package studio.eyesthetics.sbdelivery.ui.basket
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.SimpleItemAnimator
 import kotlinx.android.synthetic.main.fragment_basket.*
 import studio.eyesthetics.sbdelivery.App
 import studio.eyesthetics.sbdelivery.R
+import studio.eyesthetics.sbdelivery.data.database.entities.BasketItemEntity
 import studio.eyesthetics.sbdelivery.data.models.BasketDelegateItem
 import studio.eyesthetics.sbdelivery.data.models.basket.PromoItem
 import studio.eyesthetics.sbdelivery.extensions.formatToRub
@@ -50,25 +52,38 @@ class BasketFragment : BaseFragment<BasketViewModel>() {
         initAdapter()
 
         viewModel.observeBasket(viewLifecycleOwner) {
-            val basketItems: MutableList<BasketDelegateItem> = it.items.toMutableList()
-            viewModel.handleEmptyBasket(it.items.isEmpty())
-            basketItems.add(PromoItem(it.basketInfo.promocode, it.basketInfo.promotext))
-            basketAdapter.items = it.items
-            tv_sum.text = it.basketInfo.total.formatToRub()
+            val isListEmpty = it.items.isEmpty()
+            viewModel.handleEmptyBasket(isListEmpty)
+            if (isListEmpty.not()) {
+                val basketItems: MutableList<BasketDelegateItem> = it.items.toMutableList()
+                basketItems.add(PromoItem(it.basketInfo.promocode, it.basketInfo.promotext))
+                basketAdapter.items = basketItems
+            }
         }
+
+        viewModel.getBasket()
+
     }
 
     private fun initAdapter() {
         basketAdapter.delegatesManager.apply {
             addDelegate(BasketDelegate({ itemId, itemCount, price ->
                 viewModel.handleChangeItemCount(itemId, itemCount, price)
-            }) {
-                viewModel.handleDeleteBasketItem(it)
+            }) { item ->
+                if (basketAdapter.itemCount == 2) {
+                    basketAdapter.clearItems()
+                    viewModel.handleEmptyBasket(true)
+                }
+                else
+                    basketAdapter.deleteItem(item)
+                if (item is BasketItemEntity)
+                    viewModel.handleDeleteBasketItem(item.id)
             })
             addDelegate(PromoDelegate())
         }
 
         rv_basket.apply {
+            (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
             layoutManager = LinearLayoutManager(requireContext())
             adapter = basketAdapter
         }
@@ -79,9 +94,13 @@ class BasketFragment : BaseFragment<BasketViewModel>() {
             tv_empty.isVisible = it
             gp_sum.isVisible = it.not()
         }
+        var total: Int by RenderProp(0) {
+            tv_sum.text = it.formatToRub()
+        }
         override fun bind(data: IViewModelState) {
             data as BasketState
             isEmptyBasket = data.isEmptyBasket
+            total = data.total
         }
     }
 }

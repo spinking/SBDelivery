@@ -18,7 +18,7 @@ class PromoDelegate : BaseAdapterDelegate<BasketDelegateItem>() {
         viewHolder.bind(item as PromoItem)
     }
 
-    override fun isForViewType(item: BasketDelegateItem, items: MutableList<BasketDelegateItem>, position: Int): Boolean = item is PromoItem
+    override fun isForItem(item: BasketDelegateItem, items: MutableList<BasketDelegateItem>, position: Int): Boolean = item is PromoItem
 
     inner class PromoViewHolder(convertView: View) : ViewHolder(convertView) {
         fun bind(item: PromoItem) {
