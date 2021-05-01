@@ -10,7 +10,7 @@ import studio.eyesthetics.sbdelivery.ui.base.BaseAdapterDelegate
 
 class BasketDelegate(
     private val onItemCountChanged: (String, Int, Int) -> Unit,
-    private val onDeleteItem: (BasketDelegateItem) -> Unit
+    private val onDeleteItem: (BasketItemEntity) -> Unit
 ) : BaseAdapterDelegate<BasketDelegateItem>() {
     override val layoutRes: Int = R.layout.item_basket
 

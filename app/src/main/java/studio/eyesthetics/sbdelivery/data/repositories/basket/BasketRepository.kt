@@ -21,7 +21,7 @@ class BasketRepository(
     private val basketShortMapper: BasketEntityToBasketShortMapper
 ) : IBasketRepository {
 
-    override fun getCachedBasket(): Basket {
+    override fun getCachedBasket(): LiveData<Basket> {
         return basketDao.getBasket()
     }
 
@@ -43,7 +43,7 @@ class BasketRepository(
 
     override suspend fun updateBasket(basketItemShort: BasketItemShort) {
         val basketRequest = BasketRequest(
-            basketDao.getBasket().basketInfo.promocode,
+             basketDao.getCachePromoCode(),
             basketShortMapper.mapFromListEntity(basketItemDao.getBasketItems())
         )
         val response = basketApi.updateBasket(basketRequest)

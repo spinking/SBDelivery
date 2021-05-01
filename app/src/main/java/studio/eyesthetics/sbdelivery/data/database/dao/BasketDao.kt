@@ -19,11 +19,14 @@ interface BasketDao : BaseDao<BasketEntity> {
     suspend fun upsert(basket: BasketEntity)
 
     @Query("SELECT * FROM basket WHERE id = 1")
-    fun getBasket(): Basket
+    fun getBasket(): LiveData<Basket>
 
     @Query("SELECT total FROM basket WHERE id = 1")
     fun getLiveTotal(): LiveData<Int>
 
     @Query("UPDATE basket SET total = :total")
     fun updateBasketTotal(total: Int)
+
+    @Query("SELECT promocode FROM basket WHERE id = 1")
+    fun getCachePromoCode(): String
 }

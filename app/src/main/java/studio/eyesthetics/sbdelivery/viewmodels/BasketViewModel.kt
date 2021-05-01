@@ -6,7 +6,6 @@ import studio.eyesthetics.sbdelivery.data.database.entities.BasketItemEntity
 import studio.eyesthetics.sbdelivery.data.models.basket.BasketItemShort
 import studio.eyesthetics.sbdelivery.data.repositories.auth.IAuthRepository
 import studio.eyesthetics.sbdelivery.data.repositories.basket.IBasketRepository
-import studio.eyesthetics.sbdelivery.extensions.mutableLiveData
 import studio.eyesthetics.sbdelivery.viewmodels.base.BaseViewModel
 import studio.eyesthetics.sbdelivery.viewmodels.base.IViewModelFactory
 import studio.eyesthetics.sbdelivery.viewmodels.base.IViewModelState
@@ -28,11 +27,7 @@ class BasketViewModel(
         }
     }
 
-    private val basket: MutableLiveData<Basket> = mutableLiveData()
-
-    fun getBasket() {
-        basket.value = basketRepository.getCachedBasket()
-    }
+    private val basket: LiveData<Basket> = basketRepository.getCachedBasket()
 
     private fun loadBasketFromNetwork() {
         launchSafety {

@@ -7,7 +7,7 @@ import studio.eyesthetics.sbdelivery.data.models.basket.BasketItemShort
 
 interface IBasketRepository {
 
-    fun getCachedBasket(): Basket
+    fun getCachedBasket(): LiveData<Basket>
     fun getLiveTotal(): LiveData<Int>
     suspend fun loadBasketFromNetwork()
     suspend fun updateBasket(basketItem: BasketItemShort)
