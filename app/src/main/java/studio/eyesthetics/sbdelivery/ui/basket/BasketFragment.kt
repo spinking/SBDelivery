@@ -23,6 +23,7 @@ import studio.eyesthetics.sbdelivery.viewmodels.BasketState
 import studio.eyesthetics.sbdelivery.viewmodels.BasketViewModel
 import studio.eyesthetics.sbdelivery.viewmodels.BasketViewModelFactory
 import studio.eyesthetics.sbdelivery.viewmodels.base.IViewModelState
+import studio.eyesthetics.sbdelivery.viewmodels.base.NavigationCommand
 import studio.eyesthetics.sbdelivery.viewmodels.base.SavedStateViewModelFactory
 import javax.inject.Inject
 
@@ -64,7 +65,9 @@ class BasketFragment : BaseFragment<BasketViewModel>() {
         }
 
         btn_order.setOnClickListener {
-            viewModel.handleOrderClick()
+            //TODO remove after test
+            viewModel.navigate(NavigationCommand.To(R.id.registrationOrderFragment))
+            //viewModel.handleOrderClick()
         }
     }
 

@@ -72,8 +72,7 @@ class BasketViewModel(
         if (currentState.isAuth) {
             launchSafety(isShowBlockingLoading = true) {
                 basketRepository.updateBasket()
-                //TODO navigate to order
-                //navigate(NavigationCommand.To())
+                navigate(NavigationCommand.To(R.id.registrationOrderFragment))
             }
         } else {
             navigate(NavigationCommand.StartLogin(R.id.basketFragment))

@@ -136,8 +136,20 @@
         <item name="android:textColor">@color/color_accent_orange</item>
     </style>
 
+    <style name="Text.16.Gray">
+        <item name="android:textColor">@color/color_label_gray</item>
+    </style>
+
     <style name="MediumText.10">
         <item name="android:textSize">@dimen/text_size_10sp</item>
+    </style>
+
+    <style name="MediumText.16">
+        <item name="android:textSize">@dimen/text_size_16sp</item>
+    </style>
+
+    <style name="MediumText.16.White">
+        <item name="android:textColor">@color/color_text_light</item>
     </style>
 
     <style name="MediumText.18">
@@ -178,6 +190,10 @@
 
     <style name="Text.White">
         <item name="android:textColor">@color/color_text_light</item>
+    </style>
+
+    <style name="Text.Gray">
+        <item name="android:textColor">@color/color_label_gray</item>
     </style>
 
     <style name="DarkText" parent="Text">

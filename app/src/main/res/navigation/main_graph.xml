@@ -136,5 +136,13 @@
     <fragment
         android:id="@+id/basketFragment"
         android:name="studio.eyesthetics.sbdelivery.ui.basket.BasketFragment"
-        android:label="BasketFragment" />
+        android:label="BasketFragment" >
+        <action
+            android:id="@+id/action_basketFragment_to_registrationOrderFragment"
+            app:destination="@id/registrationOrderFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registrationOrderFragment"
+        android:name="studio.eyesthetics.sbdelivery.ui.registrationorder.RegistrationOrderFragment"
+        android:label="RegistrationOrderFragment" />
 </navigation>

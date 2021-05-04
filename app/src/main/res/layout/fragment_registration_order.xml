@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingStart="@dimen/standart_margin_16dp"
+    android:paddingEnd="@dimen/standart_margin_16dp"
+    android:paddingTop="@dimen/maxi_margin_30dp"
+    android:background="@color/color_background"
+    >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="100dp"
+            >
+
+            <TextView
+                android:id="@+id/tv_address_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/registration_order_address_label"
+                style="@style/MediumText.16.White"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                style="@style/Text.16.Gray"
+                app:layout_constraintStart_toEndOf="@id/tv_address_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBaseline_toBaselineOf="@id/tv_address_label"
+                tools:text="г. Москва, ул. Тверская, д. 5 "
+                />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5"
+                />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_enter"
+                style="@style/MediumText.White"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
+                android:layout_marginEnd="@dimen/mini_margin_8dp"
+                android:background="@drawable/filled_button"
+                android:gravity="center"
+                android:stateListAnimator="@null"
+                android:text="@string/registration_order_enter"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/guideline"
+                app:layout_constraintTop_toBottomOf="@id/tv_address_label"
+                />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_map"
+                style="@style/MediumText.White"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
+                android:layout_marginStart="@dimen/mini_margin_8dp"
+                android:background="@drawable/filled_button"
+                android:gravity="center"
+                android:stateListAnimator="@null"
+                android:text="@string/registration_order_map"
+                app:layout_constraintTop_toBottomOf="@id/tv_address_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/guideline"
+                />
+
+            <TextView
+                android:id="@+id/tv_entrance_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/maxi_margin_30dp"
+                android:text="@string/registration_order_entrance_label"
+                style="@style/MediumText.16.White"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_enter"
+                />
+
+            <EditText
+                android:id="@+id/et_entrance"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/mini_margin_10dp"
+                android:background="@null"
+                android:inputType="number"
+                android:imeOptions="actionNext"
+                android:textCursorDrawable="@null"
+                style="@style/Text.Gray"
+                app:layout_constraintStart_toEndOf="@id/tv_entrance_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBaseline_toBaselineOf="@id/tv_entrance_label"
+                tools:text="5"
+                />
+
+            <View
+                android:id="@+id/divider_entrance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:background="@drawable/divider_with_start_margin"
+                app:layout_constraintTop_toBottomOf="@id/et_entrance"
+                />
+
+            <TextView
+                android:id="@+id/tv_floor_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/maxi_margin_30dp"
+                android:text="@string/registration_order_floor_label"
+                style="@style/MediumText.16.White"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider_entrance"
+                />
+
+            <EditText
+                android:id="@+id/et_floor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/mini_margin_10dp"
+                android:background="@null"
+                android:inputType="number"
+                android:imeOptions="actionNext"
+                android:textCursorDrawable="@null"
+                style="@style/Text.Gray"
+                app:layout_constraintStart_toEndOf="@id/tv_floor_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBaseline_toBaselineOf="@id/tv_floor_label"
+                tools:text="5"
+                />
+
+            <View
+                android:id="@+id/divider_floor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:background="@drawable/divider_with_start_margin"
+                app:layout_constraintTop_toBottomOf="@id/et_floor"
+                />
+
+            <TextView
+                android:id="@+id/tv_room_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/maxi_margin_30dp"
+                android:text="@string/registration_order_room_label"
+                style="@style/MediumText.16.White"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider_floor"
+                />
+
+            <EditText
+                android:id="@+id/et_room"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/mini_margin_10dp"
+                android:background="@null"
+                android:imeOptions="actionNext"
+                android:textCursorDrawable="@null"
+                style="@style/Text.Gray"
+                app:layout_constraintStart_toEndOf="@id/tv_room_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBaseline_toBaselineOf="@id/tv_room_label"
+                tools:text="5"
+                />
+
+            <View
+                android:id="@+id/divider_room"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:background="@drawable/divider_with_start_margin"
+                app:layout_constraintTop_toBottomOf="@id/et_room"
+                />
+
+            <TextView
+                android:id="@+id/tv_intercom_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/maxi_margin_30dp"
+                android:text="@string/registration_order_intercom_label"
+                style="@style/MediumText.16.White"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider_room"
+                />
+
+            <EditText
+                android:id="@+id/et_intercom"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/mini_margin_10dp"
+                android:background="@null"
+                android:imeOptions="actionNext"
+                android:textCursorDrawable="@null"
+                style="@style/Text.Gray"
+                app:layout_constraintStart_toEndOf="@id/tv_intercom_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBaseline_toBaselineOf="@id/tv_intercom_label"
+                tools:text="5"
+                />
+
+            <View
+                android:id="@+id/divider_intercom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:background="@drawable/divider_with_start_margin"
+                app:layout_constraintTop_toBottomOf="@id/et_intercom"
+                />
+
+            <TextView
+                android:id="@+id/tv_comment_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/maxi_margin_30dp"
+                android:text="@string/registration_order_comment_label"
+                style="@style/MediumText.16.White"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider_intercom"
+                />
+
+            <EditText
+                android:id="@+id/et_comment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/mini_margin_10dp"
+                android:background="@null"
+                android:imeOptions="actionDone"
+                android:textCursorDrawable="@null"
+                style="@style/Text.Gray"
+                app:layout_constraintStart_toEndOf="@id/tv_comment_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBaseline_toBaselineOf="@id/tv_comment_label"
+                tools:text="5"
+                />
+
+            <View
+                android:id="@+id/divider_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:background="@drawable/divider_with_start_margin"
+                app:layout_constraintTop_toBottomOf="@id/et_comment"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_register_order"
+        style="@style/MediumText.18.White"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/standart_margin_16dp"
+        android:background="@drawable/filled_button"
+        android:gravity="center"
+        android:stateListAnimator="@null"
+        android:text="@string/registration_order_register_order"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
