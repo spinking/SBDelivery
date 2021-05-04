@@ -70,7 +70,7 @@ class BasketViewModel(
 
     fun handleOrderClick() {
         if (currentState.isAuth) {
-            launchSafety {
+            launchSafety(isShowBlockingLoading = true) {
                 basketRepository.updateBasket()
                 //TODO navigate to order
                 //navigate(NavigationCommand.To())
