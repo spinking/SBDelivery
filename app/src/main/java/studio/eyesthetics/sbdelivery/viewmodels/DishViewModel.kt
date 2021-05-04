@@ -8,7 +8,6 @@ import androidx.paging.PagedList
 import studio.eyesthetics.sbdelivery.R
 import studio.eyesthetics.sbdelivery.data.database.entities.BasketItemEntity
 import studio.eyesthetics.sbdelivery.data.database.entities.ReviewEntity
-import studio.eyesthetics.sbdelivery.data.models.basket.BasketItemShort
 import studio.eyesthetics.sbdelivery.data.models.favorites.FavoriteChangeRequest
 import studio.eyesthetics.sbdelivery.data.repositories.auth.IAuthRepository
 import studio.eyesthetics.sbdelivery.data.repositories.basket.IBasketRepository
@@ -106,15 +105,14 @@ class DishViewModel(
 
     fun handleAddToBasket(message: String) {
         launchSafety {
+            basketRepository.updateLocalBasket(BasketItemEntity(
+                currentState.dishId,
+                1L,
+                currentState.itemsCount,
+                currentState.price
+            ))
             if (currentState.isAuth) {
-                basketRepository.updateBasket(BasketItemShort(currentState.dishId, currentState.itemsCount))
-            } else {
-                basketRepository.updateLocalBasket(BasketItemEntity(
-                    currentState.dishId,
-                    1L,
-                    currentState.itemsCount,
-                    currentState.price
-                ))
+                basketRepository.updateBasket()
             }
             updateState { it.copy(itemsCount = 1, isDecrementButtonActive = false) }
             notify(Notify.TextMessage(message))

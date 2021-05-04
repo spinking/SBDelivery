@@ -7,12 +7,12 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import kotlinx.android.synthetic.main.fragment_basket.*
 import studio.eyesthetics.sbdelivery.App
 import studio.eyesthetics.sbdelivery.R
-import studio.eyesthetics.sbdelivery.data.database.entities.BasketItemEntity
 import studio.eyesthetics.sbdelivery.data.models.BasketDelegateItem
 import studio.eyesthetics.sbdelivery.data.models.basket.PromoItem
 import studio.eyesthetics.sbdelivery.extensions.formatToRub
 import studio.eyesthetics.sbdelivery.ui.adapterdelegates.BasketDelegate
 import studio.eyesthetics.sbdelivery.ui.adapterdelegates.PromoDelegate
+import studio.eyesthetics.sbdelivery.ui.adapterdelegates.decorators.DividerItemDecorator
 import studio.eyesthetics.sbdelivery.ui.adapterdelegates.diffcallbacks.BasketDiffCallback
 import studio.eyesthetics.sbdelivery.ui.base.BaseFragment
 import studio.eyesthetics.sbdelivery.ui.base.Binding
@@ -54,15 +54,18 @@ class BasketFragment : BaseFragment<BasketViewModel>() {
         viewModel.observeBasket(viewLifecycleOwner) {
             val isListEmpty = it.items.isEmpty()
             viewModel.handleEmptyBasket(isListEmpty)
-            if (isListEmpty.not()) {
-                val basketItems: MutableList<BasketDelegateItem> = it.items.toMutableList()
-                basketItems.add(PromoItem(it.basketInfo.promocode, it.basketInfo.promotext))
-                basketAdapter.items = basketItems
+            if (isListEmpty) {
+                basketAdapter.clearItems()
+            } else {
+                val res: MutableList<BasketDelegateItem> = it.items.sortedBy { item ->item.id }.toMutableList()
+                res.add(PromoItem(it.basketInfo.promocode, it.basketInfo.promotext))
+                basketAdapter.items = res
             }
         }
 
-        viewModel.getBasket()
-
+        btn_order.setOnClickListener {
+            viewModel.handleOrderClick()
+        }
     }
 
     private fun initAdapter() {
@@ -70,19 +73,15 @@ class BasketFragment : BaseFragment<BasketViewModel>() {
             addDelegate(BasketDelegate({ itemId, itemCount, price ->
                 viewModel.handleChangeItemCount(itemId, itemCount, price)
             }) { item ->
-                if (basketAdapter.itemCount == 2) {
-                    basketAdapter.clearItems()
-                    viewModel.handleEmptyBasket(true)
-                }
-                else
-                    basketAdapter.deleteItem(item)
-                if (item is BasketItemEntity)
-                    viewModel.handleDeleteBasketItem(item.id)
+                viewModel.handleDeleteBasketItem(item.id)
             })
-            addDelegate(PromoDelegate())
+            addDelegate(PromoDelegate {
+                viewModel.updateBasketPromo(it)
+            })
         }
 
         rv_basket.apply {
+            addItemDecoration(DividerItemDecorator(requireContext(), R.drawable.divider_with_start_margin))
             (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
             layoutManager = LinearLayoutManager(requireContext())
             adapter = basketAdapter

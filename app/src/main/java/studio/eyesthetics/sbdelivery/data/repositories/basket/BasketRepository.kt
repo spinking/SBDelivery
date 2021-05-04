@@ -8,9 +8,10 @@ import studio.eyesthetics.sbdelivery.data.database.entities.BasketItemEntity
 import studio.eyesthetics.sbdelivery.data.mappers.BasketEntityToBasketShortMapper
 import studio.eyesthetics.sbdelivery.data.mappers.BasketItemToBasketItemEntity
 import studio.eyesthetics.sbdelivery.data.mappers.BasketResponseToBasketEntity
-import studio.eyesthetics.sbdelivery.data.models.basket.BasketItemShort
 import studio.eyesthetics.sbdelivery.data.models.basket.BasketRequest
+import studio.eyesthetics.sbdelivery.data.models.basket.BasketResponse
 import studio.eyesthetics.sbdelivery.data.network.IBasketApi
+import studio.eyesthetics.sbdelivery.data.network.errors.ApiError
 
 class BasketRepository(
     private val basketApi: IBasketApi,
@@ -21,7 +22,7 @@ class BasketRepository(
     private val basketShortMapper: BasketEntityToBasketShortMapper
 ) : IBasketRepository {
 
-    override fun getCachedBasket(): Basket {
+    override fun getCachedBasket(): LiveData<Basket> {
         return basketDao.getBasket()
     }
 
@@ -41,12 +42,17 @@ class BasketRepository(
             basketItemDao.upsert(basketItemMapper.mapFromListEntity(response.items))
     }
 
-    override suspend fun updateBasket(basketItemShort: BasketItemShort) {
+    override suspend fun updateLocalBasketPromo(promo: String) {
+        basketDao.updateBasketPromo(promo)
+    }
+
+    override suspend fun updateBasket() {
         val basketRequest = BasketRequest(
-            basketDao.getBasket().basketInfo.promocode,
+             basketDao.getCachePromoCode(),
             basketShortMapper.mapFromListEntity(basketItemDao.getBasketItems())
         )
         val response = basketApi.updateBasket(basketRequest)
+        if (isBasketsEquals(response).not()) throw ApiError.BasketNotEquals(null)
         basketDao.insert(basketMapper.mapFromEntity(response))
         if (response.items.isNotEmpty())
             basketItemDao.upsert(basketItemMapper.mapFromListEntity(response.items))
@@ -54,5 +60,11 @@ class BasketRepository(
 
     override suspend fun deleteBasketItem(itemId: String) {
         basketItemDao.deleteBasketItemById(itemId)
+    }
+
+    private fun isBasketsEquals(basket: BasketResponse): Boolean {
+        val localBasketItems = basketItemDao.getBasketItems().sortedBy { it.id }.map { it.price to it.amount }
+        val responseBasketItems = basket.items.sortedBy { it.id }.map { it.price to it.amount}
+        return localBasketItems == responseBasketItems
     }
 }
