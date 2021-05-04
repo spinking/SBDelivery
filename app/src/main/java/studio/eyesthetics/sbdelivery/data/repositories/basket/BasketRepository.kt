@@ -9,7 +9,9 @@ import studio.eyesthetics.sbdelivery.data.mappers.BasketEntityToBasketShortMappe
 import studio.eyesthetics.sbdelivery.data.mappers.BasketItemToBasketItemEntity
 import studio.eyesthetics.sbdelivery.data.mappers.BasketResponseToBasketEntity
 import studio.eyesthetics.sbdelivery.data.models.basket.BasketRequest
+import studio.eyesthetics.sbdelivery.data.models.basket.BasketResponse
 import studio.eyesthetics.sbdelivery.data.network.IBasketApi
+import studio.eyesthetics.sbdelivery.data.network.errors.ApiError
 
 class BasketRepository(
     private val basketApi: IBasketApi,
@@ -50,6 +52,7 @@ class BasketRepository(
             basketShortMapper.mapFromListEntity(basketItemDao.getBasketItems())
         )
         val response = basketApi.updateBasket(basketRequest)
+        if (isBasketsEquals(response).not()) throw ApiError.BasketNotEquals(null)
         basketDao.insert(basketMapper.mapFromEntity(response))
         if (response.items.isNotEmpty())
             basketItemDao.upsert(basketItemMapper.mapFromListEntity(response.items))
@@ -57,5 +60,11 @@ class BasketRepository(
 
     override suspend fun deleteBasketItem(itemId: String) {
         basketItemDao.deleteBasketItemById(itemId)
+    }
+
+    private fun isBasketsEquals(basket: BasketResponse): Boolean {
+        val localBasketItems = basketItemDao.getBasketItems().sortedBy { it.id }.map { it.price to it.amount }
+        val responseBasketItems = basket.items.sortedBy { it.id }.map { it.price to it.amount}
+        return localBasketItems == responseBasketItems
     }
 }

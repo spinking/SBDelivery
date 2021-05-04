@@ -70,7 +70,11 @@ class BasketViewModel(
 
     fun handleOrderClick() {
         if (currentState.isAuth) {
-            //TODO create order
+            launchSafety {
+                basketRepository.updateBasket()
+                //TODO navigate to order
+                //navigate(NavigationCommand.To())
+            }
         } else {
             navigate(NavigationCommand.StartLogin(R.id.basketFragment))
         }

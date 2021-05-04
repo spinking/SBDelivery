@@ -39,12 +39,10 @@ class PromoDelegate(
                 setOnClickListener {
                     if (text == ACCEPT) {
                         onSendPromoClick.invoke(et_promo.text.toString())
-                        //TODO change it after getting response
                         text = CANCEL
                         et_promo.clearFocus()
                     } else {
                         onSendPromoClick.invoke("")
-                        //TODO change it fater getting response
                         text = ACCEPT
                         btn_send_promo.isActivated = false
                         et_promo.apply {
