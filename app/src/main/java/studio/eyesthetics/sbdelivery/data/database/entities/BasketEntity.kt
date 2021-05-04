@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
 data class BasketEntity(
     @PrimaryKey
     val id: Long,
-    val promocode: String,
+    var promocode: String,
     val promotext: String,
     val total: Int
 )

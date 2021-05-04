@@ -62,6 +62,10 @@ class BasketFragment : BaseFragment<BasketViewModel>() {
                 basketAdapter.items = res
             }
         }
+
+        btn_order.setOnClickListener {
+            viewModel.handleOrderClick()
+        }
     }
 
     private fun initAdapter() {
@@ -71,7 +75,9 @@ class BasketFragment : BaseFragment<BasketViewModel>() {
             }) { item ->
                 viewModel.handleDeleteBasketItem(item.id)
             })
-            addDelegate(PromoDelegate())
+            addDelegate(PromoDelegate {
+                viewModel.updateBasketPromo(it)
+            })
         }
 
         rv_basket.apply {

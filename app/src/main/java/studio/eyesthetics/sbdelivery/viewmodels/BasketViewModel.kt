@@ -1,14 +1,15 @@
 package studio.eyesthetics.sbdelivery.viewmodels
 
 import androidx.lifecycle.*
+import studio.eyesthetics.sbdelivery.R
 import studio.eyesthetics.sbdelivery.data.database.entities.Basket
 import studio.eyesthetics.sbdelivery.data.database.entities.BasketItemEntity
-import studio.eyesthetics.sbdelivery.data.models.basket.BasketItemShort
 import studio.eyesthetics.sbdelivery.data.repositories.auth.IAuthRepository
 import studio.eyesthetics.sbdelivery.data.repositories.basket.IBasketRepository
 import studio.eyesthetics.sbdelivery.viewmodels.base.BaseViewModel
 import studio.eyesthetics.sbdelivery.viewmodels.base.IViewModelFactory
 import studio.eyesthetics.sbdelivery.viewmodels.base.IViewModelState
+import studio.eyesthetics.sbdelivery.viewmodels.base.NavigationCommand
 import javax.inject.Inject
 
 class BasketViewModel(
@@ -35,6 +36,15 @@ class BasketViewModel(
         }
     }
 
+    fun updateBasketPromo(promo: String) {
+        launchSafety {
+            basketRepository.updateLocalBasketPromo(promo)
+            if (currentState.isAuth) {
+                basketRepository.updateBasket()
+            }
+        }
+    }
+
     fun observeBasket(owner: LifecycleOwner, onChange: (Basket) -> Unit) {
         basket.observe(owner, Observer { if (it != null) onChange(it) else updateState { state -> state.copy(isEmptyBasket = true) } })
     }
@@ -51,10 +61,18 @@ class BasketViewModel(
 
     fun handleChangeItemCount(itemId: String, itemCount: Int, price: Int) {
         launchSafety {
+            basketRepository.updateLocalBasket(BasketItemEntity(itemId, 1L, itemCount, price))
             if (currentState.isAuth) {
-                basketRepository.updateBasket(BasketItemShort(itemId, itemCount))
-            } else
-                basketRepository.updateLocalBasket(BasketItemEntity(itemId, 1L, itemCount, price))
+                basketRepository.updateBasket()
+            }
+        }
+    }
+
+    fun handleOrderClick() {
+        if (currentState.isAuth) {
+            //TODO create order
+        } else {
+            navigate(NavigationCommand.StartLogin(R.id.basketFragment))
         }
     }
 

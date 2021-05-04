@@ -8,7 +8,6 @@ import studio.eyesthetics.sbdelivery.data.database.entities.BasketItemEntity
 import studio.eyesthetics.sbdelivery.data.mappers.BasketEntityToBasketShortMapper
 import studio.eyesthetics.sbdelivery.data.mappers.BasketItemToBasketItemEntity
 import studio.eyesthetics.sbdelivery.data.mappers.BasketResponseToBasketEntity
-import studio.eyesthetics.sbdelivery.data.models.basket.BasketItemShort
 import studio.eyesthetics.sbdelivery.data.models.basket.BasketRequest
 import studio.eyesthetics.sbdelivery.data.network.IBasketApi
 
@@ -41,7 +40,11 @@ class BasketRepository(
             basketItemDao.upsert(basketItemMapper.mapFromListEntity(response.items))
     }
 
-    override suspend fun updateBasket(basketItemShort: BasketItemShort) {
+    override suspend fun updateLocalBasketPromo(promo: String) {
+        basketDao.updateBasketPromo(promo)
+    }
+
+    override suspend fun updateBasket() {
         val basketRequest = BasketRequest(
              basketDao.getCachePromoCode(),
             basketShortMapper.mapFromListEntity(basketItemDao.getBasketItems())

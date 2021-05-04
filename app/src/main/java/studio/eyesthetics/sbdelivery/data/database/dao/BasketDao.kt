@@ -29,4 +29,7 @@ interface BasketDao : BaseDao<BasketEntity> {
 
     @Query("SELECT promocode FROM basket WHERE id = 1")
     fun getCachePromoCode(): String
+
+    @Query("UPDATE basket SET promocode = :promocode" )
+    fun updateBasketPromo(promocode: String)
 }
