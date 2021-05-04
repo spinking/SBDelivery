@@ -10,7 +10,7 @@ interface IAddressApi {
     @POST("address/input")
     suspend fun checkAddress(
         @Body addressRequest: CheckAddressRequest
-    ): AddressResponse
+    ): List<AddressResponse>
 
     @POST("address/coordinates")
     suspend fun checkAddress(

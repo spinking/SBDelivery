@@ -100,4 +100,7 @@
     <string name="registration_order_comment_label">Комментарий:</string>
     <string name="registration_order_register_order">Оформить заказ</string>
     <string name="registration_order_label">Оформление заказа</string>
+
+    <!--SetAddressFragment-->
+    <string name="set_address_label">Указание адреса</string>
 </resources>

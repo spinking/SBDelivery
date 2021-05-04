@@ -16,6 +16,7 @@ import studio.eyesthetics.sbdelivery.ui.favorites.FavoritesFragment
 import studio.eyesthetics.sbdelivery.ui.home.HomeFragment
 import studio.eyesthetics.sbdelivery.ui.menu.MenuFragment
 import studio.eyesthetics.sbdelivery.ui.registrationorder.RegistrationOrderFragment
+import studio.eyesthetics.sbdelivery.ui.registrationorder.SetAddressFragment
 import studio.eyesthetics.sbdelivery.ui.search.SearchFragment
 import studio.eyesthetics.sbdelivery.ui.splash.SplashActivity
 import studio.eyesthetics.sbdelivery.workers.SyncWorker
@@ -65,6 +66,7 @@ interface AppComponent {
     fun inject(fragment: ReviewDialogFragment)
     fun inject(fragment: BasketFragment)
     fun inject(fragment: RegistrationOrderFragment)
+    fun inject(fragment: SetAddressFragment)
 
     //workers
     fun inject(worker: SyncWorker)

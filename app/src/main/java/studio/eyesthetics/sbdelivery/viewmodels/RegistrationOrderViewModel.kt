@@ -15,6 +15,10 @@ class RegistrationOrderViewModel(
             //TODO create order
         }
     }
+
+    fun handleChangeAddress(address: String) {
+        updateState { it.copy(address = address) }
+    }
 }
 
 class RegistrationOrderViewModelFactory @Inject constructor(
